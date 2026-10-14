@@ -74,9 +74,9 @@ strong { font-weight: 600; color: var(--color-text-primary); }
 
 .site-nav { display: flex; justify-content: space-between; align-items: center; padding-block: var(--space-xs); }
 
-.site-logo { display: flex; align-items: center; gap: 0.2rem; text-decoration: none; transition: all var(--transition-base); }
+.site-logo { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; transition: all var(--transition-base); }
 
-.logo-text { font-family: var(--font-heading); font-size: var(--font-size-2xl); font-weight: 700; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; white-space: nowrap; }
+.logo-text { font-family: var(--font-heading); font-size: var(--font-size-lg); font-weight: 700; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; white-space: nowrap; }
 
 .logo-img { height: 40px !important; width: 40px !important; object-fit: contain; }
 
