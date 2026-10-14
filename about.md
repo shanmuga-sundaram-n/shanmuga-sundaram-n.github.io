@@ -83,7 +83,7 @@ permalink: /about/
                     <h3 style="margin-bottom: 0;">Lead Consultant / Technical Partner</h3>
                     <p style="color: var(--color-accent-primary); font-weight: 600; margin-bottom: var(--space-xs);">Thoughtworks</p>
                 </div>
-                <div style="text-align: right;">
+                <div class="exp-dates">
                     <small style="display: block; font-weight: 600;">Aug 2023 — Present</small>
                     <small style="color: var(--color-text-tertiary);">Coimbatore, TN, India</small>
                 </div>
@@ -102,7 +102,7 @@ permalink: /about/
                     <h3 style="margin-bottom: 0;">Principal Software Engineer</h3>
                     <p style="color: var(--color-accent-primary); font-weight: 600; margin-bottom: var(--space-xs);">Fidelity Investments</p>
                 </div>
-                <div style="text-align: right;">
+                <div class="exp-dates">
                     <small style="display: block; font-weight: 600;">Apr 2020 — Jul 2023</small>
                     <small style="color: var(--color-text-tertiary);">Chennai, TN, India</small>
                 </div>
@@ -120,7 +120,7 @@ permalink: /about/
                     <h3 style="margin-bottom: 0;">Senior Associate</h3>
                     <p style="color: var(--color-accent-primary); font-weight: 600; margin-bottom: var(--space-xs);">Cognizant Technology Solutions</p>
                 </div>
-                <div style="text-align: right;">
+                <div class="exp-dates">
                     <small style="display: block; font-weight: 600;">Jun 2011 — Apr 2020</small>
                     <small style="color: var(--color-text-tertiary);">India & USA</small>
                 </div>
@@ -139,7 +139,7 @@ permalink: /about/
                     <h3 style="margin-bottom: 0;">Sr. Software Engineer</h3>
                     <p style="color: var(--color-accent-primary); font-weight: 600; margin-bottom: var(--space-xs);">L-Cube Innovative Solutions</p>
                 </div>
-                <div style="text-align: right;">
+                <div class="exp-dates">
                     <small style="display: block; font-weight: 600;">Jun 2007 — Jun 2011</small>
                     <small style="color: var(--color-text-tertiary);">Chennai, TN, India</small>
                 </div>

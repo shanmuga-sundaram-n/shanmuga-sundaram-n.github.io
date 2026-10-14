@@ -5,10 +5,10 @@ date: 2025-03-08 12:00:00 +0000
 categories: [ai, ml]
 tags: [llm, tokenization, nlp, ai, machine-learning, transformers]
 description: "Tokenizers are the invisible foundation of every large language model — shaping context limits, API costs, cross-lingual fairness, and model reasoning. Here's how they work and why they matter."
-image: "/assets/images/blog/llm-tokenizers.jpg"
+image: "/assets/images/blog/llm-tokenizers.webp"
 ---
 
-![LLM Tokenizers](/assets/images/blog/llm-tokenizers.jpg)
+![LLM Tokenizers](/assets/images/blog/llm-tokenizers.webp)
 
 Every interaction with a large language model begins long before any neural network computation. It starts with **tokenization** — the process of converting human language into the numerical representations that models actually process. Understanding tokenizers unlocks a deeper understanding of why LLMs behave the way they do.
 

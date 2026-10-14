@@ -5,10 +5,10 @@ date: 2024-10-17 12:00:00 +0000
 categories: [engineering, distributed-systems]
 tags: [kafka, performance, distributed-systems, streaming, backend]
 description: "A deep dive into the engineering decisions that make Apache Kafka one of the fastest messaging systems — sequential I/O, zero-copy, batching, compression, and intelligent caching."
-image: "/assets/images/blog/kafka-speed.jpg"
+image: "/assets/images/blog/kafka-speed.webp"
 ---
 
-![Why is Kafka So Fast?](/assets/images/blog/kafka-speed.jpg)
+![Why is Kafka So Fast?](/assets/images/blog/kafka-speed.webp)
 
 Apache Kafka is renowned for its extraordinary throughput and low latency. But what actually makes it so fast? The answer lies in a combination of deliberate engineering decisions that work together to minimize overhead at every layer.
 

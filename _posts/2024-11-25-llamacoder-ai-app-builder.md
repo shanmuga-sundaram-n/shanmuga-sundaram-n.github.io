@@ -5,10 +5,10 @@ date: 2024-11-25 12:00:00 +0000
 categories: [ai, tools]
 tags: [ai, llm, code-generation, llamacoder, no-code, productivity]
 description: "An introduction to LlamaCoder — the AI-powered platform that converts plain language descriptions into functional application code, democratising app development for everyone."
-image: "/assets/images/blog/llamacoder.jpg"
+image: "/assets/images/blog/llamacoder.webp"
 ---
 
-![LlamaCoder](/assets/images/blog/llamacoder.jpg)
+![LlamaCoder](/assets/images/blog/llamacoder.webp)
 
 What if you could describe an app idea in plain English and have working code ready in minutes? That's exactly what **LlamaCoder** delivers — and it signals a significant shift in who gets to build software.
 

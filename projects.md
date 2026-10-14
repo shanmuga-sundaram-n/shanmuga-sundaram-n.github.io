@@ -16,7 +16,7 @@ permalink: /projects/
   <div class="grid grid-3">
     {% for project in oss_projects %}
     <div class="project-card">
-      <img src="{{ project.image | relative_url }}" alt="{{ project.title }}" class="project-image">
+      <img src="{{ project.image | relative_url }}" alt="{{ project.title }}" class="project-image" width="1200" height="750" loading="lazy" decoding="async">
       <div class="project-content">
         <span class="oss-badge"><i class="fas fa-code-branch"></i> Open Source</span>
         <h3 class="project-title">{{ project.title }}</h3>
@@ -61,7 +61,7 @@ permalink: /projects/
   {% assign sorted_projects = site.data.projects | sort: "date" | reverse %}
   {% for project in sorted_projects %}
   <div class="project-card">
-    <img src="{{ project.image | relative_url }}" alt="{{ project.title }}" class="project-image">
+    <img src="{{ project.image | relative_url }}" alt="{{ project.title }}" class="project-image" width="1200" height="750" loading="lazy" decoding="async">
     <div class="project-content">
       <h3 class="project-title">{{ project.title }}</h3>
       {% if project.date %}

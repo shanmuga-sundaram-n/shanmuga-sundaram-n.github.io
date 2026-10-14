@@ -5,10 +5,10 @@ date: 2024-11-13 12:00:00 +0000
 categories: [engineering, java]
 tags: [java, concurrency, virtual-threads, project-loom, performance]
 description: "A deep dive into traditional Java threads vs virtual threads (Project Loom) — how they work internally, when to use each, and why virtual threads are a game changer for I/O-bound applications."
-image: "/assets/images/blog/java-virtual-threads.jpg"
+image: "/assets/images/blog/java-virtual-threads.webp"
 ---
 
-![Java Threads and Virtual Threads](/assets/images/blog/java-virtual-threads.jpg)
+![Java Threads and Virtual Threads](/assets/images/blog/java-virtual-threads.webp)
 
 Java's concurrency model has undergone a significant evolution with the introduction of **virtual threads** in Java 19 (Project Loom). Understanding the difference between traditional threads and virtual threads is key to building scalable, efficient applications.
 

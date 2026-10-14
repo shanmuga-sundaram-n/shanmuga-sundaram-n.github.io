@@ -5,10 +5,10 @@ date: 2024-12-28 12:00:00 +0000
 categories: [engineering, java]
 tags: [reactive-programming, backpressure, project-reactor, rxjava, akka, java, streaming]
 description: "Backpressure is the fundamental mechanism that keeps reactive systems from collapsing under load. This deep dive covers what it is, why it matters, and how to implement it correctly across Project Reactor, RxJava, and Akka Streams."
-image: "/assets/images/blog/backpressure-reactive.jpg"
+image: "/assets/images/blog/backpressure-reactive.webp"
 ---
 
-![Mastering Backpressure in Reactive Programming](/assets/images/blog/backpressure-reactive.jpg)
+![Mastering Backpressure in Reactive Programming](/assets/images/blog/backpressure-reactive.webp)
 
 Reactive programming allows developers to build highly responsive and scalable systems that handle asynchronous data flows. But a fundamental challenge emerges when **producers emit data faster than consumers can process it**.
 

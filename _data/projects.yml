@@ -17,7 +17,7 @@
 - title: "Portfolio Website"
   date: "2026-05-01"
   description: "Modern, responsive personal portfolio website built with Jekyll and hosted on GitHub Pages. Features custom CSS theming, dark/light mode, multi-agent blog content, and a full-text search powered by Fuse.js."
-  image: "/assets/images/projects/portfolio.png"
+  image: "/assets/images/projects/portfolio.webp"
   github: "https://github.com/shanmuga-sundaram-n/shanmuga-sundaram-n.github.io"
   technologies:
     - Jekyll
@@ -44,7 +44,7 @@
 - title: "AutoClassifier: AI-Powered Car Identification"
   date: "2024-06-01"
   description: "Deep learning-based car identification model using computer vision for automotive surveillance. Processes 16,185 images across 196 car classes, classifying cars by make, model, and year using CNNs and RCNN for precise vehicle detection and localization."
-  image: "/assets/images/projects/autoclassifier.png"
+  image: "/assets/images/projects/autoclassifier.webp"
   technologies:
     - Deep Learning
     - Computer Vision
@@ -56,7 +56,7 @@
 - title: "Support Ticket Categorization"
   date: "2024-05-01"
   description: "NLP-based machine learning model using transformers for automatic support ticket classification. Accurately predicts ticket categories, assigns priorities, and estimates resolution times through advanced text classification and prompt engineering."
-  image: "/assets/images/projects/support-ticket.png"
+  image: "/assets/images/projects/support-ticket.webp"
   technologies:
     - NLP
     - Transformers
@@ -67,7 +67,7 @@
 - title: "Advanced Computer Vision: Face Detection & Recognition"
   date: "2024-04-01"
   description: "Real-time face detection and recognition system for broadcast environments using CNNs. Implements triplet loss and Siamese networks for crew member identification in video streams, enhancing security and personalization."
-  image: "/assets/images/projects/face-recognition.png"
+  image: "/assets/images/projects/face-recognition.webp"
   technologies:
     - Computer Vision
     - CNN
@@ -78,7 +78,7 @@
 - title: "Customer Churn Prediction"
   date: "2024-03-01"
   description: "Ensemble learning model for predicting customer churn in telecom industry. Combines random forests and XGBoost to achieve high prediction accuracy, supporting customer retention strategies through advanced predictive analytics."
-  image: "/assets/images/projects/churn-prediction.png"
+  image: "/assets/images/projects/churn-prediction.webp"
   technologies:
     - Ensemble Learning
     - Random Forest
@@ -89,7 +89,7 @@
 - title: "Manufacturing Yield Prediction"
   date: "2024-02-01"
   description: "Predictive model for semiconductor manufacturing yield optimization. Employs PCA for feature engineering and grid search for model tuning to identify factors affecting production yield and reduce operational costs."
-  image: "/assets/images/projects/yield-prediction.png"
+  image: "/assets/images/projects/yield-prediction.webp"
   technologies:
     - Feature Engineering
     - PCA
@@ -100,7 +100,7 @@
 - title: "Neural Networks for Predictive Modeling"
   date: "2024-01-01"
   description: "Dual-purpose neural network project: regression model for signal quality prediction and image classifier for street-level photography. Focuses on optimization techniques, overfitting prevention, and hyperparameter tuning."
-  image: "/assets/images/projects/neural-networks.png"
+  image: "/assets/images/projects/neural-networks.webp"
   technologies:
     - Neural Networks
     - Regression
@@ -111,7 +111,7 @@
 - title: "Unsupervised Learning: Vehicle Clustering"
   date: "2023-12-01"
   description: "Clustering and classification system for vehicle segmentation based on fuel consumption and silhouette analysis. Utilizes K-means clustering and SVM to discover hidden patterns in unlabeled automotive data."
-  image: "/assets/images/projects/vehicle-clustering.png"
+  image: "/assets/images/projects/vehicle-clustering.webp"
   technologies:
     - Unsupervised Learning
     - K-means Clustering
@@ -122,7 +122,7 @@
 - title: "Healthcare & Marketing Predictive Models"
   date: "2023-11-01"
   description: "Supervised learning models for healthcare patient condition prediction and marketing customer conversion. Handles imbalanced datasets using logistic regression and SVM for accurate classification in critical domains."
-  image: "/assets/images/projects/healthcare-marketing.png"
+  image: "/assets/images/projects/healthcare-marketing.webp"
   technologies:
     - Supervised Learning
     - Logistic Regression
@@ -133,7 +133,7 @@
 - title: "New Wheels: SQL & Data Visualization"
   date: "2023-10-01"
   description: "Business analytics case study analyzing sales data to address declining revenue. Uses SQL queries, aggregation, and visualization to generate actionable insights for customer retention and product optimization strategies."
-  image: "/assets/images/projects/new-wheels.png"
+  image: "/assets/images/projects/new-wheels.webp"
   technologies:
     - SQL
     - Data Visualization
@@ -144,7 +144,7 @@
 - title: "Applied Statistics for Decision-Making"
   date: "2023-09-01"
   description: "Statistical analysis project applying hypothesis testing, data visualization, and statistical inference to industry problems. Analyzes sports tournaments and startup success rates to provide strategic investment insights."
-  image: "/assets/images/projects/statistics.png"
+  image: "/assets/images/projects/statistics.webp"
   technologies:
     - Statistics
     - Hypothesis Testing

@@ -35,7 +35,7 @@
   <meta property="og:description"
     content="A deep dive into the engineering decisions that make Apache Kafka one of the fastest messaging systems — sequential I/O, zero-copy, batching, compression, and intelligent caching.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="http://0.0.0.0:4000/blog/2024/10/17/why-kafka-is-so-fast/">
+  <meta property="og:url" content="https://shanmuga-sundaram-n.github.io/blog/2024/10/17/why-kafka-is-so-fast/">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
@@ -68,17 +68,17 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="A deep dive into the engineering decisions that make Apache Kafka one of the fastest messaging systems — sequential I/O, zero-copy, batching, compression, and intelligent caching." />
 <meta property="og:description" content="A deep dive into the engineering decisions that make Apache Kafka one of the fastest messaging systems — sequential I/O, zero-copy, batching, compression, and intelligent caching." />
-<link rel="canonical" href="http://0.0.0.0:4000/blog/2024/10/17/why-kafka-is-so-fast/" />
-<meta property="og:url" content="http://0.0.0.0:4000/blog/2024/10/17/why-kafka-is-so-fast/" />
+<link rel="canonical" href="https://shanmuga-sundaram-n.github.io/blog/2024/10/17/why-kafka-is-so-fast/" />
+<meta property="og:url" content="https://shanmuga-sundaram-n.github.io/blog/2024/10/17/why-kafka-is-so-fast/" />
 <meta property="og:site_name" content="Shanmuga Sundaram Natarajan’s Personal Website" />
-<meta property="og:image" content="http://0.0.0.0:4000/assets/images/blog/kafka-speed.jpg" />
+<meta property="og:image" content="https://shanmuga-sundaram-n.github.io/assets/images/blog/kafka-speed.webp" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2024-10-17T12:00:00+00:00" />
+<meta property="article:published_time" content="2024-10-17T17:30:00+05:30" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta property="twitter:image" content="http://0.0.0.0:4000/assets/images/blog/kafka-speed.jpg" />
+<meta property="twitter:image" content="https://shanmuga-sundaram-n.github.io/assets/images/blog/kafka-speed.webp" />
 <meta property="twitter:title" content="Why is Kafka So Fast? Unveiling the Secrets Behind Kafka’s Speed" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Shanmuga Sundaram Natarajan (Shan)"},"dateModified":"2024-10-17T12:00:00+00:00","datePublished":"2024-10-17T12:00:00+00:00","description":"A deep dive into the engineering decisions that make Apache Kafka one of the fastest messaging systems — sequential I/O, zero-copy, batching, compression, and intelligent caching.","headline":"Why is Kafka So Fast? Unveiling the Secrets Behind Kafka’s Speed","image":"http://0.0.0.0:4000/assets/images/blog/kafka-speed.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"http://0.0.0.0:4000/blog/2024/10/17/why-kafka-is-so-fast/"},"url":"http://0.0.0.0:4000/blog/2024/10/17/why-kafka-is-so-fast/"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Shanmuga Sundaram Natarajan (Shan)"},"dateModified":"2024-10-17T17:30:00+05:30","datePublished":"2024-10-17T17:30:00+05:30","description":"A deep dive into the engineering decisions that make Apache Kafka one of the fastest messaging systems — sequential I/O, zero-copy, batching, compression, and intelligent caching.","headline":"Why is Kafka So Fast? Unveiling the Secrets Behind Kafka’s Speed","image":"https://shanmuga-sundaram-n.github.io/assets/images/blog/kafka-speed.webp","mainEntityOfPage":{"@type":"WebPage","@id":"https://shanmuga-sundaram-n.github.io/blog/2024/10/17/why-kafka-is-so-fast/"},"url":"https://shanmuga-sundaram-n.github.io/blog/2024/10/17/why-kafka-is-so-fast/"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -89,7 +89,7 @@
     <nav class="site-nav container">
       <a href="/" class="site-logo">
         <img src="/assets/images/projects/website-logo-matched.png" alt="Shanmuga Sundaram Natarajan (Shan)"
-          class="logo-img">
+          class="logo-img" width="40" height="40">
         <span class="logo-text">Shan's Digital Space</span>
       </a>
 
@@ -131,9 +131,9 @@
 
   <!-- Main Content -->
   <main>
-    <article class="section" style="padding-top: calc(var(--space-2xl) + 80px);">
+    <article class="section post-article">
     <div class="container">
-        <div class="card" style="padding: var(--space-2xl); overflow: visible;">
+        <div class="card post-card-full">
 
             <div class="post-meta" style="margin-bottom: var(--space-md);">
                 <span><i class="far fa-calendar"></i> October 17, 2024</span>
@@ -142,10 +142,10 @@
                 
             </div>
 
-            <h1 style="font-size: var(--font-size-4xl); margin-bottom: var(--space-xl); background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1.3;">Why is Kafka So Fast? Unveiling the Secrets Behind Kafka's Speed</h1>
+            <h1 class="post-title-main">Why is Kafka So Fast? Unveiling the Secrets Behind Kafka's Speed</h1>
 
             <div class="post-content">
-                <p><img src="/assets/images/blog/kafka-speed.jpg" alt="Why is Kafka So Fast?" /></p>
+                <p><img loading="lazy" decoding="async" src="/assets/images/blog/kafka-speed.webp" alt="Why is Kafka So Fast?" /></p>
 
 <p>Apache Kafka is renowned for its extraordinary throughput and low latency. But what actually makes it so fast? The answer lies in a combination of deliberate engineering decisions that work together to minimize overhead at every layer.</p>
 
@@ -393,7 +393,13 @@
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
     mermaid.initialize({ startOnLoad: false, theme: 'dark', securityLevel: 'loose' });
 
+    // Phones: render wide left-to-right diagrams top-down so they fit the screen.
+    const isPhone = window.matchMedia('(max-width: 640px)').matches;
+
     document.querySelectorAll('pre > code.language-mermaid').forEach(function(code) {
+        if (isPhone) {
+            code.textContent = code.textContent.replace(/^(\s*(?:flowchart|graph))\s+(?:LR|RL)\b/m, '$1 TD');
+        }
         const wrapper = document.createElement('div');
         wrapper.className = 'mermaid-wrapper';
         const div = document.createElement('div');
@@ -401,6 +407,12 @@
         div.textContent = code.textContent;
         wrapper.appendChild(div);
         code.parentElement.replaceWith(wrapper);
+    });
+
+    // Code blocks without ASCII box-drawing can wrap on phones; diagram blocks keep scrolling.
+    const boxChars = /[─│┌┐└┘├┤┬┴┼═║╔╗╚╝╭╮╯╰▶▼▲]/;
+    document.querySelectorAll('.post-content pre').forEach(function(pre) {
+        if (!boxChars.test(pre.textContent)) pre.classList.add('wrap-code');
     });
 
     await mermaid.run();

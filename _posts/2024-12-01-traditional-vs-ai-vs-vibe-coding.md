@@ -5,10 +5,10 @@ date: 2024-12-01 12:00:00 +0000
 categories: [ai, engineering]
 tags: [ai, coding, vibe-coding, productivity, software-engineering, claude-code]
 description: "Modern software development has evolved into three distinct modes — traditional, AI-assisted, and vibe coding. Understanding when to use each is becoming a core engineering skill."
-image: "/assets/images/blog/traditional-vs-ai-vs-vibe-coding.jpg"
+image: "/assets/images/blog/traditional-vs-ai-vs-vibe-coding.webp"
 ---
 
-![Traditional vs AI-Assisted vs Vibe Coding](/assets/images/blog/traditional-vs-ai-vs-vibe-coding.jpg)
+![Traditional vs AI-Assisted vs Vibe Coding](/assets/images/blog/traditional-vs-ai-vs-vibe-coding.webp)
 
 Something has shifted in how software gets written. As an engineer, I've noticed that I no longer work in a single mode throughout the day. Depending on the task, the stakes, and the context, I switch between three fundamentally different headspaces — and recognising which one to be in has become as important as any technical skill.
 

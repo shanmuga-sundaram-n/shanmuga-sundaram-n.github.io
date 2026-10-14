@@ -195,7 +195,7 @@ layout: default
         <div class="grid grid-3">
             {% for project in site.data.projects limit:3 %}
             <div class="project-card">
-                <img src="{{ project.image | relative_url }}" alt="{{ project.title }}" class="project-image">
+                <img src="{{ project.image | relative_url }}" alt="{{ project.title }}" class="project-image" width="1200" height="750" loading="lazy" decoding="async">
                 <div class="project-content">
                     <h3 class="project-title">{{ project.title }}</h3>
                     <p class="project-description">{{ project.description }}</p>

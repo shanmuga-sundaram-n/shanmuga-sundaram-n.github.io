@@ -5,10 +5,10 @@ date: 2024-11-17 12:00:00 +0000
 categories: [engineering, architecture]
 tags: [serverless, kubernetes, cloud, architecture, devops, apis]
 description: "A structured comparison of serverless and Kubernetes as API deployment paradigms — trade-offs across operational overhead, scalability, cost, control, and vendor lock-in to help you choose the right architecture for your context."
-image: "/assets/images/blog/serverless-vs-kubernetes.jpg"
+image: "/assets/images/blog/serverless-vs-kubernetes.webp"
 ---
 
-![Serverless APIs vs Kubernetes](/assets/images/blog/serverless-vs-kubernetes.jpg)
+![Serverless APIs vs Kubernetes](/assets/images/blog/serverless-vs-kubernetes.webp)
 
 Choosing between serverless and Kubernetes for API deployment is one of the most consequential architectural decisions in modern cloud engineering. Both are powerful paradigms — but they make fundamentally different trade-offs.
 
