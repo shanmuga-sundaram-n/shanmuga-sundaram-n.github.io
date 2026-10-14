@@ -1,7 +1,7 @@
 # CLAUDE.md - Project Guide
 
 ## Project Overview
-Personal portfolio website for **Shanmuga Sundaram Natarajan (Shan)** — a Hands-on Architect & Technical Leader with 18+ years of experience. The site is built with Jekyll and hosted on GitHub Pages at `shanmugasundaram.in`.
+Personal portfolio website for **Shanmuga Sundaram Natarajan (Shan)** — a Hands-on Architect & Technical Leader with 19+ years of experience. The site is built with Jekyll and hosted on GitHub Pages at `shanmugasundaram.in`.
 
 ## Tech Stack
 - **Static Site Generator**: Jekyll (via `github-pages` gem ~228)

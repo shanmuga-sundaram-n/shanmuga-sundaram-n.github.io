@@ -135,7 +135,7 @@
 
     <div class="hero-content container">
         <div class="hero-text-wrapper">
-            <h1 class="hero-title" style="font-size: var(--font-size-4xl);">Blog</h1>
+            <h1 class="hero-title">Blog</h1>
             
             <p class="hero-description">Technical articles, tutorials, and insights</p>
             
@@ -146,7 +146,14 @@
 <section class="section">
     <div class="container">
         <article class="content">
-            <div class="blog-controls">
+            <div class="blog-layout">
+<aside class="blog-sidebar">
+  <h3 class="blog-sidebar-title"><i class="far fa-calendar-alt"></i> Archive</h3>
+  <div class="blog-month-filters" id="month-filters" aria-label="Filter by month"></div>
+</aside>
+
+<div class="blog-main">
+<div class="blog-controls">
   <div class="blog-search-wrapper">
     <i class="fas fa-search"></i>
     <input type="text" id="blog-search" placeholder="Search articles..." autocomplete="off" />
@@ -170,6 +177,8 @@
 <div id="posts-container" class="grid grid-2"></div>
 <div id="pagination-controls" class="blog-pagination"></div>
 <p id="no-results" class="no-results-msg" hidden>No posts found.</p>
+</div>
+</div>
 
 <div style="margin-top: var(--space-xl);"><section class="subscribe-section">
   <div class="subscribe-inner">
@@ -289,6 +298,8 @@
     "title": "Harness Engineering and Loop Engineering: The Layer Between an LLM and Real Work",
     "url": "/blog/2026/08/11/harness-engineering-and-loop-engineering/",
     "date": "August 11, 2026",
+    "month": "2026-08",
+    "monthLabel": "Aug 2026",
     "excerpt": "Start with what an AI agent actually is, because the term gets thrown around loosely. An agent is a language model (an LLM — the kind of AI behind ChatGPT or Claude) that isn’t just answering a que...",
     "description": "Prompt engineering gets a language model to say the right thing once. Harness engineering and loop engineering get it to do the right thing repeatedly, safely, and to completion — explained from first principles, with a worked example, using Claude Code's observable behavior as the reference.",
     "categories": ["ai","engineering","agents"],
@@ -300,6 +311,8 @@
     "title": "SDLC Factory: Autonomous Software Delivery with AI Agents",
     "url": "/blog/2026/06/06/sdlc-factory-autonomous-multi-agent-pipeline/",
     "date": "June 06, 2026",
+    "month": "2026-06",
+    "monthLabel": "Jun 2026",
     "excerpt": "Software delivery has a translation problem. An idea starts clear in someone’s head, gets degraded through six rounds of meetings, three Confluence pages, a Jira backlog nobody reads, and ends up a...",
     "description": "A deep technical walkthrough of SDLC Factory — an autonomous AI pipeline that transforms plain-English product ideas into production-ready software through 10 specialized agents, structured artifact contracts, and human-in-the-loop governance gates.",
     "categories": ["ai","engineering","agents"],
@@ -311,6 +324,8 @@
     "title": "Why Most Teams Fail at Collaboration — And How Domain-Driven Design Fixes It",
     "url": "/blog/2026/04/01/why-teams-fail-at-collaboration-ddd/",
     "date": "April 01, 2026",
+    "month": "2026-04",
+    "monthLabel": "Apr 2026",
     "excerpt": "Let me tell you about a bug that took three weeks to track down.\n\n",
     "description": "Three teams. One database column. Three different mental models — until it all broke at 2am. Here's how Domain-Driven Design gives you the structures that make collaboration actually work at scale.",
     "categories": ["engineering","architecture","ddd"],
@@ -322,6 +337,8 @@
     "title": "Building RAG That Actually Works: Lessons from the Trenches",
     "url": "/blog/2026/03/21/building-production-rag-pipeline/",
     "date": "March 21, 2026",
+    "month": "2026-03",
+    "monthLabel": "Mar 2026",
     "excerpt": "I’ve read probably a dozen RAG tutorials. They all do the same thing: show you how to embed a handful of PDFs into a vector store, run a similarity search, stuff the results into a prompt, and call...",
     "description": "A practitioner's guide to building production-grade RAG pipelines — covering chunking strategy, retrieval tuning, re-ranking, and evaluation. Lessons from real failures, not sanitized tutorials.",
     "categories": ["ai","engineering","rag"],
@@ -333,6 +350,8 @@
     "title": "Zero Vibe Coding with Claude Code Agents",
     "url": "/blog/2026/03/20/zero-vibe-coding-finance-tracker/",
     "date": "March 20, 2026",
+    "month": "2026-03",
+    "monthLabel": "Mar 2026",
     "excerpt": "When we talk about AI-assisted coding, the conversation usually revolves around “vibe coding” — throwing vague prompts at an LLM, connecting a UI layout tool, and crossing our fingers that the unde...",
     "description": "How I built a production-ready Personal Finance Tracker entirely from the terminal using Claude Code CLI with a 9-agent, 5-track spec-driven pipeline — no UI MCP tools, no vibe coding.",
     "categories": ["ai","engineering","claude-code"],
@@ -344,6 +363,8 @@
     "title": "LLM Tokenizers: The Hidden Engine Behind AI Language Models",
     "url": "/blog/2025/03/08/llm-tokenizers-hidden-engine/",
     "date": "March 08, 2025",
+    "month": "2025-03",
+    "monthLabel": "Mar 2025",
     "excerpt": "\n\n",
     "description": "Tokenizers are the invisible foundation of every large language model — shaping context limits, API costs, cross-lingual fairness, and model reasoning. Here's how they work and why they matter.",
     "categories": ["ai","ml"],
@@ -355,6 +376,8 @@
     "title": "Mastering Backpressure in Reactive Programming: A Deep Dive",
     "url": "/blog/2024/12/28/mastering-backpressure-reactive-programming/",
     "date": "December 28, 2024",
+    "month": "2024-12",
+    "monthLabel": "Dec 2024",
     "excerpt": "\n\n",
     "description": "Backpressure is the fundamental mechanism that keeps reactive systems from collapsing under load. This deep dive covers what it is, why it matters, and how to implement it correctly across Project Reactor, RxJava, and Akka Streams.",
     "categories": ["engineering","java"],
@@ -366,6 +389,8 @@
     "title": "Traditional Coding vs AI-Assisted Coding vs Vibe Coding: A New Spectrum",
     "url": "/blog/2024/12/01/traditional-vs-ai-vs-vibe-coding/",
     "date": "December 01, 2024",
+    "month": "2024-12",
+    "monthLabel": "Dec 2024",
     "excerpt": "\n\n",
     "description": "Modern software development has evolved into three distinct modes — traditional, AI-assisted, and vibe coding. Understanding when to use each is becoming a core engineering skill.",
     "categories": ["ai","engineering"],
@@ -377,6 +402,8 @@
     "title": "LlamaCoder: Turn Your Idea into an App in Minutes",
     "url": "/blog/2024/11/25/llamacoder-ai-app-builder/",
     "date": "November 25, 2024",
+    "month": "2024-11",
+    "monthLabel": "Nov 2024",
     "excerpt": "\n\n",
     "description": "An introduction to LlamaCoder — the AI-powered platform that converts plain language descriptions into functional application code, democratising app development for everyone.",
     "categories": ["ai","tools"],
@@ -388,6 +415,8 @@
     "title": "Architectural Trade-off: Serverless APIs vs. Kubernetes APIs",
     "url": "/blog/2024/11/17/serverless-vs-kubernetes-apis/",
     "date": "November 17, 2024",
+    "month": "2024-11",
+    "monthLabel": "Nov 2024",
     "excerpt": "\n\n",
     "description": "A structured comparison of serverless and Kubernetes as API deployment paradigms — trade-offs across operational overhead, scalability, cost, control, and vendor lock-in to help you choose the right architecture for your context.",
     "categories": ["engineering","architecture"],
@@ -399,6 +428,8 @@
     "title": "Exploring Threads and Virtual Threads in Java: A Comprehensive Guide",
     "url": "/blog/2024/11/13/java-threads-and-virtual-threads/",
     "date": "November 13, 2024",
+    "month": "2024-11",
+    "monthLabel": "Nov 2024",
     "excerpt": "\n\n",
     "description": "A deep dive into traditional Java threads vs virtual threads (Project Loom) — how they work internally, when to use each, and why virtual threads are a game changer for I/O-bound applications.",
     "categories": ["engineering","java"],
@@ -410,6 +441,8 @@
     "title": "Why is Kafka So Fast? Unveiling the Secrets Behind Kafka's Speed",
     "url": "/blog/2024/10/17/why-kafka-is-so-fast/",
     "date": "October 17, 2024",
+    "month": "2024-10",
+    "monthLabel": "Oct 2024",
     "excerpt": "\n\n",
     "description": "A deep dive into the engineering decisions that make Apache Kafka one of the fastest messaging systems — sequential I/O, zero-copy, batching, compression, and intelligent caching.",
     "categories": ["engineering","distributed-systems"],

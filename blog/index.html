@@ -6,6 +6,13 @@ permalink: /blog/
 blog_search: true
 ---
 
+<div class="blog-layout">
+<aside class="blog-sidebar">
+  <h3 class="blog-sidebar-title"><i class="far fa-calendar-alt"></i> Archive</h3>
+  <div class="blog-month-filters" id="month-filters" aria-label="Filter by month"></div>
+</aside>
+
+<div class="blog-main">
 <div class="blog-controls">
   <div class="blog-search-wrapper">
     <i class="fas fa-search"></i>
@@ -30,6 +37,8 @@ blog_search: true
 <div id="posts-container" class="grid grid-2"></div>
 <div id="pagination-controls" class="blog-pagination"></div>
 <p id="no-results" class="no-results-msg" hidden>No posts found.</p>
+</div>
+</div>
 
 <div style="margin-top: var(--space-xl);">{% include subscribe-section.html %}</div>
 
@@ -39,6 +48,8 @@ blog_search: true
     "title": {{ post.title | jsonify }},
     "url": "{{ post.url | relative_url }}",
     "date": "{{ post.date | date: '%B %d, %Y' }}",
+    "month": "{{ post.date | date: '%Y-%m' }}",
+    "monthLabel": "{{ post.date | date: '%b %Y' }}",
     "excerpt": {{ post.excerpt | strip_html | truncate: 200 | jsonify }},
     "description": {{ post.description | jsonify }},
     "categories": {{ post.categories | jsonify }},

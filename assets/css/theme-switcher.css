@@ -63,14 +63,14 @@
 
 /* Sun icon (left side) */
 .mode-icon-sun {
-    font-size: 0.7rem;
+    font-size: var(--font-size-2xs);
     color: #f59e0b;
     z-index: 0;
 }
 
 /* Moon icon (right side) */
 .mode-icon-moon {
-    font-size: 0.65rem;
+    font-size: var(--font-size-2xs);
     color: #b8bcc8;
     z-index: 0;
 }

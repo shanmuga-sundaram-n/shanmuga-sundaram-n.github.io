@@ -6,7 +6,7 @@ permalink: /about/
 ---
 
 <div class="lead">
-    Technology Architect with 18+ years of experience designing cloud-native platforms, distributed systems, and enterprise modernization initiatives. Proven expertise in architecture strategy, solution design, cloud transformation, and engineering leadership, delivering scalable technology solutions aligned with business outcomes.
+    Technology Architect with 19+ years of experience designing cloud-native platforms, distributed systems, and enterprise modernization initiatives. Proven expertise in architecture strategy, solution design, cloud transformation, and engineering leadership, delivering scalable technology solutions aligned with business outcomes.
 </div>
 <div class="lead">
     Currently focused on AI-first architecture, leveraging Generative AI, Large Language Models (LLMs), Agentic AI, and AI for Software Delivery (AIFSD) to accelerate engineering productivity, modernize enterprise systems, and enable intelligent business capabilities. Passionate about designing secure, scalable, and governed AI solutions that bridge enterprise architecture, cloud platforms, and emerging AI technologies.
@@ -44,26 +44,37 @@ permalink: /about/
         <div class="card card-glass">
             <h3><i class="fas fa-code"></i> Development Stack</h3>
             <ul class="footer-links">
-                <li><strong>Languages</strong>: Java, Spring Boot, Node.js, TypeScript, Python</li>
+                <li><strong>Languages</strong>: Java, Spring Boot, Node.js, TypeScript, Python, FastAPI, J2EE</li>
+                <li><strong>Concurrency &amp; Reactive</strong>: Reactive Programming, Virtual Threads (Project Loom), Project Reactor, RxJava, Backpressure</li>
                 <li><strong>Frontend</strong>: React, RESTful APIs</li>
-                <li><strong>Databases</strong>: SQL, NoSQL (DynamoDB), Redis</li>
+                <li><strong>Messaging &amp; Integration</strong>: Apache Kafka (Kafka Connect, Schema Registry, REST Proxy), API Security</li>
+                <li><strong>Engineering Practices</strong>: Clean Code</li>
+                <li><strong>Databases</strong>: SQL, NoSQL (DynamoDB), Redis, SQLite</li>
                 <li><strong>Observability</strong>: Datadog, JIRA</li>
             </ul>
         </div>
         <div class="card card-glass">
             <h3><i class="fas fa-network-wired"></i> Architecture & Cloud</h3>
             <ul class="footer-links">
-                <li><strong>Patterns</strong>: Microservices, Event-Driven (Kafka), DDD, Serverless</li>
+                <li><strong>Patterns</strong>: Microservices, Event-Driven (Kafka), Event Sourcing, DDD, Hexagonal Architecture, Serverless</li>
                 <li><strong>AWS</strong>: EKS, Lambda, S3, DynamoDB, Redshift</li>
+                <li><strong>Azure</strong>: Azure Cloud platform architecture</li>
                 <li><strong>GCP</strong>: Cloud Run, Pub/Sub, BigQuery</li>
-                <li><strong>DevOps</strong>: Jenkins, Docker, Kubernetes, CI/CD</li>
+                <li><strong>DevOps</strong>: Jenkins, Docker, Kubernetes, CI/CD, Terraform (IaC)</li>
+                <li><strong>Design</strong>: System Design, API Design, Data Architecture</li>
+                <li><strong>Greenfield</strong>: New platform design, architecture from scratch, AI-assisted delivery</li>
+                <li><strong>Brownfield</strong>: Legacy decoupling, cloud migration, modernization, cost &amp; performance optimization</li>
+                <li><strong>Security</strong>: API Security Architecture, Secure-by-Design, Governed AI Solutions</li>
             </ul>
         </div>
         <div class="card card-glass">
-            <h3><i class="fas fa-brain"></i> AI & Machine Learning</h3>
+            <h3><i class="fas fa-brain"></i> Agentic AI, GenAI &amp; ML</h3>
             <ul class="footer-links">
-                <li><strong>GenAI for SDLC</strong>: CursorAI, GitHub Copilot, Claude</li>
-                <li><strong>RAG Pipelines</strong>: Retrieval-Augmented Generation systems</li>
+                <li><strong>Agentic AI</strong>: Multi-Agent Systems, Agent Orchestration, Claude Code (Hooks, Sub-agents, Memory), Agent Harness &amp; Loop Engineering, MCP, Tool Use, Human-in-the-Loop Governance</li>
+                <li><strong>GenAI for SDLC</strong>: CursorAI, GitHub Copilot, Claude, OpenSpec (Spec-Driven Development)</li>
+                <li><strong>RAG Pipelines</strong>: Retrieval-Augmented Generation systems — chunking strategies, embeddings &amp; vector search, re-ranking, evaluation</li>
+                <li><strong>LLMs &amp; Prompt Engineering</strong>: Transformers, NLP, Tokenization, Prompt Engineering</li>
+                <li><strong>Machine Learning</strong>: Deep Learning, CNN, Computer Vision, XGBoost, Random Forest</li>
             </ul>
         </div>
     </div>

@@ -51,19 +51,19 @@ permalink: /contact/
 
   <div class="grid grid-3">
   <div class="card card-glass text-center">
-    <div style="font-size: 2.5rem; margin-bottom: var(--space-md);">🤝</div>
+    <div class="emoji-icon">🤝</div>
     <h3>Collaborations</h3>
     <p>Open-source contributions and interesting side projects.</p>
   </div>
 
   <div class="card card-glass text-center">
-    <div style="font-size: 2.5rem; margin-bottom: var(--space-md);">📝</div>
+    <div class="emoji-icon">📝</div>
     <h3>Consulting & Writing</h3>
     <p>Technical consulting, guest posts, and detailed tutorials.</p>
   </div>
 
   <div class="card card-glass text-center">
-    <div style="font-size: 2.5rem; margin-bottom: var(--space-md);">🎤</div>
+    <div class="emoji-icon">🎤</div>
     <h3>Speaking</h3>
     <p>Tech talks, workshops, and community events.</p>
   </div>
