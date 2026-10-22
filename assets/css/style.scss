@@ -538,9 +538,9 @@ strong {
 
 .hero-eyebrow {
   font-family: var(--font-body);
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-xl);
   font-weight: 600;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--color-accent-primary);
   text-align: left;
@@ -699,7 +699,7 @@ strong {
 }
 
 .page-hero .hero-title {
-  font-size: var(--font-size-4xl);
+  font-size: var(--font-size-5xl);
   color: var(--color-accent-primary);
 }
 
@@ -1500,54 +1500,44 @@ strong {
    FOOTER
    ============================================ */
 .site-footer {
-  background: var(--color-bg-secondary);
+  background: var(--color-bg-primary);
   border-top: 1px solid var(--color-border);
-  padding: var(--space-sm) 0;
+  padding: var(--space-lg) 0;
   margin-top: var(--space-sm);
 }
 
 .footer-bottom {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   align-items: center;
-  gap: var(--space-xs);
+  gap: var(--space-sm) var(--space-lg);
   color: var(--color-text-tertiary);
   font-size: var(--font-size-sm);
   line-height: 1;
 }
 
-.footer-bottom .social-links {
-  justify-content: center;
-}
-
 .footer-copy {
   margin: 0;
-  text-align: center;
+  margin-right: auto;
 }
 
 .social-links {
   display: flex;
-  gap: var(--space-sm);
+  align-items: center;
+  gap: var(--space-md);
 }
 
 .social-link {
-  width: 28px;
-  height: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--color-surface);
-  border-radius: var(--radius-md);
-  color: var(--color-text-secondary);
-  font-size: var(--font-size-xs);
-  transition: all var(--transition-base);
-  border: 1px solid var(--color-border);
+  color: var(--color-text-tertiary);
+  font-size: var(--font-size-base);
+  transition: color var(--transition-fast);
 }
 
 .social-link:hover {
-  background: var(--color-accent-primary);
-  color: white;
-  box-shadow: var(--shadow-md);
+  color: var(--color-accent-primary);
 }
 
 .footer-counter {
@@ -1578,10 +1568,14 @@ strong {
 }
 
 .footer-counter-link {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   font-size: var(--font-size-xs);
   color: var(--color-text-tertiary);
   text-decoration: none;
-  opacity: 0.6;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm, 4px);
+  opacity: 0.8;
   transition: opacity var(--transition-fast);
 
   &:hover {
@@ -1599,7 +1593,7 @@ strong {
 }
 
 .section-title {
-  font-size: var(--font-size-4xl);
+  font-size: var(--font-size-3xl);
   margin-bottom: var(--space-sm);
   color: var(--color-accent-primary);
 }
