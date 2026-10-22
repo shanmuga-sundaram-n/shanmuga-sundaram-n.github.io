@@ -13,15 +13,12 @@ permalink: /projects/
   </div>
 
   {% assign oss_projects = site.data.projects | where: "opensource", true | sort: "date" | reverse %}
-  <div class="grid grid-3">
+  <div class="project-grid">
     {% for project in oss_projects %}
     <div class="project-card">
       <div class="project-content">
         <span class="oss-badge"><i class="fas fa-code-branch"></i> Open Source</span>
         <h3 class="project-title">{{ project.title }}</h3>
-        {% if project.date %}
-        <p class="project-date"><i class="fas fa-calendar-alt"></i> {{ project.date | date: "%b %Y" }}</p>
-        {% endif %}
         <p class="project-description">{{ project.description }}</p>
         <div class="tags">
           {% for tech in project.technologies %}
@@ -56,15 +53,12 @@ permalink: /projects/
   <p class="section-subtitle">A complete collection of my technical work</p>
 </div>
 
-<div class="grid grid-3">
+<div class="project-grid">
   {% assign sorted_projects = site.data.projects | sort: "date" | reverse %}
   {% for project in sorted_projects %}
   <div class="project-card">
     <div class="project-content">
       <h3 class="project-title">{{ project.title }}</h3>
-      {% if project.date %}
-      <p class="project-date"><i class="fas fa-calendar-alt"></i> {{ project.date | date: "%b %Y" }}</p>
-      {% endif %}
       <p class="project-description">{{ project.description }}</p>
       
       <div class="tags">
@@ -76,7 +70,7 @@ permalink: /projects/
       <div class="project-links">
         {% if project.github %}
         <a href="{{ project.github }}" class="btn btn-secondary" target="_blank" rel="noopener">
-          <i class="fab fa-github"></i> Code
+          <i class="fab fa-github"></i> View on GitHub
         </a>
         {% endif %}
         {% if project.blog %}
