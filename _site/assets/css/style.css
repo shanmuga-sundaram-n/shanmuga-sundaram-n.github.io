@@ -120,7 +120,7 @@ strong { font-weight: 600; color: var(--color-text-primary); }
 .hero-home .hero-description { font-size: var(--font-size-base); margin: 0 0 var(--space-lg); text-align: left; }
 .hero-home .hero-text-wrapper .hero-about-block { align-self: stretch; margin-bottom: var(--space-lg); }
 
-.hero-eyebrow { font-family: var(--font-body); font-size: var(--font-size-sm); font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-accent-primary); text-align: left; margin-bottom: var(--space-sm); }
+.hero-eyebrow { font-family: var(--font-body); font-size: var(--font-size-xl); font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-accent-primary); text-align: left; margin-bottom: var(--space-sm); }
 
 .hero-headline { font-family: var(--font-heading); font-size: clamp(1.625rem, 3.2vw, var(--font-size-3xl)); font-weight: 700; line-height: 1.15; margin-bottom: var(--space-md); }
 .hero-headline em { font-style: normal; color: var(--color-accent-primary); }
@@ -167,7 +167,7 @@ strong { font-weight: 600; color: var(--color-text-primary); }
 @media (max-width: 991px) { .hero-home .hero-content.hero-split { grid-template-columns: 1fr; gap: var(--space-lg); } }
 .page-hero { min-height: auto !important; padding-top: 70px; padding-bottom: var(--space-md); }
 
-.page-hero .hero-title { font-size: var(--font-size-4xl); color: var(--color-accent-primary); }
+.page-hero .hero-title { font-size: var(--font-size-5xl); color: var(--color-accent-primary); }
 
 .emoji-icon { font-size: var(--font-size-4xl); margin-bottom: var(--space-md); }
 
@@ -367,19 +367,17 @@ strong { font-weight: 600; color: var(--color-text-primary); }
 .post-content .mermaid-wrapper .mermaid svg { width: 100%; height: auto; min-width: 320px; }
 
 /* ============================================ FOOTER ============================================ */
-.site-footer { background: var(--color-bg-secondary); border-top: 1px solid var(--color-border); padding: var(--space-sm) 0; margin-top: var(--space-sm); }
+.site-footer { background: var(--color-bg-primary); border-top: 1px solid var(--color-border); padding: var(--space-lg) 0; margin-top: var(--space-sm); }
 
-.footer-bottom { display: flex; flex-direction: column; align-items: center; gap: var(--space-xs); color: var(--color-text-tertiary); font-size: var(--font-size-sm); line-height: 1; }
+.footer-bottom { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-sm) var(--space-lg); color: var(--color-text-tertiary); font-size: var(--font-size-sm); line-height: 1; }
 
-.footer-bottom .social-links { justify-content: center; }
+.footer-copy { margin: 0; margin-right: auto; }
 
-.footer-copy { margin: 0; text-align: center; }
+.social-links { display: flex; align-items: center; gap: var(--space-md); }
 
-.social-links { display: flex; gap: var(--space-sm); }
+.social-link { display: flex; align-items: center; justify-content: center; color: var(--color-text-tertiary); font-size: var(--font-size-base); transition: color var(--transition-fast); }
 
-.social-link { width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; background: var(--color-surface); border-radius: var(--radius-md); color: var(--color-text-secondary); font-size: var(--font-size-xs); transition: all var(--transition-base); border: 1px solid var(--color-border); }
-
-.social-link:hover { background: var(--color-accent-primary); color: white; box-shadow: var(--shadow-md); }
+.social-link:hover { color: var(--color-accent-primary); }
 
 .footer-counter { display: flex; align-items: center; justify-content: center; gap: var(--space-xs); }
 
@@ -388,13 +386,13 @@ strong { font-weight: 600; color: var(--color-text-primary); }
 .counter-digits td { padding: 0; vertical-align: middle; }
 .counter-digits img { display: block; }
 
-.footer-counter-link { font-size: var(--font-size-xs); color: var(--color-text-tertiary); text-decoration: none; opacity: 0.6; transition: opacity var(--transition-fast); }
+.footer-counter-link { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: var(--font-size-xs); color: var(--color-text-tertiary); text-decoration: none; padding: 0.25rem 0.5rem; border: 1px solid var(--color-border); border-radius: var(--radius-sm, 4px); opacity: 0.8; transition: opacity var(--transition-fast); }
 .footer-counter-link:hover { opacity: 1; color: var(--color-accent-primary); }
 
 /* ============================================ SECTION HEADERS ============================================ */
 .section-header { text-align: center; margin-bottom: var(--space-lg); }
 
-.section-title { font-size: var(--font-size-4xl); margin-bottom: var(--space-sm); color: var(--color-accent-primary); }
+.section-title { font-size: var(--font-size-3xl); margin-bottom: var(--space-sm); color: var(--color-accent-primary); }
 
 .section-subtitle { font-size: var(--font-size-lg); color: var(--color-text-secondary); max-width: 600px; margin: 0 auto; }
 

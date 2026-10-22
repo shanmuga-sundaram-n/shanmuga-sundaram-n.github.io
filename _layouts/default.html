@@ -118,6 +118,7 @@
   <footer class="site-footer">
     <div class="container">
       <div class="footer-bottom">
+        <p class="footer-copy">&copy; {{ 'now' | date: "%Y" }} {{ site.author }}. All rights reserved.</p>
         <div class="social-links">
           {% for link in site.social_links %}
           <a href="{{ link.url }}" class="social-link" target="_blank" rel="noopener" aria-label="{{ link.name }}">
@@ -131,7 +132,6 @@
             <i class="fab fa-whatsapp"></i>
           </a>
         </div>
-        <p class="footer-copy">&copy; {{ 'now' | date: "%Y" }} {{ site.author }}. All rights reserved.</p>
         <div class="footer-counter">
           <div class="counter-digits">
             <script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=5eae4d5930301d43fb2dd3648a2cd2c207fb0d34'></script>
