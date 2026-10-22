@@ -4,36 +4,35 @@ title: "Zero Vibe Coding with Claude Code Agents"
 date: 2026-03-20 12:00:00 +0000
 categories: [ai, engineering, claude-code]
 tags: [claude-code, multi-agent, hexagonal-architecture, spring-boot, react]
-description: "How I built a production-ready Personal Finance Tracker entirely from the terminal using Claude Code CLI with a 9-agent, 5-track spec-driven pipeline — no UI MCP tools, no vibe coding."
+description: "How I built a production-ready Personal Finance Tracker entirely from the terminal using Claude Code CLI with a 9-agent, 5-track spec-driven pipeline, no UI MCP tools, no vibe coding."
 ---
 
-When we talk about AI-assisted coding, the conversation usually revolves around "vibe coding" — throwing vague prompts at an LLM, connecting a UI layout tool, and crossing our fingers that the underlying architecture holds together.
+Most talk about AI-assisted coding ends up at "vibe coding": throw a vague prompt at an LLM, plug in a UI tool, and hope the architecture holds together.
 
-I wanted to see what happens when you treat AI not as a magic wand, but as an embedded enterprise engineering team. To test this, I built a production-ready Personal Finance Tracker entirely from the terminal. I strictly avoided UI Model Context Protocol (MCP) integrations like Figma. Instead, I forced the **Claude Code CLI** into a rigid, Spec-Driven, Multi-Agent Development Environment — **nine agents, five pipeline tracks, four points of parallel execution, and five automated hooks** that enforced quality at the filesystem level.
+I wanted to try the opposite. What happens if you treat the AI like a small engineering team with defined roles and rules? To find out, I built a Personal Finance Tracker entirely from the terminal, with no UI Model Context Protocol (MCP) integrations like Figma. I set up **Claude Code CLI** with nine agents, five pipeline tracks, parallel execution at four points, and five hooks that enforce quality rules at the filesystem level.
 
 You can check out the final codebase here: [Personal Finance Tracker on GitHub](https://github.com/shanmuga-sundaram-n/personal-finance-tracker)
 
 ## The Final Product
 
-Before diving into *how* the AI built this, here's a look at the final application running locally — clean, modern interface, responsive sidebar navigation, and distinct feature pages (Dashboard, Transactions, Budgets) generated without ever touching a visual design tool:
+Here's the finished app running locally, with a sidebar and separate pages for Dashboard, Transactions and Budgets. None of it came from a visual design tool:
 
 ![Personal Finance Tracker UI Demo](/assets/images/projects/personal-finance-tracker.webp)
 
----
 
-## 1. Unleashing Claude Code CLI Features
+## 1. The Claude Code features I leaned on
 
-The Claude Code CLI provides native capabilities that elevate it out of a standard web chat interface. By leveraging the local filesystem, I turned the CLI into an automated powerhouse:
+Claude Code works on your local filesystem, which gives you a few things a chat window can't. These are the ones I used most:
 
-- **Custom Prompt Hooks (`.claude/hooks/`):** Building a modern React App requires strict linting, and AI can easily format things incorrectly. I created a `.claude/hooks/post-edit-lint.sh` script. Every time Claude Code edited a `.tsx` or `.ts` file, the CLI automatically fired off `$ESLINT_BIN --fix`. This completely eliminated broken CI builds due to styling errors.
+- **Custom Prompt Hooks (`.claude/hooks/`):** A React app needs consistent linting, and AI output often gets the formatting slightly wrong. So I created a `.claude/hooks/post-edit-lint.sh` script. Every time Claude Code edited a `.tsx` or `.ts` file, the CLI automatically fired off `$ESLINT_BIN --fix`. After that, I stopped seeing CI builds fail on style errors.
 
-- **Persistent CLI Memory (`.claude/agent-memory/`):** I stored detailed markdown files like `DOMAIN-OWNERSHIP.md` and `hexagonal-architecture.md`. Whenever I prompted Claude Code, it automatically fetched this local context to write code compliant with my architectural decisions.
+- **Persistent CLI Memory (`.claude/agent-memory/`):** I stored detailed markdown files like `DOMAIN-OWNERSHIP.md` and `hexagonal-architecture.md`. Claude Code pulled this context in whenever I prompted it, so the code it wrote followed my architecture decisions.
 
-- **Context Compaction (`/compact`):** Building a complex backend generates massive CLI context. Once Claude finished planning a feature, I simply typed `/compact`. This reset the active context window while keeping core memories intact — saving tokens and keeping the CLI fast.
+- **Context Compaction (`/compact`):** A complex backend fills up the context quickly. Once Claude had finished planning a feature, I ran `/compact`, which shrinks the context but keeps the key points. That saved tokens and kept things quick.
 
-- **Intelligent Commits (`/commit`):** After `./gradlew test` passed, rather than typing out git messages, I ran `/commit`. Claude Code read the actual `git diff` and generated a perfect, semantic commit message right in the terminal.
+- **Intelligent Commits (`/commit`):** After `./gradlew test` passed, I ran `/commit` instead of writing the message myself. Claude Code read the actual `git diff` and wrote a sensible commit message.
 
-### Simulated Terminal Run: Claude Code in Action
+### A simulated terminal run
 
 ```shell
 $ claude
@@ -60,11 +59,11 @@ Would you like me to spawn `full-stack-dev` to implement this now? (Y/n) > y
 
 ## 2. Setting Up the Claude Pipeline
 
-Before the agents could collaborate, I had to build the scaffolding they would live in. The entire pipeline is defined inside a single `.claude/` directory committed alongside the codebase — no external services, no cloud orchestration, no additional accounts.
+Before the agents could work together, I had to build the structure around them. The whole pipeline lives in one `.claude/` directory committed with the code. There are no external services, no cloud orchestration and no extra accounts.
 
 ### The Folder Structure
 
-Every file in `.claude/` plays a specific role. Agents carry their own persistent memory, hooks enforce quality gates automatically, and the Feature Brief is the single source of truth that flows through every phase:
+Each file in `.claude/` has one job. Agents keep their own memory, hooks enforce the quality gates, and the Feature Brief is the one document every phase works from:
 
 ```
 personal-finance-tracker/
@@ -110,7 +109,7 @@ personal-finance-tracker/
 
 ### Anatomy of an Agent Definition
 
-Each file in `.claude/agents/` is a Markdown document with YAML front matter that tells Claude Code when and how to use the agent. Here's the actual front matter for `engineering-manager.md` — the single entry point that owns all tracks:
+Each file in `.claude/agents/` is a Markdown document with YAML front matter telling Claude Code when to use that agent. This is the front matter for `engineering-manager.md`, the single entry point for every track:
 
 ```markdown
 ---
@@ -132,9 +131,9 @@ color: green
 ---
 ```
 
-The `model: opus` assignment matters. The engineering-manager runs on Claude Opus — it needs to reason about track classification, synthesise outputs from two parallel agents into a single Feature Brief, and manage stakeholder gates. All other agents run on Sonnet to reduce token cost while still having the domain knowledge they need.
+I gave the engineering-manager `model: opus` on purpose. It has to classify requests, merge the output of two parallel agents into one Feature Brief, and manage the approval gates, which is the hardest reasoning in the pipeline. Every other agent runs on Sonnet to keep token costs down.
 
-Each specialist agent's description tells Claude Code exactly which pipeline phase it belongs to and what triggers it:
+The specialist agents say which phase they belong to and what triggers them:
 
 ```markdown
 ---
@@ -154,11 +153,11 @@ color: red
 ---
 ```
 
-The body of each agent file is its full system prompt — role definition, output format, domain rules, anti-patterns, and a pointer to its own persistent memory directory. This is what the agent reads before every response.
+The body of each file is that agent's system prompt: its role, output format, domain rules, things to avoid, and a pointer to its memory directory. The agent reads all of it before every response.
 
 ### The Agent Contract
 
-Every agent declares exactly what it owns, which pipeline phase(s) it participates in, what it reads, and what it writes. The class hierarchy below maps the full agent roster:
+Every agent declares what it owns, which phases it takes part in, what it reads and what it writes. The diagram below shows the full roster:
 
 ```mermaid
 %%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#313244', 'primaryTextColor': '#CDD6F4', 'primaryBorderColor': '#89B4FA', 'lineColor': '#A6ADC8', 'secondaryColor': '#1E1E2E', 'background': '#1E1E2E', 'mainBkg': '#313244', 'clusterBkg': '#24243E', 'clusterBorder': '#45475A', 'titleColor': '#CDD6F4', 'edgeLabelBackground': '#1E1E2E', 'fontFamily': 'JetBrains Mono, monospace', 'fontSize': '15px'}}}%%
@@ -244,17 +243,17 @@ classDiagram
 ```
 
 Every subclass declares:
-- `description` — natural-language trigger guide that tells Claude Code which requests route here
-- `model` — `opus` for the engineering-manager (reasoning-heavy orchestration), `sonnet` for all specialists (domain work at lower cost)
-- `memory_dir` — each agent has its own `.claude/agent-memory/<name>/` directory it reads and writes across sessions
+- `description`, natural-language trigger guide that tells Claude Code which requests route here
+- `model`, `opus` for the engineering-manager (reasoning-heavy orchestration), `sonnet` for all specialists (domain work at lower cost)
+- `memory_dir`, each agent has its own `.claude/agent-memory/<name>/` directory it reads and writes across sessions
 
-### Five Hooks — Each Targeting a Different Failure Mode
+### Five hooks, each for a different kind of mistake
 
-The project uses five hooks, each with a specific trigger type. Together they eliminate entire categories of mistakes before they reach a build or test cycle.
+I used five hooks, each firing on a different event. Between them they catch whole categories of mistakes before a build or test even runs.
 
-**Hook 1 — `pipeline-guard.sh` (UserPromptSubmit)**
+**Hook 1, `pipeline-guard.sh` (UserPromptSubmit)**
 
-This hook fires on every single user message. It injects the track routing rules directly into Claude's context so the engineering-manager classification step is never skipped:
+This hook runs on every user message. It puts the routing rules into Claude's context so the classification step can't be skipped:
 
 ```bash
 #!/usr/bin/env bash
@@ -286,9 +285,9 @@ REMINDER
 exit 0
 ```
 
-**Hook 2 — `pre-domain-purity.sh` (PreToolUse — Edit/Write, exit 2 = block)**
+**Hook 2, `pre-domain-purity.sh` (PreToolUse, Edit/Write, exit 2 = block)**
 
-This is the most aggressive hook — it reads the file path and new content from the tool call JSON and hard-blocks the edit if it finds a Spring, JPA, Hibernate, Lombok, or Jackson import inside any `domain/` package. ArchUnit catches violations at build time; this catches them at edit time, before a single character lands on disk:
+This is the strictest one. It reads the file path and new content from the tool call and blocks the edit if a Spring, JPA, Hibernate, Lombok or Jackson import shows up inside a `domain/` package. ArchUnit catches the same thing at build time, but this stops it before anything is written to disk:
 
 ```bash
 #!/bin/bash
@@ -310,9 +309,9 @@ if [[ "$FILE_PATH" =~ /domain/[^/]+\.java$ ]]; then
 fi
 ```
 
-**Hook 3 — `pre-migration-guard.sh` (PreToolUse — Edit, exit 2 = block)**
+**Hook 3, `pre-migration-guard.sh` (PreToolUse, Edit, exit 2 = block)**
 
-Liquibase migrations are append-only. If Claude attempts to modify an existing `.yml` migration file, this hook hard-blocks the edit and suggests the correct next sequence number:
+Liquibase migrations should only ever be added to. If Claude tries to change an existing `.yml` migration, this hook blocks the edit and suggests the next sequence number:
 
 ```bash
 #!/bin/bash
@@ -329,9 +328,9 @@ if [[ "$FILE_PATH" =~ /db\.changelog/changes/[^/]+\.(yml|yaml)$ ]]; then
 fi
 ```
 
-**Hook 4 — `post-edit-lint.sh` (PostToolUse — Edit/Write)**
+**Hook 4, `post-edit-lint.sh` (PostToolUse, Edit/Write)**
 
-Fires after every TypeScript file edit and runs ESLint auto-fix silently. This keeps the frontend lint-clean without Claude having to think about formatting:
+This runs ESLint with auto-fix after every TypeScript edit, so the frontend stays lint-clean and Claude doesn't have to think about formatting:
 
 ```bash
 #!/bin/bash
@@ -345,9 +344,9 @@ if [[ "$FILE_PATH" =~ \.(ts|tsx)$ ]]; then
 fi
 ```
 
-**Hook 5 — `verify-app-health.sh` (manual, run at end of every track)**
+**Hook 5, `verify-app-health.sh` (manual, run at end of every track)**
 
-Not a Claude Code hook in the trigger sense — this is a script the engineering-manager is instructed to run after every pipeline track completes. It checks 5 layers in sequence and exits non-zero if any fail:
+Strictly speaking this isn't a hook. It's a script the engineering-manager is told to run at the end of every track. It checks five layers in order and exits non-zero if any fail:
 
 ```
 Layer 1 — Backend compiles        ./gradlew :application:compileJava
@@ -357,11 +356,11 @@ Layer 4 — All 3 containers up     docker compose ps
 Layer 5 — API smoke test          curl localhost:8080/api/v1/auth/login (expects 401)
 ```
 
-The engineering-manager is instructed: **do not close any request until all 5 layers are green**. This makes "it works on my machine" impossible — the definition of done is a running application.
+The engineering-manager's instruction is not to close a request until all five layers are green. So "done" means the application is actually running.
 
 ### The Agent Handoff in Practice
 
-The magic of the pipeline is that agents communicate through files, not through shared memory or direct calls. This enforces a clean separation: each agent reads only what it needs and writes only what it owns.
+Agents in this setup talk to each other through files, not shared memory or direct calls. That keeps things separate: each agent reads what it needs and writes only what it owns.
 
 ```mermaid
 %%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#313244', 'primaryTextColor': '#CDD6F4', 'primaryBorderColor': '#89B4FA', 'lineColor': '#A6ADC8', 'secondaryColor': '#1E1E2E', 'background': '#1E1E2E', 'mainBkg': '#313244', 'clusterBkg': '#24243E', 'clusterBorder': '#45475A', 'titleColor': '#CDD6F4', 'edgeLabelBackground': '#1E1E2E', 'fontFamily': 'JetBrains Mono, monospace', 'fontSize': '15px'}}}%%
@@ -422,13 +421,13 @@ flowchart TD
     DE --> HEALTH["✅ verify-app-health.sh<br/>5 layers must pass"]:::done
 ```
 
-The Feature Brief — written by the engineering-manager after Phase 1 — is the single source of truth that all downstream agents read. It is saved to `agent-memory/engineering-manager/feature-briefs/[feature-name].md` and never discarded, giving the team a complete audit trail of every feature decision.
+The engineering-manager writes the Feature Brief after Phase 1, and every later agent reads it. It's saved to `agent-memory/engineering-manager/feature-briefs/[feature-name].md` and kept, so there's a record of every feature decision.
 
 ---
 
 ## 3. The 9-Agent, 5-Track Pipeline
 
-The project has nine agents and five pipeline tracks. Every request — feature, hotfix, refactor, research, or UI-only change — is first classified into a track by the engineering-manager, which then runs the appropriate pipeline. This prevented ad-hoc "just fix it" shortcuts that would have eroded architecture over time.
+There are nine agents and five tracks. The engineering-manager first sorts every request (feature, hotfix, refactor, research or UI-only change) into a track and then runs that track's pipeline. That stopped the "just fix it quickly" shortcuts that slowly wear down an architecture.
 
 ### Five Tracks, One Entry Point
 
@@ -463,37 +462,37 @@ The `pipeline-guard.sh` hook injects these routing rules on every single message
 
 ### The FEATURE Track: Six Phases, Four Parallel Streams
 
-A FEATURE request — the most common track — runs through six phases. What makes it genuinely different from sequential AI assistance is **three separate points of parallel execution**:
+A FEATURE request, the most common kind, goes through six phases. The difference from ordinary one-step-at-a-time AI assistance is that several steps run in parallel:
 
-**Phase 1 — Discovery (1A + 1B run in parallel)**
+**Phase 1, Discovery (1A + 1B run in parallel)**
 
-The engineering-manager spawns `personal-finance-analyst` and `tech-lead` simultaneously in the same message. They work independently from different angles:
+The engineering-manager spawns `personal-finance-analyst` and `tech-lead` simultaneously in the same message. They approach it from different angles:
 
 - `personal-finance-analyst` reads `DOMAIN-OWNERSHIP.md` and produces the **Domain Brief**: numbered acceptance criteria, data model changes, financial edge cases (NUMERIC(19,4) enforcement, sign conventions, soft-delete rules), and validation error codes.
 - `tech-lead` reads `architecture-decisions.md` and produces the **Architecture Brief**: bounded contexts affected, exact port interface method signatures, Liquibase migration strategy, `@Transactional` placement, N+1 risks, and a dependency graph for implementation order.
 
 After both complete, the engineering-manager runs Phase 1C: it synthesises both outputs into a single **Feature Brief** and saves it to `agent-memory/engineering-manager/feature-briefs/[feature-name].md`.
 
-Then comes **Phase 1D — the Stakeholder Gate**: the engineering-manager presents the Feature Brief to the user and explicitly asks: *Are the acceptance criteria complete? Is the scope right? Any compliance concerns?* No code is written until the user approves. This is the cheapest point in the pipeline to catch scope problems.
+Then comes **Phase 1D, the Stakeholder Gate**: the engineering-manager presents the Feature Brief to the user and explicitly asks: *Are the acceptance criteria complete? Is the scope right? Any compliance concerns?* Nothing gets coded until I approve. This is the cheapest moment to catch a scope problem.
 
-**Phase 2 — Implementation (2A + 2B run in parallel)**
+**Phase 2, Implementation (2A + 2B run in parallel)**
 
-Once approved, `full-stack-dev` (backend, Phase 2A) and `ux-ui-designer` (design spec, Phase 2B) start simultaneously. The full-stack-dev implements the backend in strict dependency order — DB migration → domain model → ports → domain service → JPA entity/mapper → persistence adapter → REST controller → Config wiring — and only after the API contract is stable does Phase 2C begin: the full-stack-dev implements the frontend using the design spec from 2B.
+Once approved, `full-stack-dev` (backend, Phase 2A) and `ux-ui-designer` (design spec, Phase 2B) start simultaneously. The full-stack-dev implements the backend in strict dependency order, DB migration → domain model → ports → domain service → JPA entity/mapper → persistence adapter → REST controller → Config wiring, and only after the API contract is stable does Phase 2C begin: the full-stack-dev implements the frontend using the design spec from 2B.
 
-**Phase 3 — Review (3A + 3B + 3C + 3D run in parallel)**
+**Phase 3, Review (3A + 3B + 3C + 3D run in parallel)**
 
 All four review streams fire simultaneously the moment Phase 2C is complete:
 
 | Stream | Agent | Checks |
 |---|---|---|
-| 3A — Architecture | `tech-lead` | Hexagonal boundary violations, @Service on domain, @Entity on domain models |
-| 3B — Security | `security-reviewer` | Auth token on every endpoint, cross-user 404 not 403, no financial data in logs |
-| 3C — Performance | `performance-reviewer` | N+1 queries, missing DB indexes, unbounded list queries, bundle size |
-| 3D — Dependencies | `tech-lead` | CVEs, licence compatibility, justified new packages |
+| 3A, Architecture | `tech-lead` | Hexagonal boundary violations, @Service on domain, @Entity on domain models |
+| 3B, Security | `security-reviewer` | Auth token on every endpoint, cross-user 404 not 403, no financial data in logs |
+| 3C, Performance | `performance-reviewer` | N+1 queries, missing DB indexes, unbounded list queries, bundle size |
+| 3D, Dependencies | `tech-lead` | CVEs, licence compatibility, justified new packages |
 
-All hard blockers from all four streams must be fixed before the Phase 3E LGTM — the tech-lead's explicit merge approval.
+All hard blockers from all four streams must be fixed before the Phase 3E LGTM, the tech-lead's explicit merge approval.
 
-**Phases 4, 5, 6 — QA, Docs, Deploy**
+**Phases 4, 5, 6, QA, Docs, Deploy**
 
 Phase 4 runs `qa-automation-tester` (domain unit tests + MockMvc controller integration tests) and `ux-ui-designer` (WCAG 2.1 AA + 375px mobile review) in parallel. Phase 5 writes OpenAPI spec updates, CHANGELOG entry, and any new ADRs. Phase 6 runs `devops-engineer` for the deploy, followed by the mandatory `verify-app-health.sh` five-layer check.
 
@@ -515,11 +514,11 @@ Phase 4 runs `qa-automation-tester` (domain unit tests + MockMvc controller inte
 
 ## 4. Engineering Strict Guardrails
 
-To ensure the CLI didn't drift as the conversation grew, I enforced architectural purity with **hard automated constraints** rather than hoping Claude would follow instructions.
+Long conversations drift. To stop that, I enforced the architecture with automated checks instead of hoping Claude would follow instructions.
 
 ### Guardrail A: Pure Hexagonal Boundaries via ArchUnit
 
-The domain layer must be completely unaware of Spring or databases. If Claude generated a `Lombok` or `@Autowired` import inside the domain logic, the build failed physically in the terminal:
+The domain layer must know nothing about Spring or the database. If Claude put a `Lombok` or `@Autowired` import in the domain code, the build failed:
 
 ```java
 // ArchitectureTest.java
@@ -532,7 +531,7 @@ static final ArchRule domain_must_not_import_spring =
                 .as("Domain classes must not depend on Spring, JPA, Jackson, or Lombok");
 ```
 
-The ArchUnit rule enforces the following layer boundary at build time:
+The rule enforces this layer boundary at build time:
 
 ```mermaid
 %%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#313244', 'primaryTextColor': '#CDD6F4', 'primaryBorderColor': '#89B4FA', 'lineColor': '#A6ADC8', 'secondaryColor': '#1E1E2E', 'background': '#1E1E2E', 'mainBkg': '#313244', 'clusterBkg': '#24243E', 'clusterBorder': '#45475A', 'titleColor': '#CDD6F4', 'edgeLabelBackground': '#1E1E2E', 'fontFamily': 'JetBrains Mono, monospace', 'fontSize': '15px'}}}%%
@@ -565,7 +564,7 @@ graph LR
 
 ### Guardrail B: Clean Wiring Without Framework Pollution
 
-Claude was forbidden from using `@Service` or `@Component` on core business logic. Instead, it learned to construct a dedicated configuration class to wire dependencies manually:
+Claude wasn't allowed to use `@Service` or `@Component` on core business logic. Instead it wires dependencies by hand in a configuration class:
 
 ```java
 // account/config/AccountConfig.java
@@ -582,7 +581,7 @@ public class AccountConfig {
 
 ### Guardrail C: Persistent Database Models vs Domain Models
 
-To avoid attaching `@Entity` to a domain object (which allows bad states to bypass business invariants), Claude maintained two separate class structures:
+Putting `@Entity` on a domain object lets invalid states slip past business rules, so Claude kept two separate sets of classes:
 
 ```java
 // account/adapter/outbound/persistence/AccountJpaEntity.java
@@ -601,7 +600,7 @@ public class AccountJpaEntity extends AuditableJpaEntity {
 
 ### Guardrail D: Anti-Corruption Layers (Bounded Context Isolation)
 
-If the `budget` module needed `transaction` data, Claude had to build an explicit cross-context outbound port adapter — it could not directly import across bounded contexts:
+If the `budget` module needed `transaction` data, Claude had to build an outbound port and adapter. It couldn't import across bounded contexts directly:
 
 ```java
 // budget/domain/port/outbound/TransactionSummaryPort.java
@@ -610,7 +609,7 @@ public interface TransactionSummaryPort {
 }
 ```
 
-No direct class import crosses the context boundary. The `budget` module only knows the port interface — the adapter that fulfils it lives entirely inside the `transaction` module:
+No class import crosses the boundary. The `budget` module knows only the port interface, and the adapter that implements it lives in the `transaction` module:
 
 ```mermaid
 %%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#313244', 'primaryTextColor': '#CDD6F4', 'primaryBorderColor': '#89B4FA', 'lineColor': '#A6ADC8', 'secondaryColor': '#1E1E2E', 'background': '#1E1E2E', 'mainBkg': '#313244', 'clusterBkg': '#24243E', 'clusterBorder': '#45475A', 'titleColor': '#CDD6F4', 'edgeLabelBackground': '#1E1E2E', 'fontFamily': 'JetBrains Mono, monospace', 'fontSize': '15px'}}}%%
@@ -638,9 +637,9 @@ flowchart LR
 
 ## 5. Feature Spotlight: Dynamic Budget Aggregation
 
-**The Challenge:** Storing a physical `spentAmount` column on a Budget table is a classic beginner mistake — if you delete a transaction from 3 weeks ago, the budget's `spentAmount` goes out of sync.
+**The problem:** Storing a `spentAmount` column on a Budget table is a common mistake. Delete a transaction from three weeks ago and the stored figure is wrong.
 
-**The Solution:** Because Claude Code was forced to follow the PRD, it leveraged Guardrail D to build a **Runtime Synthesis Engine** — dynamically computing usage on the fly rather than storing stale state:
+**The fix:** Since Claude had to follow the PRD and the port rules from Guardrail D, it calculated usage when asked instead of storing it:
 
 ```java
 // Inside BudgetQueryService (Domain logic)
@@ -672,10 +671,10 @@ BUILD SUCCESSFUL in 3s
 
 ---
 
-## Final Thoughts: From Chatbot to Engineering Partner
+## What I took from it
 
-Building a production-ready application with Claude Code CLI reveals a massive shift in how AI should be utilized for software engineering. By rejecting "vibe coding" and external MCP crutches, and instead relying on Claude Code's native hooks, persistent memory, and `/compact` commands, I was able to enforce a rigid, 7-agent spec-driven environment.
+The biggest lesson is that AI works much better with constraints. Hooks, persistent memory, ArchUnit tests and an approval gate before any code did more for quality than any clever prompt.
 
-This process didn't just build an app for me — it taught me how to properly design scalable databases, orchestrate Hexagonal solutions, and respect WCAG UX heuristics. By forcing Claude Code to respect pipeline personas and automated tests, you don't just get an AI assistant that writes text files — you get a senior engineering team embedded directly in your terminal.
+I also learned a fair bit myself, about hexagonal architecture, database design and accessibility, because I had to write down the rules well enough for the agents to follow them. It isn't a replacement for engineering judgment. The pipeline works because I defined the architecture and I read what comes out.
 
 Check out the full source: [github.com/shanmuga-sundaram-n/personal-finance-tracker](https://github.com/shanmuga-sundaram-n/personal-finance-tracker)

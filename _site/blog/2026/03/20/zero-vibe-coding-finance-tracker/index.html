@@ -27,13 +27,13 @@
 
   <!-- SEO Meta Tags -->
   <meta name="description"
-    content="How I built a production-ready Personal Finance Tracker entirely from the terminal using Claude Code CLI with a 9-agent, 5-track spec-driven pipeline — no UI MCP tools, no vibe coding.">
+    content="How I built a production-ready Personal Finance Tracker entirely from the terminal using Claude Code CLI with a 9-agent, 5-track spec-driven pipeline, no UI MCP tools, no vibe coding.">
   <meta name="author" content="Shanmuga Sundaram Natarajan (Shan)">
 
   <!-- Open Graph -->
   <meta property="og:title" content="Zero Vibe Coding with Claude Code Agents">
   <meta property="og:description"
-    content="How I built a production-ready Personal Finance Tracker entirely from the terminal using Claude Code CLI with a 9-agent, 5-track spec-driven pipeline — no UI MCP tools, no vibe coding.">
+    content="How I built a production-ready Personal Finance Tracker entirely from the terminal using Claude Code CLI with a 9-agent, 5-track spec-driven pipeline, no UI MCP tools, no vibe coding.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://shanmuga-sundaram-n.github.io/blog/2026/03/20/zero-vibe-coding-finance-tracker/">
 
@@ -41,7 +41,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Zero Vibe Coding with Claude Code Agents">
   <meta name="twitter:description"
-    content="How I built a production-ready Personal Finance Tracker entirely from the terminal using Claude Code CLI with a 9-agent, 5-track spec-driven pipeline — no UI MCP tools, no vibe coding.">
+    content="How I built a production-ready Personal Finance Tracker entirely from the terminal using Claude Code CLI with a 9-agent, 5-track spec-driven pipeline, no UI MCP tools, no vibe coding.">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="/assets/images/projects/website-logo-matched.png">
@@ -66,8 +66,8 @@
 <meta property="og:title" content="Zero Vibe Coding with Claude Code Agents" />
 <meta name="author" content="Shanmuga Sundaram Natarajan (Shan)" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="How I built a production-ready Personal Finance Tracker entirely from the terminal using Claude Code CLI with a 9-agent, 5-track spec-driven pipeline — no UI MCP tools, no vibe coding." />
-<meta property="og:description" content="How I built a production-ready Personal Finance Tracker entirely from the terminal using Claude Code CLI with a 9-agent, 5-track spec-driven pipeline — no UI MCP tools, no vibe coding." />
+<meta name="description" content="How I built a production-ready Personal Finance Tracker entirely from the terminal using Claude Code CLI with a 9-agent, 5-track spec-driven pipeline, no UI MCP tools, no vibe coding." />
+<meta property="og:description" content="How I built a production-ready Personal Finance Tracker entirely from the terminal using Claude Code CLI with a 9-agent, 5-track spec-driven pipeline, no UI MCP tools, no vibe coding." />
 <link rel="canonical" href="https://shanmuga-sundaram-n.github.io/blog/2026/03/20/zero-vibe-coding-finance-tracker/" />
 <meta property="og:url" content="https://shanmuga-sundaram-n.github.io/blog/2026/03/20/zero-vibe-coding-finance-tracker/" />
 <meta property="og:site_name" content="Shanmuga Sundaram Natarajan’s Personal Website" />
@@ -76,7 +76,7 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Zero Vibe Coding with Claude Code Agents" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Shanmuga Sundaram Natarajan (Shan)"},"dateModified":"2026-03-20T17:30:00+05:30","datePublished":"2026-03-20T17:30:00+05:30","description":"How I built a production-ready Personal Finance Tracker entirely from the terminal using Claude Code CLI with a 9-agent, 5-track spec-driven pipeline — no UI MCP tools, no vibe coding.","headline":"Zero Vibe Coding with Claude Code Agents","mainEntityOfPage":{"@type":"WebPage","@id":"https://shanmuga-sundaram-n.github.io/blog/2026/03/20/zero-vibe-coding-finance-tracker/"},"url":"https://shanmuga-sundaram-n.github.io/blog/2026/03/20/zero-vibe-coding-finance-tracker/"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Shanmuga Sundaram Natarajan (Shan)"},"dateModified":"2026-03-20T17:30:00+05:30","datePublished":"2026-03-20T17:30:00+05:30","description":"How I built a production-ready Personal Finance Tracker entirely from the terminal using Claude Code CLI with a 9-agent, 5-track spec-driven pipeline, no UI MCP tools, no vibe coding.","headline":"Zero Vibe Coding with Claude Code Agents","mainEntityOfPage":{"@type":"WebPage","@id":"https://shanmuga-sundaram-n.github.io/blog/2026/03/20/zero-vibe-coding-finance-tracker/"},"url":"https://shanmuga-sundaram-n.github.io/blog/2026/03/20/zero-vibe-coding-finance-tracker/"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -143,40 +143,38 @@
             <h1 class="post-title-main">Zero Vibe Coding with Claude Code Agents</h1>
 
             <div class="post-content">
-                <p>When we talk about AI-assisted coding, the conversation usually revolves around “vibe coding” — throwing vague prompts at an LLM, connecting a UI layout tool, and crossing our fingers that the underlying architecture holds together.</p>
+                <p>Most talk about AI-assisted coding ends up at “vibe coding”: throw a vague prompt at an LLM, plug in a UI tool, and hope the architecture holds together.</p>
 
-<p>I wanted to see what happens when you treat AI not as a magic wand, but as an embedded enterprise engineering team. To test this, I built a production-ready Personal Finance Tracker entirely from the terminal. I strictly avoided UI Model Context Protocol (MCP) integrations like Figma. Instead, I forced the <strong>Claude Code CLI</strong> into a rigid, Spec-Driven, Multi-Agent Development Environment — <strong>nine agents, five pipeline tracks, four points of parallel execution, and five automated hooks</strong> that enforced quality at the filesystem level.</p>
+<p>I wanted to try the opposite. What happens if you treat the AI like a small engineering team with defined roles and rules? To find out, I built a Personal Finance Tracker entirely from the terminal, with no UI Model Context Protocol (MCP) integrations like Figma. I set up <strong>Claude Code CLI</strong> with nine agents, five pipeline tracks, parallel execution at four points, and five hooks that enforce quality rules at the filesystem level.</p>
 
 <p>You can check out the final codebase here: <a href="https://github.com/shanmuga-sundaram-n/personal-finance-tracker">Personal Finance Tracker on GitHub</a></p>
 
 <h2 id="the-final-product">The Final Product</h2>
 
-<p>Before diving into <em>how</em> the AI built this, here’s a look at the final application running locally — clean, modern interface, responsive sidebar navigation, and distinct feature pages (Dashboard, Transactions, Budgets) generated without ever touching a visual design tool:</p>
+<p>Here’s the finished app running locally, with a sidebar and separate pages for Dashboard, Transactions and Budgets. None of it came from a visual design tool:</p>
 
 <p><img loading="lazy" decoding="async" src="/assets/images/projects/personal-finance-tracker.webp" alt="Personal Finance Tracker UI Demo" /></p>
 
-<hr />
+<h2 id="1-the-claude-code-features-i-leaned-on">1. The Claude Code features I leaned on</h2>
 
-<h2 id="1-unleashing-claude-code-cli-features">1. Unleashing Claude Code CLI Features</h2>
-
-<p>The Claude Code CLI provides native capabilities that elevate it out of a standard web chat interface. By leveraging the local filesystem, I turned the CLI into an automated powerhouse:</p>
+<p>Claude Code works on your local filesystem, which gives you a few things a chat window can’t. These are the ones I used most:</p>
 
 <ul>
   <li>
-    <p><strong>Custom Prompt Hooks (<code class="language-plaintext highlighter-rouge">.claude/hooks/</code>):</strong> Building a modern React App requires strict linting, and AI can easily format things incorrectly. I created a <code class="language-plaintext highlighter-rouge">.claude/hooks/post-edit-lint.sh</code> script. Every time Claude Code edited a <code class="language-plaintext highlighter-rouge">.tsx</code> or <code class="language-plaintext highlighter-rouge">.ts</code> file, the CLI automatically fired off <code class="language-plaintext highlighter-rouge">$ESLINT_BIN --fix</code>. This completely eliminated broken CI builds due to styling errors.</p>
+    <p><strong>Custom Prompt Hooks (<code class="language-plaintext highlighter-rouge">.claude/hooks/</code>):</strong> A React app needs consistent linting, and AI output often gets the formatting slightly wrong. So I created a <code class="language-plaintext highlighter-rouge">.claude/hooks/post-edit-lint.sh</code> script. Every time Claude Code edited a <code class="language-plaintext highlighter-rouge">.tsx</code> or <code class="language-plaintext highlighter-rouge">.ts</code> file, the CLI automatically fired off <code class="language-plaintext highlighter-rouge">$ESLINT_BIN --fix</code>. After that, I stopped seeing CI builds fail on style errors.</p>
   </li>
   <li>
-    <p><strong>Persistent CLI Memory (<code class="language-plaintext highlighter-rouge">.claude/agent-memory/</code>):</strong> I stored detailed markdown files like <code class="language-plaintext highlighter-rouge">DOMAIN-OWNERSHIP.md</code> and <code class="language-plaintext highlighter-rouge">hexagonal-architecture.md</code>. Whenever I prompted Claude Code, it automatically fetched this local context to write code compliant with my architectural decisions.</p>
+    <p><strong>Persistent CLI Memory (<code class="language-plaintext highlighter-rouge">.claude/agent-memory/</code>):</strong> I stored detailed markdown files like <code class="language-plaintext highlighter-rouge">DOMAIN-OWNERSHIP.md</code> and <code class="language-plaintext highlighter-rouge">hexagonal-architecture.md</code>. Claude Code pulled this context in whenever I prompted it, so the code it wrote followed my architecture decisions.</p>
   </li>
   <li>
-    <p><strong>Context Compaction (<code class="language-plaintext highlighter-rouge">/compact</code>):</strong> Building a complex backend generates massive CLI context. Once Claude finished planning a feature, I simply typed <code class="language-plaintext highlighter-rouge">/compact</code>. This reset the active context window while keeping core memories intact — saving tokens and keeping the CLI fast.</p>
+    <p><strong>Context Compaction (<code class="language-plaintext highlighter-rouge">/compact</code>):</strong> A complex backend fills up the context quickly. Once Claude had finished planning a feature, I ran <code class="language-plaintext highlighter-rouge">/compact</code>, which shrinks the context but keeps the key points. That saved tokens and kept things quick.</p>
   </li>
   <li>
-    <p><strong>Intelligent Commits (<code class="language-plaintext highlighter-rouge">/commit</code>):</strong> After <code class="language-plaintext highlighter-rouge">./gradlew test</code> passed, rather than typing out git messages, I ran <code class="language-plaintext highlighter-rouge">/commit</code>. Claude Code read the actual <code class="language-plaintext highlighter-rouge">git diff</code> and generated a perfect, semantic commit message right in the terminal.</p>
+    <p><strong>Intelligent Commits (<code class="language-plaintext highlighter-rouge">/commit</code>):</strong> After <code class="language-plaintext highlighter-rouge">./gradlew test</code> passed, I ran <code class="language-plaintext highlighter-rouge">/commit</code> instead of writing the message myself. Claude Code read the actual <code class="language-plaintext highlighter-rouge">git diff</code> and wrote a sensible commit message.</p>
   </li>
 </ul>
 
-<h3 id="simulated-terminal-run-claude-code-in-action">Simulated Terminal Run: Claude Code in Action</h3>
+<h3 id="a-simulated-terminal-run">A simulated terminal run</h3>
 
 <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>claude
 ╭────────────────────────────────────────────────────────────────────────╮
@@ -202,11 +200,11 @@ Would you like me to spawn `full-stack-dev` to implement this now? (Y/n) &gt; y
 
 <h2 id="2-setting-up-the-claude-pipeline">2. Setting Up the Claude Pipeline</h2>
 
-<p>Before the agents could collaborate, I had to build the scaffolding they would live in. The entire pipeline is defined inside a single <code class="language-plaintext highlighter-rouge">.claude/</code> directory committed alongside the codebase — no external services, no cloud orchestration, no additional accounts.</p>
+<p>Before the agents could work together, I had to build the structure around them. The whole pipeline lives in one <code class="language-plaintext highlighter-rouge">.claude/</code> directory committed with the code. There are no external services, no cloud orchestration and no extra accounts.</p>
 
 <h3 id="the-folder-structure">The Folder Structure</h3>
 
-<p>Every file in <code class="language-plaintext highlighter-rouge">.claude/</code> plays a specific role. Agents carry their own persistent memory, hooks enforce quality gates automatically, and the Feature Brief is the single source of truth that flows through every phase:</p>
+<p>Each file in <code class="language-plaintext highlighter-rouge">.claude/</code> has one job. Agents keep their own memory, hooks enforce the quality gates, and the Feature Brief is the one document every phase works from:</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>personal-finance-tracker/
 └── .claude/
@@ -251,7 +249,7 @@ Would you like me to spawn `full-stack-dev` to implement this now? (Y/n) &gt; y
 
 <h3 id="anatomy-of-an-agent-definition">Anatomy of an Agent Definition</h3>
 
-<p>Each file in <code class="language-plaintext highlighter-rouge">.claude/agents/</code> is a Markdown document with YAML front matter that tells Claude Code when and how to use the agent. Here’s the actual front matter for <code class="language-plaintext highlighter-rouge">engineering-manager.md</code> — the single entry point that owns all tracks:</p>
+<p>Each file in <code class="language-plaintext highlighter-rouge">.claude/agents/</code> is a Markdown document with YAML front matter telling Claude Code when to use that agent. This is the front matter for <code class="language-plaintext highlighter-rouge">engineering-manager.md</code>, the single entry point for every track:</p>
 
 <div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">---</span>
 <span class="na">name</span><span class="pi">:</span> <span class="s">engineering-manager</span>
@@ -272,9 +270,9 @@ Would you like me to spawn `full-stack-dev` to implement this now? (Y/n) &gt; y
 <span class="nn">---</span>
 </code></pre></div></div>
 
-<p>The <code class="language-plaintext highlighter-rouge">model: opus</code> assignment matters. The engineering-manager runs on Claude Opus — it needs to reason about track classification, synthesise outputs from two parallel agents into a single Feature Brief, and manage stakeholder gates. All other agents run on Sonnet to reduce token cost while still having the domain knowledge they need.</p>
+<p>I gave the engineering-manager <code class="language-plaintext highlighter-rouge">model: opus</code> on purpose. It has to classify requests, merge the output of two parallel agents into one Feature Brief, and manage the approval gates, which is the hardest reasoning in the pipeline. Every other agent runs on Sonnet to keep token costs down.</p>
 
-<p>Each specialist agent’s description tells Claude Code exactly which pipeline phase it belongs to and what triggers it:</p>
+<p>The specialist agents say which phase they belong to and what triggers them:</p>
 
 <div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">---</span>
 <span class="na">name</span><span class="pi">:</span> <span class="s">personal-finance-analyst</span>
@@ -293,11 +291,11 @@ Would you like me to spawn `full-stack-dev` to implement this now? (Y/n) &gt; y
 <span class="nn">---</span>
 </code></pre></div></div>
 
-<p>The body of each agent file is its full system prompt — role definition, output format, domain rules, anti-patterns, and a pointer to its own persistent memory directory. This is what the agent reads before every response.</p>
+<p>The body of each file is that agent’s system prompt: its role, output format, domain rules, things to avoid, and a pointer to its memory directory. The agent reads all of it before every response.</p>
 
 <h3 id="the-agent-contract">The Agent Contract</h3>
 
-<p>Every agent declares exactly what it owns, which pipeline phase(s) it participates in, what it reads, and what it writes. The class hierarchy below maps the full agent roster:</p>
+<p>Every agent declares what it owns, which phases it takes part in, what it reads and what it writes. The diagram below shows the full roster:</p>
 
 <pre><code class="language-mermaid">%%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#313244', 'primaryTextColor': '#CDD6F4', 'primaryBorderColor': '#89B4FA', 'lineColor': '#A6ADC8', 'secondaryColor': '#1E1E2E', 'background': '#1E1E2E', 'mainBkg': '#313244', 'clusterBkg': '#24243E', 'clusterBorder': '#45475A', 'titleColor': '#CDD6F4', 'edgeLabelBackground': '#1E1E2E', 'fontFamily': 'JetBrains Mono, monospace', 'fontSize': '15px'}}}%%
 classDiagram
@@ -383,18 +381,18 @@ classDiagram
 
 <p>Every subclass declares:</p>
 <ul>
-  <li><code class="language-plaintext highlighter-rouge">description</code> — natural-language trigger guide that tells Claude Code which requests route here</li>
-  <li><code class="language-plaintext highlighter-rouge">model</code> — <code class="language-plaintext highlighter-rouge">opus</code> for the engineering-manager (reasoning-heavy orchestration), <code class="language-plaintext highlighter-rouge">sonnet</code> for all specialists (domain work at lower cost)</li>
-  <li><code class="language-plaintext highlighter-rouge">memory_dir</code> — each agent has its own <code class="language-plaintext highlighter-rouge">.claude/agent-memory/&lt;name&gt;/</code> directory it reads and writes across sessions</li>
+  <li><code class="language-plaintext highlighter-rouge">description</code>, natural-language trigger guide that tells Claude Code which requests route here</li>
+  <li><code class="language-plaintext highlighter-rouge">model</code>, <code class="language-plaintext highlighter-rouge">opus</code> for the engineering-manager (reasoning-heavy orchestration), <code class="language-plaintext highlighter-rouge">sonnet</code> for all specialists (domain work at lower cost)</li>
+  <li><code class="language-plaintext highlighter-rouge">memory_dir</code>, each agent has its own <code class="language-plaintext highlighter-rouge">.claude/agent-memory/&lt;name&gt;/</code> directory it reads and writes across sessions</li>
 </ul>
 
-<h3 id="five-hooks--each-targeting-a-different-failure-mode">Five Hooks — Each Targeting a Different Failure Mode</h3>
+<h3 id="five-hooks-each-for-a-different-kind-of-mistake">Five hooks, each for a different kind of mistake</h3>
 
-<p>The project uses five hooks, each with a specific trigger type. Together they eliminate entire categories of mistakes before they reach a build or test cycle.</p>
+<p>I used five hooks, each firing on a different event. Between them they catch whole categories of mistakes before a build or test even runs.</p>
 
-<p><strong>Hook 1 — <code class="language-plaintext highlighter-rouge">pipeline-guard.sh</code> (UserPromptSubmit)</strong></p>
+<p><strong>Hook 1, <code class="language-plaintext highlighter-rouge">pipeline-guard.sh</code> (UserPromptSubmit)</strong></p>
 
-<p>This hook fires on every single user message. It injects the track routing rules directly into Claude’s context so the engineering-manager classification step is never skipped:</p>
+<p>This hook runs on every user message. It puts the routing rules into Claude’s context so the classification step can’t be skipped:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env bash</span>
 <span class="c"># .claude/hooks/pipeline-guard.sh — fires on EVERY user message</span>
@@ -425,9 +423,9 @@ HARD RULES:
 </span><span class="nb">exit </span>0
 </code></pre></div></div>
 
-<p><strong>Hook 2 — <code class="language-plaintext highlighter-rouge">pre-domain-purity.sh</code> (PreToolUse — Edit/Write, exit 2 = block)</strong></p>
+<p><strong>Hook 2, <code class="language-plaintext highlighter-rouge">pre-domain-purity.sh</code> (PreToolUse, Edit/Write, exit 2 = block)</strong></p>
 
-<p>This is the most aggressive hook — it reads the file path and new content from the tool call JSON and hard-blocks the edit if it finds a Spring, JPA, Hibernate, Lombok, or Jackson import inside any <code class="language-plaintext highlighter-rouge">domain/</code> package. ArchUnit catches violations at build time; this catches them at edit time, before a single character lands on disk:</p>
+<p>This is the strictest one. It reads the file path and new content from the tool call and blocks the edit if a Spring, JPA, Hibernate, Lombok or Jackson import shows up inside a <code class="language-plaintext highlighter-rouge">domain/</code> package. ArchUnit catches the same thing at build time, but this stops it before anything is written to disk:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
 <span class="c"># .claude/hooks/pre-domain-purity.sh</span>
@@ -448,9 +446,9 @@ HARD RULES:
 fi</span>
 </code></pre></div></div>
 
-<p><strong>Hook 3 — <code class="language-plaintext highlighter-rouge">pre-migration-guard.sh</code> (PreToolUse — Edit, exit 2 = block)</strong></p>
+<p><strong>Hook 3, <code class="language-plaintext highlighter-rouge">pre-migration-guard.sh</code> (PreToolUse, Edit, exit 2 = block)</strong></p>
 
-<p>Liquibase migrations are append-only. If Claude attempts to modify an existing <code class="language-plaintext highlighter-rouge">.yml</code> migration file, this hook hard-blocks the edit and suggests the correct next sequence number:</p>
+<p>Liquibase migrations should only ever be added to. If Claude tries to change an existing <code class="language-plaintext highlighter-rouge">.yml</code> migration, this hook blocks the edit and suggests the next sequence number:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
 <span class="c"># .claude/hooks/pre-migration-guard.sh</span>
@@ -466,9 +464,9 @@ fi</span>
 fi</span>
 </code></pre></div></div>
 
-<p><strong>Hook 4 — <code class="language-plaintext highlighter-rouge">post-edit-lint.sh</code> (PostToolUse — Edit/Write)</strong></p>
+<p><strong>Hook 4, <code class="language-plaintext highlighter-rouge">post-edit-lint.sh</code> (PostToolUse, Edit/Write)</strong></p>
 
-<p>Fires after every TypeScript file edit and runs ESLint auto-fix silently. This keeps the frontend lint-clean without Claude having to think about formatting:</p>
+<p>This runs ESLint with auto-fix after every TypeScript edit, so the frontend stays lint-clean and Claude doesn’t have to think about formatting:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
 <span class="c"># .claude/hooks/post-edit-lint.sh</span>
@@ -481,9 +479,9 @@ fi</span>
 fi</span>
 </code></pre></div></div>
 
-<p><strong>Hook 5 — <code class="language-plaintext highlighter-rouge">verify-app-health.sh</code> (manual, run at end of every track)</strong></p>
+<p><strong>Hook 5, <code class="language-plaintext highlighter-rouge">verify-app-health.sh</code> (manual, run at end of every track)</strong></p>
 
-<p>Not a Claude Code hook in the trigger sense — this is a script the engineering-manager is instructed to run after every pipeline track completes. It checks 5 layers in sequence and exits non-zero if any fail:</p>
+<p>Strictly speaking this isn’t a hook. It’s a script the engineering-manager is told to run at the end of every track. It checks five layers in order and exits non-zero if any fail:</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Layer 1 — Backend compiles        ./gradlew :application:compileJava
 Layer 2 — All tests pass          ./gradlew :application:test
@@ -492,11 +490,11 @@ Layer 4 — All 3 containers up     docker compose ps
 Layer 5 — API smoke test          curl localhost:8080/api/v1/auth/login (expects 401)
 </code></pre></div></div>
 
-<p>The engineering-manager is instructed: <strong>do not close any request until all 5 layers are green</strong>. This makes “it works on my machine” impossible — the definition of done is a running application.</p>
+<p>The engineering-manager’s instruction is not to close a request until all five layers are green. So “done” means the application is actually running.</p>
 
 <h3 id="the-agent-handoff-in-practice">The Agent Handoff in Practice</h3>
 
-<p>The magic of the pipeline is that agents communicate through files, not through shared memory or direct calls. This enforces a clean separation: each agent reads only what it needs and writes only what it owns.</p>
+<p>Agents in this setup talk to each other through files, not shared memory or direct calls. That keeps things separate: each agent reads what it needs and writes only what it owns.</p>
 
 <pre><code class="language-mermaid">%%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#313244', 'primaryTextColor': '#CDD6F4', 'primaryBorderColor': '#89B4FA', 'lineColor': '#A6ADC8', 'secondaryColor': '#1E1E2E', 'background': '#1E1E2E', 'mainBkg': '#313244', 'clusterBkg': '#24243E', 'clusterBorder': '#45475A', 'titleColor': '#CDD6F4', 'edgeLabelBackground': '#1E1E2E', 'fontFamily': 'JetBrains Mono, monospace', 'fontSize': '15px'}}}%%
 flowchart TD
@@ -556,13 +554,13 @@ flowchart TD
     DE --&gt; HEALTH["✅ verify-app-health.sh&lt;br/&gt;5 layers must pass"]:::done
 </code></pre>
 
-<p>The Feature Brief — written by the engineering-manager after Phase 1 — is the single source of truth that all downstream agents read. It is saved to <code class="language-plaintext highlighter-rouge">agent-memory/engineering-manager/feature-briefs/[feature-name].md</code> and never discarded, giving the team a complete audit trail of every feature decision.</p>
+<p>The engineering-manager writes the Feature Brief after Phase 1, and every later agent reads it. It’s saved to <code class="language-plaintext highlighter-rouge">agent-memory/engineering-manager/feature-briefs/[feature-name].md</code> and kept, so there’s a record of every feature decision.</p>
 
 <hr />
 
 <h2 id="3-the-9-agent-5-track-pipeline">3. The 9-Agent, 5-Track Pipeline</h2>
 
-<p>The project has nine agents and five pipeline tracks. Every request — feature, hotfix, refactor, research, or UI-only change — is first classified into a track by the engineering-manager, which then runs the appropriate pipeline. This prevented ad-hoc “just fix it” shortcuts that would have eroded architecture over time.</p>
+<p>There are nine agents and five tracks. The engineering-manager first sorts every request (feature, hotfix, refactor, research or UI-only change) into a track and then runs that track’s pipeline. That stopped the “just fix it quickly” shortcuts that slowly wear down an architecture.</p>
 
 <h3 id="five-tracks-one-entry-point">Five Tracks, One Entry Point</h3>
 
@@ -596,11 +594,11 @@ flowchart TD
 
 <h3 id="the-feature-track-six-phases-four-parallel-streams">The FEATURE Track: Six Phases, Four Parallel Streams</h3>
 
-<p>A FEATURE request — the most common track — runs through six phases. What makes it genuinely different from sequential AI assistance is <strong>three separate points of parallel execution</strong>:</p>
+<p>A FEATURE request, the most common kind, goes through six phases. The difference from ordinary one-step-at-a-time AI assistance is that several steps run in parallel:</p>
 
-<p><strong>Phase 1 — Discovery (1A + 1B run in parallel)</strong></p>
+<p><strong>Phase 1, Discovery (1A + 1B run in parallel)</strong></p>
 
-<p>The engineering-manager spawns <code class="language-plaintext highlighter-rouge">personal-finance-analyst</code> and <code class="language-plaintext highlighter-rouge">tech-lead</code> simultaneously in the same message. They work independently from different angles:</p>
+<p>The engineering-manager spawns <code class="language-plaintext highlighter-rouge">personal-finance-analyst</code> and <code class="language-plaintext highlighter-rouge">tech-lead</code> simultaneously in the same message. They approach it from different angles:</p>
 
 <ul>
   <li><code class="language-plaintext highlighter-rouge">personal-finance-analyst</code> reads <code class="language-plaintext highlighter-rouge">DOMAIN-OWNERSHIP.md</code> and produces the <strong>Domain Brief</strong>: numbered acceptance criteria, data model changes, financial edge cases (NUMERIC(19,4) enforcement, sign conventions, soft-delete rules), and validation error codes.</li>
@@ -609,13 +607,13 @@ flowchart TD
 
 <p>After both complete, the engineering-manager runs Phase 1C: it synthesises both outputs into a single <strong>Feature Brief</strong> and saves it to <code class="language-plaintext highlighter-rouge">agent-memory/engineering-manager/feature-briefs/[feature-name].md</code>.</p>
 
-<p>Then comes <strong>Phase 1D — the Stakeholder Gate</strong>: the engineering-manager presents the Feature Brief to the user and explicitly asks: <em>Are the acceptance criteria complete? Is the scope right? Any compliance concerns?</em> No code is written until the user approves. This is the cheapest point in the pipeline to catch scope problems.</p>
+<p>Then comes <strong>Phase 1D, the Stakeholder Gate</strong>: the engineering-manager presents the Feature Brief to the user and explicitly asks: <em>Are the acceptance criteria complete? Is the scope right? Any compliance concerns?</em> Nothing gets coded until I approve. This is the cheapest moment to catch a scope problem.</p>
 
-<p><strong>Phase 2 — Implementation (2A + 2B run in parallel)</strong></p>
+<p><strong>Phase 2, Implementation (2A + 2B run in parallel)</strong></p>
 
-<p>Once approved, <code class="language-plaintext highlighter-rouge">full-stack-dev</code> (backend, Phase 2A) and <code class="language-plaintext highlighter-rouge">ux-ui-designer</code> (design spec, Phase 2B) start simultaneously. The full-stack-dev implements the backend in strict dependency order — DB migration → domain model → ports → domain service → JPA entity/mapper → persistence adapter → REST controller → Config wiring — and only after the API contract is stable does Phase 2C begin: the full-stack-dev implements the frontend using the design spec from 2B.</p>
+<p>Once approved, <code class="language-plaintext highlighter-rouge">full-stack-dev</code> (backend, Phase 2A) and <code class="language-plaintext highlighter-rouge">ux-ui-designer</code> (design spec, Phase 2B) start simultaneously. The full-stack-dev implements the backend in strict dependency order, DB migration → domain model → ports → domain service → JPA entity/mapper → persistence adapter → REST controller → Config wiring, and only after the API contract is stable does Phase 2C begin: the full-stack-dev implements the frontend using the design spec from 2B.</p>
 
-<p><strong>Phase 3 — Review (3A + 3B + 3C + 3D run in parallel)</strong></p>
+<p><strong>Phase 3, Review (3A + 3B + 3C + 3D run in parallel)</strong></p>
 
 <p>All four review streams fire simultaneously the moment Phase 2C is complete:</p>
 
@@ -629,31 +627,31 @@ flowchart TD
   </thead>
   <tbody>
     <tr>
-      <td>3A — Architecture</td>
+      <td>3A, Architecture</td>
       <td><code class="language-plaintext highlighter-rouge">tech-lead</code></td>
       <td>Hexagonal boundary violations, @Service on domain, @Entity on domain models</td>
     </tr>
     <tr>
-      <td>3B — Security</td>
+      <td>3B, Security</td>
       <td><code class="language-plaintext highlighter-rouge">security-reviewer</code></td>
       <td>Auth token on every endpoint, cross-user 404 not 403, no financial data in logs</td>
     </tr>
     <tr>
-      <td>3C — Performance</td>
+      <td>3C, Performance</td>
       <td><code class="language-plaintext highlighter-rouge">performance-reviewer</code></td>
       <td>N+1 queries, missing DB indexes, unbounded list queries, bundle size</td>
     </tr>
     <tr>
-      <td>3D — Dependencies</td>
+      <td>3D, Dependencies</td>
       <td><code class="language-plaintext highlighter-rouge">tech-lead</code></td>
       <td>CVEs, licence compatibility, justified new packages</td>
     </tr>
   </tbody>
 </table>
 
-<p>All hard blockers from all four streams must be fixed before the Phase 3E LGTM — the tech-lead’s explicit merge approval.</p>
+<p>All hard blockers from all four streams must be fixed before the Phase 3E LGTM, the tech-lead’s explicit merge approval.</p>
 
-<p><strong>Phases 4, 5, 6 — QA, Docs, Deploy</strong></p>
+<p><strong>Phases 4, 5, 6, QA, Docs, Deploy</strong></p>
 
 <p>Phase 4 runs <code class="language-plaintext highlighter-rouge">qa-automation-tester</code> (domain unit tests + MockMvc controller integration tests) and <code class="language-plaintext highlighter-rouge">ux-ui-designer</code> (WCAG 2.1 AA + 375px mobile review) in parallel. Phase 5 writes OpenAPI spec updates, CHANGELOG entry, and any new ADRs. Phase 6 runs <code class="language-plaintext highlighter-rouge">devops-engineer</code> for the deploy, followed by the mandatory <code class="language-plaintext highlighter-rouge">verify-app-health.sh</code> five-layer check.</p>
 
@@ -720,11 +718,11 @@ flowchart TD
 
 <h2 id="4-engineering-strict-guardrails">4. Engineering Strict Guardrails</h2>
 
-<p>To ensure the CLI didn’t drift as the conversation grew, I enforced architectural purity with <strong>hard automated constraints</strong> rather than hoping Claude would follow instructions.</p>
+<p>Long conversations drift. To stop that, I enforced the architecture with automated checks instead of hoping Claude would follow instructions.</p>
 
 <h3 id="guardrail-a-pure-hexagonal-boundaries-via-archunit">Guardrail A: Pure Hexagonal Boundaries via ArchUnit</h3>
 
-<p>The domain layer must be completely unaware of Spring or databases. If Claude generated a <code class="language-plaintext highlighter-rouge">Lombok</code> or <code class="language-plaintext highlighter-rouge">@Autowired</code> import inside the domain logic, the build failed physically in the terminal:</p>
+<p>The domain layer must know nothing about Spring or the database. If Claude put a <code class="language-plaintext highlighter-rouge">Lombok</code> or <code class="language-plaintext highlighter-rouge">@Autowired</code> import in the domain code, the build failed:</p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// ArchitectureTest.java</span>
 <span class="nd">@ArchTest</span>
@@ -736,7 +734,7 @@ flowchart TD
                 <span class="o">.</span><span class="na">as</span><span class="o">(</span><span class="s">"Domain classes must not depend on Spring, JPA, Jackson, or Lombok"</span><span class="o">);</span>
 </code></pre></div></div>
 
-<p>The ArchUnit rule enforces the following layer boundary at build time:</p>
+<p>The rule enforces this layer boundary at build time:</p>
 
 <pre><code class="language-mermaid">%%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#313244', 'primaryTextColor': '#CDD6F4', 'primaryBorderColor': '#89B4FA', 'lineColor': '#A6ADC8', 'secondaryColor': '#1E1E2E', 'background': '#1E1E2E', 'mainBkg': '#313244', 'clusterBkg': '#24243E', 'clusterBorder': '#45475A', 'titleColor': '#CDD6F4', 'edgeLabelBackground': '#1E1E2E', 'fontFamily': 'JetBrains Mono, monospace', 'fontSize': '15px'}}}%%
 graph LR
@@ -768,7 +766,7 @@ graph LR
 
 <h3 id="guardrail-b-clean-wiring-without-framework-pollution">Guardrail B: Clean Wiring Without Framework Pollution</h3>
 
-<p>Claude was forbidden from using <code class="language-plaintext highlighter-rouge">@Service</code> or <code class="language-plaintext highlighter-rouge">@Component</code> on core business logic. Instead, it learned to construct a dedicated configuration class to wire dependencies manually:</p>
+<p>Claude wasn’t allowed to use <code class="language-plaintext highlighter-rouge">@Service</code> or <code class="language-plaintext highlighter-rouge">@Component</code> on core business logic. Instead it wires dependencies by hand in a configuration class:</p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// account/config/AccountConfig.java</span>
 <span class="nd">@Configuration</span>
@@ -784,7 +782,7 @@ graph LR
 
 <h3 id="guardrail-c-persistent-database-models-vs-domain-models">Guardrail C: Persistent Database Models vs Domain Models</h3>
 
-<p>To avoid attaching <code class="language-plaintext highlighter-rouge">@Entity</code> to a domain object (which allows bad states to bypass business invariants), Claude maintained two separate class structures:</p>
+<p>Putting <code class="language-plaintext highlighter-rouge">@Entity</code> on a domain object lets invalid states slip past business rules, so Claude kept two separate sets of classes:</p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// account/adapter/outbound/persistence/AccountJpaEntity.java</span>
 <span class="nd">@Entity</span>
@@ -802,7 +800,7 @@ graph LR
 
 <h3 id="guardrail-d-anti-corruption-layers-bounded-context-isolation">Guardrail D: Anti-Corruption Layers (Bounded Context Isolation)</h3>
 
-<p>If the <code class="language-plaintext highlighter-rouge">budget</code> module needed <code class="language-plaintext highlighter-rouge">transaction</code> data, Claude had to build an explicit cross-context outbound port adapter — it could not directly import across bounded contexts:</p>
+<p>If the <code class="language-plaintext highlighter-rouge">budget</code> module needed <code class="language-plaintext highlighter-rouge">transaction</code> data, Claude had to build an outbound port and adapter. It couldn’t import across bounded contexts directly:</p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// budget/domain/port/outbound/TransactionSummaryPort.java</span>
 <span class="kd">public</span> <span class="kd">interface</span> <span class="nc">TransactionSummaryPort</span> <span class="o">{</span>
@@ -810,7 +808,7 @@ graph LR
 <span class="o">}</span>
 </code></pre></div></div>
 
-<p>No direct class import crosses the context boundary. The <code class="language-plaintext highlighter-rouge">budget</code> module only knows the port interface — the adapter that fulfils it lives entirely inside the <code class="language-plaintext highlighter-rouge">transaction</code> module:</p>
+<p>No class import crosses the boundary. The <code class="language-plaintext highlighter-rouge">budget</code> module knows only the port interface, and the adapter that implements it lives in the <code class="language-plaintext highlighter-rouge">transaction</code> module:</p>
 
 <pre><code class="language-mermaid">%%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#313244', 'primaryTextColor': '#CDD6F4', 'primaryBorderColor': '#89B4FA', 'lineColor': '#A6ADC8', 'secondaryColor': '#1E1E2E', 'background': '#1E1E2E', 'mainBkg': '#313244', 'clusterBkg': '#24243E', 'clusterBorder': '#45475A', 'titleColor': '#CDD6F4', 'edgeLabelBackground': '#1E1E2E', 'fontFamily': 'JetBrains Mono, monospace', 'fontSize': '15px'}}}%%
 flowchart LR
@@ -837,9 +835,9 @@ flowchart LR
 
 <h2 id="5-feature-spotlight-dynamic-budget-aggregation">5. Feature Spotlight: Dynamic Budget Aggregation</h2>
 
-<p><strong>The Challenge:</strong> Storing a physical <code class="language-plaintext highlighter-rouge">spentAmount</code> column on a Budget table is a classic beginner mistake — if you delete a transaction from 3 weeks ago, the budget’s <code class="language-plaintext highlighter-rouge">spentAmount</code> goes out of sync.</p>
+<p><strong>The problem:</strong> Storing a <code class="language-plaintext highlighter-rouge">spentAmount</code> column on a Budget table is a common mistake. Delete a transaction from three weeks ago and the stored figure is wrong.</p>
 
-<p><strong>The Solution:</strong> Because Claude Code was forced to follow the PRD, it leveraged Guardrail D to build a <strong>Runtime Synthesis Engine</strong> — dynamically computing usage on the fly rather than storing stale state:</p>
+<p><strong>The fix:</strong> Since Claude had to follow the PRD and the port rules from Guardrail D, it calculated usage when asked instead of storing it:</p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Inside BudgetQueryService (Domain logic)</span>
 <span class="nc">Money</span> <span class="n">spentThisPeriod</span> <span class="o">=</span> <span class="n">transactionSummaryPort</span><span class="o">.</span><span class="na">sumExpensesForCategory</span><span class="o">(</span>
@@ -869,11 +867,11 @@ BUILD SUCCESSFUL <span class="k">in </span>3s
 
 <hr />
 
-<h2 id="final-thoughts-from-chatbot-to-engineering-partner">Final Thoughts: From Chatbot to Engineering Partner</h2>
+<h2 id="what-i-took-from-it">What I took from it</h2>
 
-<p>Building a production-ready application with Claude Code CLI reveals a massive shift in how AI should be utilized for software engineering. By rejecting “vibe coding” and external MCP crutches, and instead relying on Claude Code’s native hooks, persistent memory, and <code class="language-plaintext highlighter-rouge">/compact</code> commands, I was able to enforce a rigid, 7-agent spec-driven environment.</p>
+<p>The biggest lesson is that AI works much better with constraints. Hooks, persistent memory, ArchUnit tests and an approval gate before any code did more for quality than any clever prompt.</p>
 
-<p>This process didn’t just build an app for me — it taught me how to properly design scalable databases, orchestrate Hexagonal solutions, and respect WCAG UX heuristics. By forcing Claude Code to respect pipeline personas and automated tests, you don’t just get an AI assistant that writes text files — you get a senior engineering team embedded directly in your terminal.</p>
+<p>I also learned a fair bit myself, about hexagonal architecture, database design and accessibility, because I had to write down the rules well enough for the agents to follow them. It isn’t a replacement for engineering judgment. The pipeline works because I defined the architecture and I read what comes out.</p>
 
 <p>Check out the full source: <a href="https://github.com/shanmuga-sundaram-n/personal-finance-tracker">github.com/shanmuga-sundaram-n/personal-finance-tracker</a></p>
 
