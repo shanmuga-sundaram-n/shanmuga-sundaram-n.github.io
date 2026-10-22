@@ -106,21 +106,23 @@
     }
 
     noResults.hidden = true;
+    let lastMonth = null;
     postsContainer.innerHTML = posts.map(function (post) {
-      const categories = (post.categories || []).map(function (c) {
-        return '<span>' + escapeHtml(c) + '</span>';
-      }).join(', ');
+      let excerpt = post.description || post.excerpt || '';
+      if (excerpt.length > 110) excerpt = excerpt.slice(0, 109).trim() + '\u2026';
 
-      const excerpt = post.description || post.excerpt || '';
+      // Show the month only on the first post of each month
+      const showMonth = post.month !== lastMonth;
+      lastMonth = post.month;
 
-      return '<article class="post-card">' +
-        '<div class="post-meta">' +
-        '<span><i class="far fa-calendar"></i> ' + escapeHtml(post.date) + '</span>' +
-        (categories ? '<span><i class="fas fa-folder"></i> ' + categories + '</span>' : '') +
+      return '<article class="writing-item">' +
+        (showMonth
+          ? '<time datetime="' + escapeHtml(post.month) + '">' + escapeHtml(post.monthLabel) + '</time>'
+          : '<span aria-hidden="true"></span>') +
+        '<div>' +
+        '<h3 class="writing-item-title"><a href="' + post.url + '">' + escapeHtml(post.title) + '</a></h3>' +
+        '<p>' + escapeHtml(excerpt) + '</p>' +
         '</div>' +
-        '<h3 class="post-title"><a href="' + post.url + '">' + escapeHtml(post.title) + '</a></h3>' +
-        '<p class="post-excerpt">' + escapeHtml(excerpt) + '</p>' +
-        '<a href="' + post.url + '" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>' +
         '</article>';
     }).join('');
   }

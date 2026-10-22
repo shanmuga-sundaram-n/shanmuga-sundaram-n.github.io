@@ -62,34 +62,33 @@ layout: default
 
 
 <!-- Latest Blog Posts -->
+{% assign latest = site.posts.first %}
 <section class="section">
     <div class="container">
-        <div class="section-header">
-            <h2 class="section-title">Latest Blog Posts</h2>
-            <p class="section-subtitle">Thoughts, tutorials, and insights</p>
+        <div class="writing-head">
+            <h2 class="section-title">Latest Blogs</h2>
+            <a href="{{ '/blog/' | relative_url }}" class="writing-all">All blogs</a>
         </div>
 
-        <div class="grid grid-2">
-            {% for post in site.posts limit:3 %}
-            <article class="post-card">
-                <div class="post-meta">
-                    <span><i class="far fa-calendar"></i> {{ post.date | date: "%B %d, %Y" }}</span>
-                </div>
-                <h3 class="post-title">
-                    <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-                </h3>
-                <p class="post-excerpt">{{ post.excerpt | strip_html | truncate: 150 }}</p>
-                <a href="{{ post.url | relative_url }}" class="read-more">
-                    Read More <i class="fas fa-arrow-right"></i>
-                </a>
+        <div class="writing">
+            <article class="writing-featured">
+                <p class="writing-kicker">Latest{% if latest.categories.first %} · {{ latest.categories.first }}{% endif %}</p>
+                <h3 class="writing-featured-title"><a href="{{ latest.url | relative_url }}">{{ latest.title }}</a></h3>
+                <p class="writing-featured-text">{{ latest.description | default: latest.excerpt | strip_html | truncate: 230 }}</p>
+                <p class="writing-meta">{{ latest.date | date: "%-d %B %Y" }} · {{ latest.content | number_of_words | divided_by: 200 | plus: 1 }} min read</p>
             </article>
-            {% endfor %}
-        </div>
 
-        <div class="text-center mt-xl">
-            <a href="{{ '/blog/' | relative_url }}" class="btn btn-outline">
-                View All Posts <i class="fas fa-arrow-right"></i>
-            </a>
+            <ol class="writing-list">
+                {% for post in site.posts offset: 1 limit: 4 %}
+                <li class="writing-item">
+                    <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %Y" }}</time>
+                    <div>
+                        <h3 class="writing-item-title"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+                        <p>{{ post.description | default: post.excerpt | strip_html | truncate: 110 }}</p>
+                    </div>
+                </li>
+                {% endfor %}
+            </ol>
         </div>
     </div>
 </section>

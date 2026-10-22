@@ -130,7 +130,6 @@
   <main>
     <div class="hero hero-home">
     <div class="hero-background"></div>
-    <div class="hero-gradient"></div>
 
     <div class="hero-content hero-split container">
         <div class="hero-text-wrapper">
@@ -189,62 +188,57 @@
 
 
 <!-- Latest Blog Posts -->
+
 <section class="section">
     <div class="container">
-        <div class="section-header">
-            <h2 class="section-title">Latest Blog Posts</h2>
-            <p class="section-subtitle">Thoughts, tutorials, and insights</p>
+        <div class="writing-head">
+            <h2 class="section-title">Latest Blogs</h2>
+            <a href="/blog/" class="writing-all">All blogs</a>
         </div>
 
-        <div class="grid grid-2">
-            
-            <article class="post-card">
-                <div class="post-meta">
-                    <span><i class="far fa-calendar"></i> August 11, 2026</span>
-                </div>
-                <h3 class="post-title">
-                    <a href="/blog/2026/08/11/harness-engineering-and-loop-engineering/">Harness Engineering and Loop Engineering: The Layer Between an LLM and Real Work</a>
-                </h3>
-                <p class="post-excerpt">Start with what an AI agent actually is, because the term gets thrown around loosely. An agent is a language model (an LLM — the kind of AI behind ...</p>
-                <a href="/blog/2026/08/11/harness-engineering-and-loop-engineering/" class="read-more">
-                    Read More <i class="fas fa-arrow-right"></i>
-                </a>
+        <div class="writing">
+            <article class="writing-featured">
+                <p class="writing-kicker">Latest · ai</p>
+                <h3 class="writing-featured-title"><a href="/blog/2026/10/20/stop-using-llm-for-everything-jev-ai/">Stop Using a Language Model for Everything. Here's What I Use Instead.</a></h3>
+                <p class="writing-featured-text">Most enterprise agent pipelines route every AI call through an LLM. After profiling a production pipeline, I found 80% of those calls were structured decision work that didn't need generative capability at all. Here's what I us...</p>
+                <p class="writing-meta">20 October 2026 · 5 min read</p>
             </article>
-            
-            <article class="post-card">
-                <div class="post-meta">
-                    <span><i class="far fa-calendar"></i> June 06, 2026</span>
-                </div>
-                <h3 class="post-title">
-                    <a href="/blog/2026/06/06/sdlc-factory-autonomous-multi-agent-pipeline/">SDLC Factory: Autonomous Software Delivery with AI Agents</a>
-                </h3>
-                <p class="post-excerpt">Software delivery has a translation problem. An idea starts clear in someone’s head, gets degraded through six rounds of meetings, three Confluence...</p>
-                <a href="/blog/2026/06/06/sdlc-factory-autonomous-multi-agent-pipeline/" class="read-more">
-                    Read More <i class="fas fa-arrow-right"></i>
-                </a>
-            </article>
-            
-            <article class="post-card">
-                <div class="post-meta">
-                    <span><i class="far fa-calendar"></i> April 01, 2026</span>
-                </div>
-                <h3 class="post-title">
-                    <a href="/blog/2026/04/01/why-teams-fail-at-collaboration-ddd/">Why Most Teams Fail at Collaboration — And How Domain-Driven Design Fixes It</a>
-                </h3>
-                <p class="post-excerpt">Let me tell you about a bug that took three weeks to track down.
 
-</p>
-                <a href="/blog/2026/04/01/why-teams-fail-at-collaboration-ddd/" class="read-more">
-                    Read More <i class="fas fa-arrow-right"></i>
-                </a>
-            </article>
-            
-        </div>
-
-        <div class="text-center mt-xl">
-            <a href="/blog/" class="btn btn-outline">
-                View All Posts <i class="fas fa-arrow-right"></i>
-            </a>
+            <ol class="writing-list">
+                
+                <li class="writing-item">
+                    <time datetime="2026-08-11T14:30:00+05:30">Aug 2026</time>
+                    <div>
+                        <h3 class="writing-item-title"><a href="/blog/2026/08/11/harness-engineering-and-loop-engineering/">Harness Engineering and Loop Engineering: The Layer Between an LLM and Real Work</a></h3>
+                        <p>Prompt engineering gets a language model to say the right thing once. Harness engineering and loop engineer...</p>
+                    </div>
+                </li>
+                
+                <li class="writing-item">
+                    <time datetime="2026-06-06T14:30:00+05:30">Jun 2026</time>
+                    <div>
+                        <h3 class="writing-item-title"><a href="/blog/2026/06/06/sdlc-factory-autonomous-multi-agent-pipeline/">SDLC Factory: Autonomous Software Delivery with AI Agents</a></h3>
+                        <p>A deep technical walkthrough of SDLC Factory — an autonomous AI pipeline that transforms plain-English prod...</p>
+                    </div>
+                </li>
+                
+                <li class="writing-item">
+                    <time datetime="2026-04-01T17:30:00+05:30">Apr 2026</time>
+                    <div>
+                        <h3 class="writing-item-title"><a href="/blog/2026/04/01/why-teams-fail-at-collaboration-ddd/">Why Most Teams Fail at Collaboration — And How Domain-Driven Design Fixes It</a></h3>
+                        <p>Three teams. One database column. Three different mental models — until it all broke at 2am. Here's how Dom...</p>
+                    </div>
+                </li>
+                
+                <li class="writing-item">
+                    <time datetime="2026-03-21T17:30:00+05:30">Mar 2026</time>
+                    <div>
+                        <h3 class="writing-item-title"><a href="/blog/2026/03/21/building-production-rag-pipeline/">Building RAG That Actually Works: Lessons from the Trenches</a></h3>
+                        <p>A practitioner's guide to building production-grade RAG pipelines — covering chunking strategy, retrieval t...</p>
+                    </div>
+                </li>
+                
+            </ol>
         </div>
     </div>
 </section>
