@@ -4,33 +4,33 @@ title: "SDLC Factory: Autonomous Software Delivery with AI Agents"
 date: 2026-06-06 09:00:00 +0000
 categories: [ai, engineering, agents]
 tags: [multi-agent, llm, sdlc, claude, openai, python, fastapi, sqlite, devops, agentic-ai]
-description: "A deep technical walkthrough of SDLC Factory — an autonomous AI pipeline that transforms plain-English product ideas into production-ready software through 10 specialized agents, structured artifact contracts, and human-in-the-loop governance gates."
+description: "A deep technical walkthrough of SDLC Factory, an autonomous AI pipeline that transforms plain-English product ideas into production-ready software through 10 specialized agents, structured artifact contracts, and human-in-the-loop governance gates."
 ---
 
-Software delivery has a translation problem. An idea starts clear in someone's head, gets degraded through six rounds of meetings, three Confluence pages, a Jira backlog nobody reads, and ends up as code that solves last quarter's version of the problem. Even when teams work well together, the handoffs between product, architecture, development, and QA introduce latency and information loss at every boundary.
+Software delivery loses information at every handoff. An idea starts out clear in someone's head, goes through six meetings, three Confluence pages and a Jira backlog nobody reads, and ends up as code that solves last quarter's version of the problem. Even good teams lose time and detail at each boundary between product, architecture, development and QA.
 
-I spent the last few months building something to attack this problem head-on: **SDLC Factory** — an autonomous multi-agent system that takes a plain-English product idea and drives it through a full software delivery pipeline using 10 specialized AI agents, enforced artifact contracts between every stage, and human approval gates where it actually matters.
+Over the last few months I've been building something to attack this: **SDLC Factory**. It takes a plain-English product idea and drives it through a full delivery pipeline using 10 specialised AI agents, enforced artifact contracts between stages, and human approval gates at the points that matter.
 
-This isn't a wrapper around a chatbot. It's a structured pipeline with real engineering discipline baked in — parallel development threads, a QA auto-fix loop, context compression for long conversations, prompt injection scanning, multi-tenant isolation, and a cost tracker. This post walks through how I built it, the design decisions that mattered, and the things I got wrong the first time.
-
----
-
-## The Problem With Existing Agentic Approaches
-
-Most "AI coding agents" today are either:
-
-1. **Single-agent loops** — one model doing everything: requirements, design, code, tests. It loses track of what it decided three pages ago and produces code that doesn't match its own spec.
-2. **Unstructured multi-agent systems** — agents that can spawn sub-agents freely, pass arbitrary messages, and coordinate through natural language. Sounds powerful; in practice, the coordination overhead eats the gains and debugging is a nightmare.
-
-Neither of these enforces that *the output of one stage is a valid input to the next*. Requirements drift from architecture. Architecture drifts from code. There's no contract.
-
-SDLC Factory enforces contracts. Every stage produces a JSON artifact validated against a schema. The next stage gets only what it needs from prior stages — no raw conversation history, no hallucinated context. Structured handoffs, like real engineering.
+It's more than a chatbot wrapper. It has parallel development threads, a QA auto-fix loop, context compression for long conversations, prompt injection scanning, multi-tenant isolation and a cost tracker. This post covers how I built it, the design decisions that mattered, and what I got wrong the first time.
 
 ---
 
-## System Architecture: The Full Layer Map
+## What's wrong with the usual approaches
 
-Before diving into individual components, here's how the whole system fits together:
+Most AI coding agents I've seen fall into one of two camps:
+
+1. **Single-agent loops.** One model does everything: requirements, design, code and tests. It forgets what it decided three pages ago and writes code that doesn't match its own spec.
+2. **Unstructured multi-agent systems.** Agents spawn sub-agents freely and coordinate in natural language. It sounds powerful, but in my experience the coordination overhead eats the gains and debugging is painful.
+
+Neither guarantees that the output of one stage is valid input for the next. Requirements drift from the architecture, and the architecture drifts from the code. There's no contract.
+
+SDLC Factory enforces one. Every stage produces a JSON artifact validated against a schema, and the next stage gets only what it needs from earlier stages. It never sees the raw conversation history.
+
+---
+
+## System architecture
+
+Here's how the whole system fits together:
 
 ```mermaid
 %%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#313244', 'primaryTextColor': '#CDD6F4', 'primaryBorderColor': '#89B4FA', 'lineColor': '#A6ADC8', 'secondaryColor': '#1E1E2E', 'background': '#1E1E2E', 'mainBkg': '#313244', 'clusterBkg': '#24243E', 'clusterBorder': '#45475A', 'titleColor': '#CDD6F4', 'edgeLabelBackground': '#1E1E2E', 'fontFamily': 'JetBrains Mono, monospace', 'fontSize': '13px'}}}%%
@@ -93,7 +93,7 @@ flowchart TB
     Runtime --> Tel
 ```
 
-Each layer has a single responsibility and communicates upward through structured interfaces — no layer talks to a non-adjacent layer directly.
+Each layer has one job, and no layer talks to a non-adjacent one.
 
 ---
 
@@ -225,11 +225,11 @@ classDiagram
 ```
 
 Every subclass declares:
-- `OUTPUT_SCHEMA` — JSON Schema that the runtime validates the artifact against before advancing
-- `ENABLED_TOOLSETS` — scoped tool access (read-only roles like Architect can't call `terminal`)
-- `prior_stages()` — which prior artifacts get injected into this agent's context
+- `OUTPUT_SCHEMA`, JSON Schema that the runtime validates the artifact against before advancing
+- `ENABLED_TOOLSETS`, scoped tool access (read-only roles like Architect can't call `terminal`)
+- `prior_stages()`, which prior artifacts get injected into this agent's context
 
-`prior_stages()` is the key. The Architect sees the glossary and business requirements. It does not see the Product Owner's raw conversation. No noise, no hallucination amplification.
+`prior_stages()` matters most here. The Architect sees the glossary and business requirements but not the Product Owner's raw conversation, so there's less noise for it to build on.
 
 ```python
 class ArchitectAgent(BaseSDLCAgent):
@@ -255,7 +255,7 @@ class ArchitectAgent(BaseSDLCAgent):
 
 ## Three-Tier Memory System
 
-Instead of dumping everything into one context window, the pipeline uses a three-tier memory system that routes the right context to the right agent:
+Rather than dumping everything into one context window, the pipeline uses three tiers of memory so each agent gets the right context:
 
 ```mermaid
 %%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#313244', 'primaryTextColor': '#CDD6F4', 'primaryBorderColor': '#89B4FA', 'lineColor': '#A6ADC8', 'secondaryColor': '#1E1E2E', 'background': '#1E1E2E', 'mainBkg': '#313244', 'clusterBkg': '#24243E', 'clusterBorder': '#45475A', 'titleColor': '#CDD6F4', 'edgeLabelBackground': '#1E1E2E', 'fontFamily': 'JetBrains Mono, monospace', 'fontSize': '13px'}}}%%
@@ -284,11 +284,11 @@ graph LR
     T3 -->|task metadata| AG
 ```
 
-**Tier 1 — Project Memory** (`PROJECT_MEMORY.md`): Written by the Domain Expert on the first turn. Contains the shared glossary, bounded contexts, and project conventions. Injected into *every* agent's system prompt, verbatim. This is the shared language of the project.
+**Tier 1, Project Memory** (`PROJECT_MEMORY.md`): Written by the Domain Expert on the first turn. Contains the shared glossary, bounded contexts, and project conventions. Injected into *every* agent's system prompt, verbatim. This is the shared language of the project.
 
-**Tier 2 — Artifact Bundle** (SQLite + in-memory): Each completed stage writes a validated JSON artifact. Agents receive only the stages listed in their `prior_stages()` declaration, injected as `<stage-context>` fence blocks. A `StreamingContextScrubber` strips these tags from the model's output in real-time to prevent the agent from echoing context blocks back.
+**Tier 2, Artifact Bundle** (SQLite + in-memory): Each completed stage writes a validated JSON artifact. Agents receive only the stages listed in their `prior_stages()` declaration, injected as `<stage-context>` fence blocks. A `StreamingContextScrubber` strips these tags from the model's output in real-time to prevent the agent from echoing context blocks back.
 
-**Tier 3 — Kanban Blackboard** (SQLite): Used by parallel development agents to coordinate without sharing message histories. Developers post task state transitions (ready → in_progress → done) and JSON comments. The parent dispatcher reads the board; individual agents never see each other's prompts.
+**Tier 3, Kanban Blackboard** (SQLite): Used by parallel development agents to coordinate without sharing message histories. Developers post task state transitions (ready → in_progress → done) and JSON comments. The parent dispatcher reads the board; individual agents never see each other's prompts.
 
 ---
 
@@ -325,10 +325,10 @@ flowchart TD
 ```
 
 Each developer thread:
-1. Gets a **fresh message history** — zero cross-agent context leak
+1. Gets a **fresh message history**, zero cross-agent context leak
 2. Is scoped to `output/<run_id>/src/<task_id>/` with path traversal protection
-3. Coordinates only via kanban task state — no direct inter-agent communication
-4. Has `clarify`, `send_message`, and `delegate_task` tools blocked — no recursive sub-agent spawning
+3. Coordinates only via kanban task state, no direct inter-agent communication
+4. Has `clarify`, `send_message`, and `delegate_task` tools blocked, no recursive sub-agent spawning
 
 ```python
 # core/pipeline.py
@@ -347,9 +347,7 @@ The first version had all three developers writing to a shared directory. They c
 
 ## The QA Auto-Fix Loop
 
-When QA fails, most pipelines stop and wait for a human. That's right for some failures. It's wrong for the 80% of failures that are fixable in one pass — a missing import, a mismatched API signature, a forgotten migration.
-
-The QA loop handles this automatically:
+When QA fails, most pipelines stop and wait for a human. That's right for some failures, but many are simple to fix in one pass: a missing import, a mismatched API signature, a forgotten migration. The QA loop handles those automatically:
 
 ```mermaid
 %%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#313244', 'primaryTextColor': '#CDD6F4', 'primaryBorderColor': '#89B4FA', 'lineColor': '#A6ADC8', 'secondaryColor': '#1E1E2E', 'background': '#1E1E2E', 'mainBkg': '#313244', 'clusterBkg': '#24243E', 'clusterBorder': '#45475A', 'titleColor': '#CDD6F4', 'edgeLabelBackground': '#1E1E2E', 'fontFamily': 'JetBrains Mono, monospace', 'fontSize': '13px'}}}%%
@@ -372,7 +370,7 @@ flowchart TD
     ITER -->|no| ESC["escalated_to_hitl = true\nPause for human review"]:::gate
 ```
 
-The key is "group by owning developer task." Each developer wrote code under their namespace. When those tests fail, the fix goes back to that developer — not to a generic fix agent that doesn't know the codebase structure.
+The key is "group by owning developer task." Each developer wrote code under their namespace. When those tests fail, the fix goes back to that developer, not to a generic fix agent that doesn't know the codebase structure.
 
 ```python
 # core/qa_loop.py
@@ -390,13 +388,13 @@ class QALoop:
         return report
 ```
 
-Three iterations handles almost everything I've tested against. If a fourth is needed, it's usually a design issue — which means a human should look at it.
+Three iterations has covered almost everything I've tested. If it needs a fourth, it's usually a design problem, and a human should look at it.
 
 ---
 
 ## HITL Governance: Five Modes, One Interface
 
-Human-in-the-loop gates exist at Requirements, Architecture, Quality Gate, and Delivery. "Human in the loop" means different things in different contexts — CLI prompt for solo dev, Slack reaction for team review, webhook for enterprise approval systems. All five modes sit behind a single interface:
+Human-in-the-loop gates exist at Requirements, Architecture, Quality Gate, and Delivery. "Human in the loop" means different things in different contexts, CLI prompt for solo dev, Slack reaction for team review, webhook for enterprise approval systems. All five modes sit behind a single interface:
 
 ```mermaid
 %%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#313244', 'primaryTextColor': '#CDD6F4', 'primaryBorderColor': '#89B4FA', 'lineColor': '#A6ADC8', 'secondaryColor': '#1E1E2E', 'background': '#1E1E2E', 'mainBkg': '#313244', 'clusterBkg': '#24243E', 'clusterBorder': '#45475A', 'titleColor': '#CDD6F4', 'edgeLabelBackground': '#1E1E2E', 'fontFamily': 'JetBrains Mono, monospace', 'fontSize': '13px'}}}%%
@@ -428,7 +426,7 @@ flowchart TD
     AMD --> LOG
 ```
 
-The `AMENDED` decision is the one that makes the system practical. If a reviewer fixes an ADR or adjusts an API contract, the pipeline mutates the artifact in-place, clears downstream stages, and continues from that point. You're not blocked waiting for the agent to regenerate something — you fix it yourself and move on. Every decision is immutably recorded with actor and rationale.
+The `AMENDED` decision is what made the system usable. If a reviewer fixes an ADR or adjusts an API contract, the pipeline mutates the artifact in-place, clears downstream stages, and continues from that point. You're not blocked waiting for the agent to regenerate something, you fix it yourself and move on. Every decision is immutably recorded with actor and rationale.
 
 ```python
 # gateway/hitl.py
@@ -457,7 +455,7 @@ Developer agents on large projects can burn through a context window. A backend 
 
 1. Monitor token count after every turn
 2. When count exceeds 80% of model limit, trigger compression
-3. Run an auxiliary model (Haiku — fast, cheap) to summarize the middle turns
+3. Run an auxiliary model (Haiku, fast, cheap) to summarize the middle turns
 4. Preserve: system prompt (head) + last 2,000 tokens (tail)
 5. Inject a structured `[STAGE COMPACTION]` block:
 
@@ -469,7 +467,7 @@ Open Questions: rate limiting strategy — defaulting to 100 req/min per user
 Remaining Work: unit tests, integration tests, OpenAPI docs
 ```
 
-The agent continues from this compact summary without seeing the full history. The model picks up the structured summary the same way a developer picks up a standup note. In testing, quality after compaction is nearly identical to without it.
+The agent carries on from this summary without the full history, much as a developer picks up from a standup note. In my testing the quality after compaction was close to what it was before.
 
 ---
 
@@ -493,7 +491,7 @@ Every agent turn emits a structured JSON log to stdout:
 }
 ```
 
-Optional OpenTelemetry integration adds distributed tracing across the full pipeline. The OTel SDK is an optional dependency — if not installed, a `_NoOpTracer` silently takes over with zero performance cost:
+Optional OpenTelemetry integration adds distributed tracing across the full pipeline. The OTel SDK is an optional dependency, if not installed, a `_NoOpTracer` silently takes over with zero performance cost:
 
 ```mermaid
 %%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#313244', 'primaryTextColor': '#CDD6F4', 'primaryBorderColor': '#89B4FA', 'lineColor': '#A6ADC8', 'secondaryColor': '#1E1E2E', 'background': '#1E1E2E', 'mainBkg': '#313244', 'clusterBkg': '#24243E', 'clusterBorder': '#45475A', 'titleColor': '#CDD6F4', 'edgeLabelBackground': '#1E1E2E', 'fontFamily': 'JetBrains Mono, monospace', 'fontSize': '13px'}}}%%
@@ -547,13 +545,13 @@ def scan_for_injection(idea: str) -> None:
             raise PromptInjectionError(f"Input rejected: matched pattern '{pattern}'")
 ```
 
-The scan runs before the run_id is created — no audit trail entry, no database record, no token spend.
+The scan runs before the run_id is created, no audit trail entry, no database record, no token spend.
 
 ---
 
 ## SQLite as the Persistence Backbone
 
-I spent about ten minutes considering PostgreSQL. Then I remembered this is a pipeline, not a web server. Concurrency is bounded — a handful of parallel developer threads. SQLite in WAL mode handles this with zero setup.
+I spent about ten minutes considering PostgreSQL. Then I remembered this is a pipeline, not a web server. Concurrency is bounded, a handful of parallel developer threads. SQLite in WAL mode handles this with zero setup.
 
 ```sql
 -- 7 tables in pipeline.db
@@ -581,7 +579,7 @@ def _execute_with_retry(self, query, params=(), max_attempts=5):
     raise RuntimeError("DB lock not released after max retries")
 ```
 
-FTS5 on `stage_artifacts` lets you search all artifact content with a single query — find every run that mentioned a specific API endpoint or technology.
+FTS5 on `stage_artifacts` lets you search all artifact content with a single query, find every run that mentioned a specific API endpoint or technology.
 
 ---
 
@@ -607,7 +605,7 @@ class CredentialPool:
             return key
 ```
 
-On a 429 response, rotate to the next key and retry immediately. On 5xx, exponential backoff on the same key. On auth or context-length errors, raise immediately — retrying won't help.
+On a 429 response, rotate to the next key and retry immediately. On 5xx, exponential backoff on the same key. On auth or context-length errors, raise immediately, retrying won't help.
 
 ---
 
@@ -687,55 +685,55 @@ python sdlc.py ui --host 127.0.0.1 --port 7474
 
 ## Web Dashboard
 
-The `sdlc.py ui` command launches a FastAPI web server with a real-time dashboard. Pipeline runs auto-refresh every few seconds — you can track status, stage progress, and cost without touching the CLI.
+The `sdlc.py ui` command launches a FastAPI web server with a real-time dashboard. Pipeline runs auto-refresh every few seconds, you can track status, stage progress, and cost without touching the CLI.
 
-![SDLC Factory Dashboard — Pipeline Runs overview with status cards](/assets/images/projects/sdlc-factory-ui.png)
+![SDLC Factory Dashboard, Pipeline Runs overview with status cards](/assets/images/projects/sdlc-factory-ui.png)
 
 The dashboard shows all runs with their current stage, status badge (Running / Completed / Failed / Paused), start time, and duration. The stat cards at the top give a live count across all states so you can see at a glance what's in-flight.
 
-Clicking a run opens the run detail view — a stage pipeline with clickable nodes, each revealing its artifact, kanban tasks, audit trail, and cost breakdown in tabbed panels.
+Clicking a run opens the run detail view, a stage pipeline with clickable nodes, each revealing its artifact, kanban tasks, audit trail, and cost breakdown in tabbed panels.
 
-![SDLC Factory Run Detail — stage pipeline with 7 stages, HITL gates highlighted, artifact JSON viewer](/assets/images/projects/sdlc-factory-pipeline.png)
+![SDLC Factory Run Detail, stage pipeline with 7 stages, HITL gates highlighted, artifact JSON viewer](/assets/images/projects/sdlc-factory-pipeline.png)
 
 The pipeline progress bar shows all 7 stages. Stages with HITL gates are marked with a ⏸ GATE label. Approved stages show who signed off (pipeline auto-approve vs. human operator) and the timestamp. The Architecture stage here was reviewed and approved via CLI with the rationale recorded.
 
 ### HITL Audit Log
 
-Every gate decision — Approved, Rejected, or Amended — is timestamped and stored. The audit log view shows the full decision history for a run:
+Every gate decision, Approved, Rejected, or Amended, is timestamped and stored. The audit log view shows the full decision history for a run:
 
-![SDLC Factory Audit Log — HITL gate decisions with timeline, actors, and rationale](/assets/images/projects/sdlc-factory-audit.png)
+![SDLC Factory Audit Log, HITL gate decisions with timeline, actors, and rationale](/assets/images/projects/sdlc-factory-audit.png)
 
-Rejections with `cli: interrupted` are operator-side ctrl+C interrupts before the gate prompt completed — the pipeline pauses and re-presents the gate on the next `resume`. Human approvals carry the actor name and rationale string verbatim.
+Rejections with `cli: interrupted` are operator-side ctrl+C interrupts before the gate prompt completed, the pipeline pauses and re-presents the gate on the next `resume`. Human approvals carry the actor name and rationale string verbatim.
 
 ### Kanban Blackboard
 
 During the parallel development stage, each developer agent claims tasks from a shared kanban board backed by SQLite. The board live-updates as agents progress:
 
-![SDLC Factory Kanban Board — development stage tasks across Pending, In Progress, Blocked, Done columns](/assets/images/projects/sdlc-factory-kanban.png)
+![SDLC Factory Kanban Board, development stage tasks across Pending, In Progress, Blocked, Done columns](/assets/images/projects/sdlc-factory-kanban.png)
 
-The 20 blocked tasks here reflect a provider API error (tool_results role mismatch) that stopped the development agents mid-iteration — exactly the kind of failure the checkpoint/resume system is designed to recover from.
+The 20 blocked tasks here reflect a provider API error (tool_results role mismatch) that stopped the development agents mid-iteration, exactly the kind of failure the checkpoint/resume system is designed to recover from.
 
 ### Token Usage and Cost
 
 Every agent turn records tokens in, tokens out, model used, and duration. The cost tab breaks this down by stage and role:
 
-![SDLC Factory Cost Breakdown — 49,717 tokens in, 36,307 out, $1.31 total across stages and models](/assets/images/projects/sdlc-factory-cost.png)
+![SDLC Factory Cost Breakdown, 49,717 tokens in, 36,307 out, $1.31 total across stages and models](/assets/images/projects/sdlc-factory-cost.png)
 
-Architecture is the most expensive stage ($0.77) because it uses Claude Opus with a large context window loading all prior discovery and requirements artifacts. The Business Analyst (requirements) comes second at $0.28 for the longest wall-clock run (~10 minutes). Development registers $0 here because the agents failed before making any API calls — cost tracking is per-turn so partially-completed agent runs are fully accounted for.
+Architecture is the most expensive stage ($0.77) because it uses Claude Opus with a large context window loading all prior discovery and requirements artifacts. The Business Analyst (requirements) comes second at $0.28 for the longest wall-clock run (~10 minutes). Development registers $0 here because the agents failed before making any API calls, cost tracking is per-turn so partially-completed agent runs are fully accounted for.
 
 ---
 
 ## What I Got Wrong (And Fixed)
 
-**Shared filesystem for parallel developers.** Three agents writing to the same directory clobbered each other's files within seconds. Fix: path-scoped namespacing — each developer owns `output/<run_id>/src/<task_id>/` exclusively, with path traversal validation on every write.
+**Shared filesystem for parallel developers.** Three agents writing to the same directory clobbered each other's files within seconds. Fix: path-scoped namespacing, each developer owns `output/<run_id>/src/<task_id>/` exclusively, with path traversal validation on every write.
 
-**Too much context injected too early.** Early versions injected all prior stage artifacts into every agent. The Architect was seeing the Product Owner's raw conversation. Context budgets burned on noise, agents hallucinated based on conversational artefacts rather than structured ones. Fix: the `prior_stages()` declaration — each agent gets only what it needs, as validated JSON.
+**Too much context injected too early.** Early versions injected all prior stage artifacts into every agent. The Architect was seeing the Product Owner's raw conversation. Context budgets burned on noise, agents hallucinated based on conversational artefacts rather than structured ones. Fix: the `prior_stages()` declaration, each agent gets only what it needs, as validated JSON.
 
-**No iteration budget.** Without a turn limit, agents on ambiguous tasks would loop indefinitely — rewriting the same file, retrying the same tool call, asking clarifying questions to themselves. Fix: `IterationBudget` with role-appropriate defaults (50 turns for Architect, 30 for developers, 20 for others).
+**No iteration budget.** Without a turn limit, agents on ambiguous tasks would loop indefinitely, rewriting the same file, retrying the same tool call, asking clarifying questions to themselves. Fix: `IterationBudget` with role-appropriate defaults (50 turns for Architect, 30 for developers, 20 for others).
 
 **Sync SQLite under concurrent threads.** Without WAL mode and retry logic, concurrent developer threads deadlocked on DB writes constantly. Fix: WAL mode at connection open, jittered exponential backoff on `OperationalError`.
 
-**No AMENDED path in HITL.** Early gates had only APPROVED and REJECTED. Rejection meant restarting from scratch — far too heavy for "I want to tweak this one ADR." Adding the AMENDED path required rebuilding the gate interface but it's the feature that made the system practical.
+**No AMENDED path in HITL.** Early gates had only APPROVED and REJECTED. Rejection meant restarting from scratch, far too heavy for "I want to tweak this one ADR." Adding the AMENDED path required rebuilding the gate interface but it's the feature that made the system practical.
 
 ---
 
@@ -760,12 +758,12 @@ On crash or manual pause, `sdlc resume <run_id>` reloads all completed artifacts
 
 ---
 
-## Closing Thoughts
+## Closing thoughts
 
-Building SDLC Factory changed how I think about agentic systems. The instinct with AI agents is to give them maximum freedom — let them spawn sub-agents, share context freely, figure out coordination themselves. What I found is that the opposite is true for reliable pipelines: tight contracts, scoped context, enforced schemas, explicit coordination protocols.
+Building this changed how I think about agentic systems. My first instinct was to give the agents as much freedom as possible: let them spawn sub-agents, share context and work out coordination themselves. For a reliable pipeline, the opposite worked better. Tight contracts, scoped context, enforced schemas and explicit coordination.
 
-The complexity in this system isn't in the agents — it's in the connective tissue. The three-tier memory system, the artifact contracts, the HITL gateway, the QA loop, the context compressor. Each was built to solve a specific failure mode I hit in an earlier version. None of them are glamorous. All of them are necessary.
+Most of the complexity isn't in the agents. It's in the glue: the memory tiers, the artifact contracts, the HITL gateway, the QA loop and the context compressor. Each one exists because of a specific failure in an earlier version. None of it is glamorous, and all of it is needed.
 
-If you're building agentic systems for production use, start with the handoffs, not the agents. Get the contracts right first. The agents are the easy part.
+If you're building agents for production, start with the handoffs rather than the agents. The agents themselves are the easier part.
 
 The full codebase is at [github.com/shanmuga-sundaram-n/sdlc-factory](https://github.com/shanmuga-sundaram-n/sdlc-factory). Questions and contributions welcome.

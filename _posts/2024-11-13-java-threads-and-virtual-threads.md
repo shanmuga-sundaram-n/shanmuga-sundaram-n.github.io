@@ -4,104 +4,64 @@ title: "Exploring Threads and Virtual Threads in Java: A Comprehensive Guide"
 date: 2024-11-13 12:00:00 +0000
 categories: [engineering, java]
 tags: [java, concurrency, virtual-threads, project-loom, performance]
-description: "A deep dive into traditional Java threads vs virtual threads (Project Loom) — how they work internally, when to use each, and why virtual threads are a game changer for I/O-bound applications."
+description: "A deep dive into traditional Java threads vs virtual threads (Project Loom), how they work internally, when to use each, and why virtual threads are a game changer for I/O-bound applications."
 image: "/assets/images/blog/java-virtual-threads.webp"
 ---
 
 ![Java Threads and Virtual Threads](/assets/images/blog/java-virtual-threads.webp)
 
-Java's concurrency model has undergone a significant evolution with the introduction of **virtual threads** in Java 19 (Project Loom). Understanding the difference between traditional threads and virtual threads is key to building scalable, efficient applications.
+Virtual threads arrived as a preview in Java 19 (Project Loom) and became final in Java 21. They're the biggest change to Java concurrency in a long time, so here is how I think about them next to the threads we've always had.
 
----
+## Platform threads
 
-## Traditional Java Threads (Platform Threads)
+A regular Java thread is a thin wrapper over an operating system thread. One Java thread maps to one kernel thread, each with its own stack, and the OS decides when it runs.
 
-Traditional threads — also called **platform threads** — are managed by the operating system and map directly to native OS threads.
+That's fine until you have a lot of them. Each thread costs a good chunk of memory, and the OS spends time switching between them. If a thread is blocked waiting for a database or an HTTP call, it still holds all of that. A few thousand threads is about where things start to hurt.
 
-**Key characteristics:**
-- Heavyweight: significant creation and management cost
-- Consume OS resources even when blocked on I/O
-- Limited scalability due to memory overhead per thread
-- Scheduled by the OS, incurring context-switching overhead
+## Virtual threads
 
-**Internal mechanics:**
-- Each Java thread maps 1:1 to a kernel-level thread with its own memory stack
-- The OS scheduler manages thread switching through context-switching
-- Synchronization occurs at the OS level
+A virtual thread is scheduled by the JVM, not the OS. The JVM runs them on a small pool of carrier threads, which are ordinary platform threads. Their stacks live on the heap and grow only as needed, so they're cheap. You can have millions.
 
-Thousands of threads quickly become inefficient — memory constraints and context-switching overheads degrade performance significantly.
+The important part is what happens on a blocking call. When a virtual thread waits on I/O, it unmounts from its carrier, and that carrier immediately picks up another virtual thread. When the I/O completes, the virtual thread is mounted again, maybe on a different carrier, and carries on.
 
----
-
-## Virtual Threads (Project Loom)
-
-Introduced in Java 19 and made production-ready in Java 21, **virtual threads** are user-mode threads managed by the JVM rather than the OS.
-
-**Key characteristics:**
-- Lightweight and inexpensive to create (millions can run simultaneously)
-- Yield control to the JVM when blocking, freeing carrier OS threads for other work
-- Managed by the JVM scheduler using a small pool of OS threads
-- Cooperative multitasking through yielding
-
-**Internal mechanics:**
-- No direct 1:1 mapping to OS threads
-- Use continuation-based scheduling backed by **carrier threads**
-- Stack frames stored in the Java heap — minimal per-thread overhead
-- When a virtual thread blocks (e.g., on I/O), it unmounts from the carrier thread, which immediately picks up another virtual thread
-
----
-
-## Side-by-Side Comparison
-
-| Aspect | Platform Threads | Virtual Threads |
-|--------|-----------------|-----------------|
-| Managed by | OS | JVM |
+| | Platform threads | Virtual threads |
+|---|---|---|
+| Scheduled by | OS | JVM |
 | Cost to create | High | Very low |
-| Scalability | Thousands | Millions |
-| Blocking behaviour | Blocks OS thread | Unmounts from carrier |
-| Memory overhead | Large (OS stack) | Small (heap) |
-| Best for | CPU-bound tasks | I/O-bound tasks |
+| Practical limit | Thousands | Millions |
+| When blocked | Holds an OS thread | Frees the carrier |
+| Stack memory | Large, fixed | Small, on the heap |
+| Good for | CPU-bound work | I/O-bound work |
 
----
+## A web server example
 
-## Practical Example: Web Server
+Say you handle 10,000 concurrent requests and each one spends most of its time waiting on a database.
 
-Consider a web server handling thousands of concurrent requests.
-
-**With platform threads:** Each request ties up an OS thread while waiting for database queries or network calls. With 10,000 concurrent requests, you need 10,000 OS threads — memory exhaustion becomes a real risk.
-
-**With virtual threads:** Each request gets its own virtual thread. When blocked on I/O, the virtual thread unmounts and the carrier thread immediately handles another request. You can handle 10,000 concurrent requests with just a handful of OS threads.
+With platform threads you need something like 10,000 OS threads, or a thread pool plus a queue and a lot of tuning. With virtual threads, each request gets its own thread and you write plain blocking code. The carriers stay busy because blocked requests step aside.
 
 ```java
-// Creating a virtual thread (Java 21)
+// One virtual thread
 Thread.ofVirtual().start(() -> {
-    // handle request — blocking I/O is fine here
     var result = database.query("SELECT ...");
     response.send(result);
 });
 
-// Or with ExecutorService
+// Or an executor that creates one per task
 try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
     executor.submit(() -> handleRequest(request));
 }
 ```
 
----
+This is the part I like most. You get the scalability people used to need reactive code for, and your code still reads top to bottom.
 
-## When to Use Each
+## When I'd use which
 
-**Use platform threads when:**
-- Your workload is CPU-bound (heavy computation, no blocking)
-- You have a small, fixed number of concurrent tasks
-- You need precise OS-level thread control
+Stay with platform threads for CPU-heavy work. If the task is crunching numbers and never waits, virtual threads add nothing, because you're limited by cores anyway. They also make sense when you need tight control over thread behaviour.
 
-**Use virtual threads when:**
-- Your workload is I/O-bound (database, network, file access)
-- You need high concurrency (web servers, microservices, messaging)
-- You want to simplify code by avoiding reactive/callback patterns
+Reach for virtual threads when the work is mostly waiting: database calls, HTTP calls, file access. Web servers and microservices are the obvious fit.
 
----
+Two things to watch for. Don't pool virtual threads, since they're meant to be created freely. And in Java 21, blocking inside a `synchronized` block pins the virtual thread to its carrier, which can hurt throughput. Newer JDK releases have been improving this, but it's worth checking on the version you run.
 
-## Key Takeaway
+## Summary
 
-Virtual threads don't replace platform threads — they complement them. For the vast majority of server-side Java applications that spend most time waiting on I/O, virtual threads offer a dramatic scalability improvement with minimal code changes. Project Loom effectively brings the simplicity of synchronous code to the scale of asynchronous systems.
+Virtual threads don't replace platform threads. They cover the large class of server code that mostly waits on I/O, and they let you write it in the simple blocking style while still scaling.

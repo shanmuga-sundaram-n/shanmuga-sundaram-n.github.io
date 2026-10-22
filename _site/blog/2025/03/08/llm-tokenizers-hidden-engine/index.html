@@ -27,13 +27,13 @@
 
   <!-- SEO Meta Tags -->
   <meta name="description"
-    content="Tokenizers are the invisible foundation of every large language model — shaping context limits, API costs, cross-lingual fairness, and model reasoning. Here's how they work and why they matter.">
+    content="Tokenizers are the invisible foundation of every large language model, shaping context limits, API costs, cross-lingual fairness, and model reasoning. Here's how they work and why they matter.">
   <meta name="author" content="Shanmuga Sundaram Natarajan (Shan)">
 
   <!-- Open Graph -->
   <meta property="og:title" content="LLM Tokenizers: The Hidden Engine Behind AI Language Models">
   <meta property="og:description"
-    content="Tokenizers are the invisible foundation of every large language model — shaping context limits, API costs, cross-lingual fairness, and model reasoning. Here's how they work and why they matter.">
+    content="Tokenizers are the invisible foundation of every large language model, shaping context limits, API costs, cross-lingual fairness, and model reasoning. Here's how they work and why they matter.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://shanmuga-sundaram-n.github.io/blog/2025/03/08/llm-tokenizers-hidden-engine/">
 
@@ -41,7 +41,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="LLM Tokenizers: The Hidden Engine Behind AI Language Models">
   <meta name="twitter:description"
-    content="Tokenizers are the invisible foundation of every large language model — shaping context limits, API costs, cross-lingual fairness, and model reasoning. Here's how they work and why they matter.">
+    content="Tokenizers are the invisible foundation of every large language model, shaping context limits, API costs, cross-lingual fairness, and model reasoning. Here's how they work and why they matter.">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="/assets/images/projects/website-logo-matched.png">
@@ -66,8 +66,8 @@
 <meta property="og:title" content="LLM Tokenizers: The Hidden Engine Behind AI Language Models" />
 <meta name="author" content="Shanmuga Sundaram Natarajan (Shan)" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Tokenizers are the invisible foundation of every large language model — shaping context limits, API costs, cross-lingual fairness, and model reasoning. Here’s how they work and why they matter." />
-<meta property="og:description" content="Tokenizers are the invisible foundation of every large language model — shaping context limits, API costs, cross-lingual fairness, and model reasoning. Here’s how they work and why they matter." />
+<meta name="description" content="Tokenizers are the invisible foundation of every large language model, shaping context limits, API costs, cross-lingual fairness, and model reasoning. Here’s how they work and why they matter." />
+<meta property="og:description" content="Tokenizers are the invisible foundation of every large language model, shaping context limits, API costs, cross-lingual fairness, and model reasoning. Here’s how they work and why they matter." />
 <link rel="canonical" href="https://shanmuga-sundaram-n.github.io/blog/2025/03/08/llm-tokenizers-hidden-engine/" />
 <meta property="og:url" content="https://shanmuga-sundaram-n.github.io/blog/2025/03/08/llm-tokenizers-hidden-engine/" />
 <meta property="og:site_name" content="Shanmuga Sundaram Natarajan’s Personal Website" />
@@ -78,7 +78,7 @@
 <meta property="twitter:image" content="https://shanmuga-sundaram-n.github.io/assets/images/blog/llm-tokenizers.webp" />
 <meta property="twitter:title" content="LLM Tokenizers: The Hidden Engine Behind AI Language Models" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Shanmuga Sundaram Natarajan (Shan)"},"dateModified":"2025-03-08T17:30:00+05:30","datePublished":"2025-03-08T17:30:00+05:30","description":"Tokenizers are the invisible foundation of every large language model — shaping context limits, API costs, cross-lingual fairness, and model reasoning. Here’s how they work and why they matter.","headline":"LLM Tokenizers: The Hidden Engine Behind AI Language Models","image":"https://shanmuga-sundaram-n.github.io/assets/images/blog/llm-tokenizers.webp","mainEntityOfPage":{"@type":"WebPage","@id":"https://shanmuga-sundaram-n.github.io/blog/2025/03/08/llm-tokenizers-hidden-engine/"},"url":"https://shanmuga-sundaram-n.github.io/blog/2025/03/08/llm-tokenizers-hidden-engine/"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Shanmuga Sundaram Natarajan (Shan)"},"dateModified":"2025-03-08T17:30:00+05:30","datePublished":"2025-03-08T17:30:00+05:30","description":"Tokenizers are the invisible foundation of every large language model, shaping context limits, API costs, cross-lingual fairness, and model reasoning. Here’s how they work and why they matter.","headline":"LLM Tokenizers: The Hidden Engine Behind AI Language Models","image":"https://shanmuga-sundaram-n.github.io/assets/images/blog/llm-tokenizers.webp","mainEntityOfPage":{"@type":"WebPage","@id":"https://shanmuga-sundaram-n.github.io/blog/2025/03/08/llm-tokenizers-hidden-engine/"},"url":"https://shanmuga-sundaram-n.github.io/blog/2025/03/08/llm-tokenizers-hidden-engine/"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -147,161 +147,70 @@
             <div class="post-content">
                 <p><img loading="lazy" decoding="async" src="/assets/images/blog/llm-tokenizers.webp" alt="LLM Tokenizers" /></p>
 
-<p>Every interaction with a large language model begins long before any neural network computation. It starts with <strong>tokenization</strong> — the process of converting human language into the numerical representations that models actually process. Understanding tokenizers unlocks a deeper understanding of why LLMs behave the way they do.</p>
+<p>A language model never sees your text. Before any neural network runs, the text is converted into numbers by a tokenizer. It’s easy to ignore, but it explains a lot about how LLMs behave and what they cost.</p>
 
-<hr />
+<h2 id="what-tokenization-is">What tokenization is</h2>
 
-<h2 id="what-is-tokenization">What is Tokenization?</h2>
+<p>The tokenizer splits text into pieces called tokens and maps each one to an ID from a fixed vocabulary. “Hello, world!” might become <code class="language-plaintext highlighter-rouge">[15496, 11, 995, 0]</code>. Those four numbers are all the model gets.</p>
 
-<p>Tokenization transforms text into discrete units called <strong>tokens</strong> — numerical representations the model can process. Rather than understanding words directly, models convert input into token IDs corresponding to entries in a vocabulary.</p>
+<h2 id="why-you-should-care">Why you should care</h2>
 
-<p>“Hello, world!” might become <code class="language-plaintext highlighter-rouge">[15496, 11, 995, 0]</code> — four numbers that the model processes as a sequence. The model never sees the original text; it only sees tokens.</p>
+<ul>
+  <li><strong>Context windows are measured in tokens</strong>, not words or characters.</li>
+  <li><strong>API pricing is per token</strong>, so how efficiently your text tokenizes affects the bill.</li>
+  <li><strong>Some languages are penalised.</strong> Text in languages that tokenize poorly uses up more of the context window and costs more.</li>
+  <li><strong>Code, maths and prose all tokenize differently</strong>, which affects how much of each you can fit.</li>
+</ul>
 
-<hr />
+<h2 id="three-approaches">Three approaches</h2>
 
-<h2 id="why-tokenization-matters">Why Tokenization Matters</h2>
+<h3 id="word-based">Word-based</h3>
 
-<p>The choice of tokenizer has profound downstream effects:</p>
+<p>Split on spaces and punctuation. It’s intuitive and simple, but the vocabulary gets enormous, and any word the tokenizer hasn’t seen is a problem. Languages with lots of compound words, such as German, Finnish and Turkish, suffer the most.</p>
+
+<h3 id="character-based">Character-based</h3>
+
+<p>Every character is a token, so “Hello world” becomes 11 tokens. The vocabulary is tiny and nothing is ever unknown. But sequences get five to ten times longer than with words, and the model has to work out meaning from individual letters, which is expensive.</p>
+
+<h3 id="subword">Subword</h3>
+
+<p>This is what modern models use, including GPT, Claude, Llama and Gemini. Words are broken into meaningful chunks: “Unlikeliest” might become <code class="language-plaintext highlighter-rouge">["Un", "likely", "est"]</code>.</p>
+
+<p>The most common algorithm is Byte-Pair Encoding (BPE):</p>
 
 <ol>
-  <li><strong>Context window capacity</strong> — the maximum text a model can process is measured in tokens, not words or characters</li>
-  <li><strong>API costs</strong> — most LLM APIs charge per token; tokenization efficiency directly affects cost</li>
-  <li><strong>Cross-lingual performance</strong> — languages with inefficient tokenization get fewer “thoughts” per context window</li>
-  <li><strong>Specialised content</strong> — code, mathematical notation, and domain-specific text tokenize very differently than prose</li>
+  <li>Start with single characters.</li>
+  <li>Count how often each adjacent pair occurs.</li>
+  <li>Merge the most frequent pair into a new token.</li>
+  <li>Repeat until you reach the target vocabulary size, typically 10,000 to 100,000.</li>
 </ol>
 
-<hr />
+<p>Common words end up as single tokens, rare words get split into pieces you can recognise, and the vocabulary stays manageable.</p>
 
-<h2 id="three-main-tokenization-approaches">Three Main Tokenization Approaches</h2>
+<h2 id="how-it-affects-models">How it affects models</h2>
 
-<h3 id="1-word-based-tokenization">1. Word-Based Tokenization</h3>
+<p><strong>Cost.</strong> Training, fine-tuning and inference all scale with token counts. The same prompt can tokenize differently from one model to another, so the price for identical content varies.</p>
 
-<p>The system scans text character-by-character, treating delimiters (spaces, punctuation) as token boundaries. “Hello world!” becomes individual word units.</p>
+<p><strong>Fairness across languages.</strong> This is the part that bothers me most. A tokenizer trained mostly on English handles English very efficiently. Thai, Arabic and many African languages often need far more tokens for the same content. That means higher cost, less room in the context window, and often worse quality because there was less data for them.</p>
 
-<p><strong>Advantages:</strong></p>
-<ul>
-  <li>Intuitive and semantically meaningful</li>
-  <li>Simple to implement</li>
-  <li>Efficient for common vocabulary</li>
-</ul>
+<p><strong>Reasoning.</strong> When one idea gets spread over many tokens, the model has to connect them through attention. Token boundaries that don’t line up with the meaning can also cause odd behaviour. This is part of why models are famously bad at things like counting letters in a word.</p>
 
-<p><strong>Limitations:</strong></p>
-<ul>
-  <li>Massive vocabularies for morphologically rich languages</li>
-  <li>Out-of-vocabulary (OOV) problems for rare or new words</li>
-  <li>Compound word challenges (German, Finnish, Turkish suffer most)</li>
-</ul>
-
-<hr />
-
-<h3 id="2-character-based-tokenization">2. Character-Based Tokenization</h3>
-
-<p>Each character becomes a token. “Hello world” breaks into 11 tokens: <code class="language-plaintext highlighter-rouge">H-e-l-l-o-[space]-w-o-r-l-d</code>.</p>
-
-<p><strong>Advantages:</strong></p>
-<ul>
-  <li>Tiny vocabulary (100–200 tokens covers most languages)</li>
-  <li>Eliminates unknown word problems entirely</li>
-</ul>
-
-<p><strong>Trade-offs:</strong></p>
-<ul>
-  <li>Sequences 5–10× longer than word-based</li>
-  <li>The model must reconstruct semantic meaning from individual characters</li>
-  <li>Higher computational cost for the same amount of text</li>
-</ul>
-
-<hr />
-
-<h3 id="3-subword-tokenization-the-modern-standard">3. Subword Tokenization (The Modern Standard)</h3>
-
-<p>Modern LLMs — GPT, Claude, Llama, Gemini — all use subword tokenization. Words are split into meaningful units: “Unlikeliest” becomes <code class="language-plaintext highlighter-rouge">["Un", "likely", "est"]</code>.</p>
-
-<p>The dominant algorithm is <strong>Byte-Pair Encoding (BPE)</strong>:</p>
-
-<ol>
-  <li>Start with a vocabulary of individual characters</li>
-  <li>Count the frequency of all adjacent token pairs</li>
-  <li>Merge the most common pair into a new token</li>
-  <li>Repeat until reaching the target vocabulary size (typically 10,000–100,000 tokens)</li>
-</ol>
-
-<p>The result: common words become single tokens, rare words get split into recognisable subword units, and the vocabulary is compact enough to be manageable.</p>
-
-<hr />
-
-<h2 id="impact-on-model-performance">Impact on Model Performance</h2>
-
-<h3 id="economic-implications">Economic Implications</h3>
-
-<p>Tokenization efficiency has real cost consequences:</p>
+<h2 id="practical-tips">Practical tips</h2>
 
 <ul>
-  <li><strong>Training efficiency</strong> improves with optimised tokenization</li>
-  <li><strong>Fine-tuning costs</strong> scale directly with tokens per training example</li>
-  <li><strong>Inference latency</strong> varies based on how a given input tokenizes</li>
+  <li>Look at your text in a tokenizer tool, such as OpenAI’s tokenizer playground, to see where the boundaries fall.</li>
+  <li>Expect prompts in different languages to cost different amounts.</li>
+  <li>Structured formats like JSON and markdown tend to tokenize reasonably well, but check rather than assume.</li>
+  <li>Remember that code tokenizes very differently from prose when you estimate size.</li>
 </ul>
 
-<p>A well-structured prompt in English might use significantly fewer tokens than an equivalent prompt in another language — directly affecting both cost and available reasoning capacity.</p>
+<h2 id="where-its-heading">Where it’s heading</h2>
 
-<h3 id="cross-lingual-disparities">Cross-Lingual Disparities</h3>
+<p>People are working on character-level fallbacks for rare words, tokenizers learned during pre-training, and models that work directly on bytes and skip tokenization altogether. I’d keep an eye on the byte-level work in particular.</p>
 
-<p>This is one of the most significant fairness issues in modern LLMs. Languages with less efficient tokenization:</p>
+<h2 id="wrapping-up">Wrapping up</h2>
 
-<ul>
-  <li>Get fewer reasoning steps within a fixed context window</li>
-  <li>Cost more per equivalent amount of text</li>
-  <li>May have lower model quality due to less training data representation</li>
-</ul>
-
-<p>English typically tokenizes very efficiently in models trained primarily on English text. Languages like Thai, Arabic, or many African languages often require significantly more tokens for equivalent content.</p>
-
-<h3 id="technical-effects-on-model-reasoning">Technical Effects on Model Reasoning</h3>
-
-<ul>
-  <li><strong>Attention dilution</strong> — when semantic units are spread across many tokens, the model’s attention mechanism must work harder to connect related concepts</li>
-  <li><strong>Boundary artifacts</strong> — token boundaries that misalign with semantic units can affect how the model processes meaning</li>
-  <li><strong>Embedding geometry</strong> — the choice of tokens shapes the internal representation of concepts in the model’s embedding space</li>
-</ul>
-
-<hr />
-
-<h2 id="practical-optimisation-strategies">Practical Optimisation Strategies</h2>
-
-<p><strong>For prompt engineering:</strong></p>
-<ul>
-  <li>Structure prompts with awareness of how your target language tokenizes</li>
-  <li>Use tokenizer visualisation tools (like OpenAI’s tokenizer playground) to inspect token boundaries</li>
-  <li>Prefer structured formats (JSON, markdown) that often tokenize efficiently</li>
-</ul>
-
-<p><strong>For data preparation:</strong></p>
-<ul>
-  <li>Select formats based on tokenization performance for your use case</li>
-  <li>Apply semantic compression — preserve meaning with fewer tokens where possible</li>
-  <li>Be aware that code tokenizes very differently than prose</li>
-</ul>
-
-<hr />
-
-<h2 id="the-future-of-tokenization">The Future of Tokenization</h2>
-
-<p>Emerging approaches are addressing current limitations:</p>
-
-<ul>
-  <li><strong>Character-level fallbacks</strong> for rare words and multilingual content</li>
-  <li><strong>Learned tokenizers</strong> that adapt during pre-training</li>
-  <li><strong>Semantic tokenization</strong> that incorporates meaning-based rather than purely frequency-based boundaries</li>
-  <li><strong>Byte-level models</strong> that operate directly on raw bytes, eliminating the tokenization step entirely</li>
-</ul>
-
-<hr />
-
-<h2 id="key-takeaway">Key Takeaway</h2>
-
-<p>Tokenization forms the crucial bridge between human language and machine understanding. It shapes everything from API costs to model reasoning depth to cross-lingual fairness — yet it’s almost entirely invisible to most users.</p>
-
-<p>Understanding how your text becomes tokens isn’t just an academic exercise. It directly informs better prompt design, more accurate cost estimation, and a clearer mental model of why LLMs behave the way they do.</p>
+<p>Tokenizers sit between human language and the model, and they shape cost, context limits and fairness across languages. You don’t need to understand BPE to use an LLM, but knowing it’s there makes a lot of strange behaviour make sense, and it helps you estimate costs more accurately.</p>
 
             </div>
 

@@ -27,13 +27,13 @@
 
   <!-- SEO Meta Tags -->
   <meta name="description"
-    content="Prompt engineering gets a language model to say the right thing once. Harness engineering and loop engineering get it to do the right thing repeatedly, safely, and to completion — explained from first principles, with a worked example, using Claude Code's observable behavior as the reference.">
+    content="Prompt engineering gets a language model to say the right thing once. Harness engineering and loop engineering get it to do the right thing repeatedly, safely, and to completion, explained from first principles, with a worked example, using Claude Code's observable behavior as the reference.">
   <meta name="author" content="Shanmuga Sundaram Natarajan (Shan)">
 
   <!-- Open Graph -->
   <meta property="og:title" content="Harness Engineering and Loop Engineering: The Layer Between an LLM and Real Work">
   <meta property="og:description"
-    content="Prompt engineering gets a language model to say the right thing once. Harness engineering and loop engineering get it to do the right thing repeatedly, safely, and to completion — explained from first principles, with a worked example, using Claude Code's observable behavior as the reference.">
+    content="Prompt engineering gets a language model to say the right thing once. Harness engineering and loop engineering get it to do the right thing repeatedly, safely, and to completion, explained from first principles, with a worked example, using Claude Code's observable behavior as the reference.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://shanmuga-sundaram-n.github.io/blog/2026/08/11/harness-engineering-and-loop-engineering/">
 
@@ -41,7 +41,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Harness Engineering and Loop Engineering: The Layer Between an LLM and Real Work">
   <meta name="twitter:description"
-    content="Prompt engineering gets a language model to say the right thing once. Harness engineering and loop engineering get it to do the right thing repeatedly, safely, and to completion — explained from first principles, with a worked example, using Claude Code's observable behavior as the reference.">
+    content="Prompt engineering gets a language model to say the right thing once. Harness engineering and loop engineering get it to do the right thing repeatedly, safely, and to completion, explained from first principles, with a worked example, using Claude Code's observable behavior as the reference.">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="/assets/images/projects/website-logo-matched.png">
@@ -66,8 +66,8 @@
 <meta property="og:title" content="Harness Engineering and Loop Engineering: The Layer Between an LLM and Real Work" />
 <meta name="author" content="Shanmuga Sundaram Natarajan (Shan)" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Prompt engineering gets a language model to say the right thing once. Harness engineering and loop engineering get it to do the right thing repeatedly, safely, and to completion — explained from first principles, with a worked example, using Claude Code’s observable behavior as the reference." />
-<meta property="og:description" content="Prompt engineering gets a language model to say the right thing once. Harness engineering and loop engineering get it to do the right thing repeatedly, safely, and to completion — explained from first principles, with a worked example, using Claude Code’s observable behavior as the reference." />
+<meta name="description" content="Prompt engineering gets a language model to say the right thing once. Harness engineering and loop engineering get it to do the right thing repeatedly, safely, and to completion, explained from first principles, with a worked example, using Claude Code’s observable behavior as the reference." />
+<meta property="og:description" content="Prompt engineering gets a language model to say the right thing once. Harness engineering and loop engineering get it to do the right thing repeatedly, safely, and to completion, explained from first principles, with a worked example, using Claude Code’s observable behavior as the reference." />
 <link rel="canonical" href="https://shanmuga-sundaram-n.github.io/blog/2026/08/11/harness-engineering-and-loop-engineering/" />
 <meta property="og:url" content="https://shanmuga-sundaram-n.github.io/blog/2026/08/11/harness-engineering-and-loop-engineering/" />
 <meta property="og:site_name" content="Shanmuga Sundaram Natarajan’s Personal Website" />
@@ -76,7 +76,7 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Harness Engineering and Loop Engineering: The Layer Between an LLM and Real Work" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Shanmuga Sundaram Natarajan (Shan)"},"dateModified":"2026-08-11T14:30:00+05:30","datePublished":"2026-08-11T14:30:00+05:30","description":"Prompt engineering gets a language model to say the right thing once. Harness engineering and loop engineering get it to do the right thing repeatedly, safely, and to completion — explained from first principles, with a worked example, using Claude Code’s observable behavior as the reference.","headline":"Harness Engineering and Loop Engineering: The Layer Between an LLM and Real Work","mainEntityOfPage":{"@type":"WebPage","@id":"https://shanmuga-sundaram-n.github.io/blog/2026/08/11/harness-engineering-and-loop-engineering/"},"url":"https://shanmuga-sundaram-n.github.io/blog/2026/08/11/harness-engineering-and-loop-engineering/"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Shanmuga Sundaram Natarajan (Shan)"},"dateModified":"2026-08-11T14:30:00+05:30","datePublished":"2026-08-11T14:30:00+05:30","description":"Prompt engineering gets a language model to say the right thing once. Harness engineering and loop engineering get it to do the right thing repeatedly, safely, and to completion, explained from first principles, with a worked example, using Claude Code’s observable behavior as the reference.","headline":"Harness Engineering and Loop Engineering: The Layer Between an LLM and Real Work","mainEntityOfPage":{"@type":"WebPage","@id":"https://shanmuga-sundaram-n.github.io/blog/2026/08/11/harness-engineering-and-loop-engineering/"},"url":"https://shanmuga-sundaram-n.github.io/blog/2026/08/11/harness-engineering-and-loop-engineering/"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -143,46 +143,42 @@
             <h1 class="post-title-main">Harness Engineering and Loop Engineering: The Layer Between an LLM and Real Work</h1>
 
             <div class="post-content">
-                <p>Start with what an <strong>AI agent</strong> actually is, because the term gets thrown around loosely. An agent is a language model (an LLM — the kind of AI behind ChatGPT or Claude) that isn’t just answering a question once. It’s allowed to take actions — read a file, run a command, search the web — look at what happened, and decide what to do next, on its own, in a loop, until the task is done. A plain chatbot takes one input and gives one output. An agent takes an input and can act repeatedly, unsupervised, for as long as it takes.</p>
+                <p>First, what is an <strong>AI agent</strong>? The term gets thrown around loosely. It’s a language model (an LLM, the kind of AI behind ChatGPT or Claude) that does more than answer a question once. It can take actions such as reading a file, running a command or searching the web, look at what happened, and decide what to do next, in a loop, until the task is done. A chatbot takes one input and gives one output. An agent can keep acting, unsupervised, for as long as it takes.</p>
 
-<p>That extra power is where things get interesting — and risky. <strong>Prompt engineering</strong> is the well-known discipline of wording your instructions well so a model gives a good answer in a single response. It’s necessary, but it’s not enough once a model is allowed to act repeatedly on its own. Once it’s running in a loop — reading its own results, deciding what to do next, deciding when to stop — a second, less-talked-about discipline shows up underneath it. Not “what do I say to the model,” but “what do I build <em>around</em> it.”</p>
+<p>That’s what makes agents useful, and also what makes them risky. <strong>Prompt engineering</strong> is about wording your instructions so a model gives a good answer in a single response. That’s necessary, but it isn’t enough once the model is acting on its own, reading its own results, deciding what to do next and deciding when to stop. At that point a second discipline appears. The question changes from “what do I say to the model?” to “what do I build <em>around</em> it?”</p>
 
-<p>I’ve been calling these two halves <strong>harness engineering</strong> and <strong>loop engineering</strong>. They’re not the same thing, even though people casually call both of them “the agent.”</p>
+<p>I call the two halves <strong>harness engineering</strong> and <strong>loop engineering</strong>. People often lump both together as “the agent,” but they’re different things.</p>
 
 <ul>
-  <li>The <strong>harness</strong> is everything the model is <em>allowed to do</em> — which tools it can call, what files it can touch, what commands are off-limits, how much context it sees before it even starts.</li>
+  <li>The <strong>harness</strong> is everything the model is <em>allowed to do</em>, which tools it can call, what files it can touch, what commands are off-limits, how much context it sees before it even starts.</li>
   <li>The <strong>loop</strong> is the <em>control flow</em> that keeps calling the model, checking what it wants to do, letting it (or not), feeding the result back, and deciding when to stop.</li>
 </ul>
 
-<p>Get the harness wrong and a capable model does dangerous or useless things — it wasn’t told not to. Get the loop wrong and a well-scoped, well-behaved model still runs forever, burns your budget, or quietly drifts off the original task because nothing was watching for that.</p>
+<p>Get the harness wrong and a capable model can do dangerous or useless things simply because nobody told it not to. Get the loop wrong and a well-behaved model can still run forever, burn through your budget, or drift off the original task because nothing was watching for it.</p>
 
-<p>This post explains both from the ground up, then walks through one realistic example — an agent that auto-fixes failing tests in a pull request — end to end: why you need these controls, what to build, and how to build it. I’ll use Claude Code’s own observable behavior (permission modes, hooks, subagents, on-demand tool loading, <code class="language-plaintext highlighter-rouge">CLAUDE.md</code> project instructions) as the running example throughout, because it’s a harness I use every day and can describe from direct experience.</p>
+<p>This post explains both from first principles, then walks through one example: an agent that auto-fixes failing tests in a pull request. I’ll use Claude Code (permission modes, hooks, subagents, on-demand tool loading and <code class="language-plaintext highlighter-rouge">CLAUDE.md</code> instructions) as the running reference, since I use it every day.</p>
 
 <hr />
 
-<h2 id="a-few-terms-defined-up-front">A Few Terms, Defined Up Front</h2>
+<h2 id="a-few-terms">A few terms</h2>
 
-<p>If you’ve built with LLM APIs before, skim this. If you haven’t, these five terms show up constantly below and are worth pinning down first:</p>
+<p>If you’ve built with LLM APIs before, skip this. If not, these five terms come up a lot:</p>
 
 <ul>
-  <li><strong>Context window</strong> — the total amount of text (measured in <em>tokens</em>, roughly word-fragments) a model can “see” at once, including its instructions, the conversation so far, and anything it just read. It’s finite — usually a few hundred thousand tokens — and everything you put in it costs money and pushes out room for something else.</li>
-  <li><strong>System prompt</strong> — a block of instructions given to the model before the conversation starts, setting its role, rules, and boundaries. The user never sees it directly; it shapes how the model behaves throughout.</li>
-  <li><strong>Tool call / tool use</strong> — when a model, instead of just replying with text, asks to run a specific action — “call the <code class="language-plaintext highlighter-rouge">Bash</code> tool with this command” — and waits for the result before continuing. This is the mechanism that turns a chatbot into an agent.</li>
-  <li><strong>MCP (Model Context Protocol)</strong> — a standard way to plug external systems (Slack, a database, Google Drive) into an agent as tools, without writing custom integration code for each one.</li>
-  <li><strong>Sandbox</strong> — a restricted environment (limited filesystem access, no network, a disposable container) that limits what a tool call can actually affect, even if the model asks for something dangerous.</li>
+  <li><strong>Context window</strong>, the total amount of text (measured in <em>tokens</em>, roughly word-fragments) a model can “see” at once, including its instructions, the conversation so far, and anything it just read. It’s finite, usually a few hundred thousand tokens, and everything you put in it costs money and pushes out room for something else.</li>
+  <li><strong>System prompt</strong>, a block of instructions given to the model before the conversation starts, setting its role, rules, and boundaries. The user never sees it directly; it shapes how the model behaves throughout.</li>
+  <li><strong>Tool call / tool use</strong>, when a model, instead of just replying with text, asks to run a specific action, “call the <code class="language-plaintext highlighter-rouge">Bash</code> tool with this command”, and waits for the result before continuing. This is the mechanism that turns a chatbot into an agent.</li>
+  <li><strong>MCP (Model Context Protocol)</strong>, a standard way to plug external systems (Slack, a database, Google Drive) into an agent as tools, without writing custom integration code for each one.</li>
+  <li><strong>Sandbox</strong>, a restricted environment (limited filesystem access, no network, a disposable container) that limits what a tool call can actually affect, even if the model asks for something dangerous.</li>
 </ul>
 
-<p>Everything else gets defined the first time it comes up.</p>
+<h2 id="two-failure-modes">Two failure modes</h2>
 
-<hr />
+<p>The easiest way to see why they’re separate is to look at what breaks when you skip each one.</p>
 
-<h2 id="two-different-failure-modes-two-different-disciplines">Two Different Failure Modes, Two Different Disciplines</h2>
+<p><strong>Skip the harness</strong> and the model has no boundaries. It can call any tool with any argument, read files outside the project, run destructive shell commands or leak sensitive output. It isn’t malicious. Nothing told it not to. I call this a <strong>scope failure</strong>: it did something it should never have been allowed to try.</p>
 
-<p>The clearest way to see why harness and loop are separate concerns is to look at what breaks when you skip each one.</p>
-
-<p><strong>Skip harness engineering</strong> and the model has no boundaries. It can call any tool with any argument, read files outside the project, run destructive shell commands, or leak sensitive output — not out of malice, but because <em>nothing told it not to</em>. This is a <strong>scope failure</strong>: the model did something it should never have been allowed to attempt in the first place.</p>
-
-<p><strong>Skip loop engineering</strong> and the model has boundaries but no brakes. It re-reads the same file five times, retries a failing action in an endless cycle, or keeps going “one more turn” until the conversation is so long it has to be summarized repeatedly and it forgets what it was originally asked to do. This is a <strong>termination failure</strong>: everything the model did was individually allowed, but nothing ever told it — or forced it — to stop.</p>
+<p><strong>Skip the loop design</strong> and the model has boundaries but no brakes. It re-reads the same file five times, retries a failing action endlessly, or keeps going “one more turn” until the conversation has been summarised so many times that it forgets what it was asked to do. I call this a <strong>termination failure</strong>: each action was allowed, but nothing made it stop.</p>
 
 <pre><code class="language-mermaid">%%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#313244', 'primaryTextColor': '#CDD6F4', 'primaryBorderColor': '#89B4FA', 'lineColor': '#A6ADC8', 'secondaryColor': '#1E1E2E', 'background': '#1E1E2E', 'mainBkg': '#313244', 'clusterBkg': '#24243E', 'clusterBorder': '#45475A', 'titleColor': '#CDD6F4', 'edgeLabelBackground': '#1E1E2E', 'fontFamily': 'JetBrains Mono, monospace', 'fontSize': '13px'}}}%%
 flowchart LR
@@ -211,13 +207,13 @@ flowchart LR
     DEC --&gt;|done| STOP
 </code></pre>
 
-<p>Reading this diagram left to right: the <strong>harness</strong> (left box) is set up once, before anything runs — it defines the walls. The <strong>loop</strong> (right box) is what happens turn after turn once the model is running: call it, see if it wants to use a tool, act on that if it’s allowed, and go around again until something says stop. Most public “prompt engineering” advice only ever talks about the small “Model” circle in the middle. Harness and loop engineering is everything else in this picture — and that’s where almost all the reliability problems in real agentic systems actually live.</p>
+<p>The <strong>harness</strong> (left) is set up once, before anything runs, and defines the walls. The <strong>loop</strong> (right) is what happens turn after turn: call the model, see whether it wants a tool, run it if allowed, and go round again until something says stop. Most prompt engineering advice is about the small “Model” circle in the middle. In my experience, most of the reliability problems in real agent systems are in everything else in the picture.</p>
 
 <hr />
 
-<h2 id="anatomy-of-a-harness">Anatomy of a Harness</h2>
+<h2 id="what-a-harness-is-made-of">What a harness is made of</h2>
 
-<p>A harness is the set of things that are true about the model’s environment <em>before it ever generates a single word</em>. Think of it like onboarding a new contractor: before they touch anything, you’ve already decided what systems they can log into, what files they can edit, and who has to approve what. The harness is that setup, made explicit and enforced in code. For a coding agent like Claude Code, it looks roughly like this:</p>
+<p>The harness is everything that’s true about the model’s environment before it generates a single word. It’s like onboarding a contractor: before they touch anything, you’ve decided which systems they can log into, which files they can edit and who has to approve what. The harness is that setup, written down and enforced in code. For a coding agent like Claude Code it looks roughly like this:</p>
 
 <pre><code class="language-mermaid">%%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#313244', 'primaryTextColor': '#CDD6F4', 'primaryBorderColor': '#89B4FA', 'lineColor': '#A6ADC8', 'secondaryColor': '#1E1E2E', 'background': '#1E1E2E', 'mainBkg': '#313244', 'clusterBkg': '#24243E', 'clusterBorder': '#45475A', 'titleColor': '#CDD6F4', 'edgeLabelBackground': '#1E1E2E', 'fontFamily': 'JetBrains Mono, monospace', 'fontSize': '13px'}}}%%
 flowchart TB
@@ -261,23 +257,23 @@ flowchart TB
     HOOKS --&gt; STATE
 </code></pre>
 
-<p>Five boxes, five jobs. Before going deeper, here’s what each one means in plain terms:</p>
+<p>Five boxes, five jobs:</p>
 
 <ul>
-  <li><strong>Context Assembly</strong> — what information the model gets to see before it starts working: its instructions, any project-specific rules, anything remembered from before.</li>
-  <li><strong>Tool Surface</strong> — the full list of actions the model is even capable of requesting. If a tool isn’t in this list, the model can’t call it, period — this is the first and strongest form of control.</li>
-  <li><strong>Permission Gate</strong> — for tools that <em>are</em> available, whether a specific call is allowed to actually run, or needs a human to approve it first.</li>
-  <li><strong>Hooks</strong> — small pieces of code that run automatically before or after a tool call, regardless of what the model “intended.”</li>
-  <li><strong>State &amp; Isolation</strong> — what gets remembered between turns, and what stays walled off between separate agents working at the same time.</li>
+  <li><strong>Context Assembly</strong>, what information the model gets to see before it starts working: its instructions, any project-specific rules, anything remembered from before.</li>
+  <li><strong>Tool Surface</strong>, the full list of actions the model is even capable of requesting. If a tool isn’t in this list, the model can’t call it, period, this is the first and strongest form of control.</li>
+  <li><strong>Permission Gate</strong>, for tools that <em>are</em> available, whether a specific call is allowed to actually run, or needs a human to approve it first.</li>
+  <li><strong>Hooks</strong>, small pieces of code that run automatically before or after a tool call, regardless of what the model “intended.”</li>
+  <li><strong>State &amp; Isolation</strong>, what gets remembered between turns, and what stays walled off between separate agents working at the same time.</li>
 </ul>
 
-<p>Four of these deserve a closer look, because they’re the parts people skip when building their own agent harness from scratch.</p>
+<p>Three of these deserve a closer look, because they’re the parts people tend to skip when building their own harness.</p>
 
-<h3 id="deferred-tool-loading--why-you-dont-hand-over-every-tool-at-once">Deferred tool loading — why you don’t hand over every tool at once</h3>
+<h3 id="deferred-tool-loading">Deferred tool loading</h3>
 
-<p>Every tool a model can call comes with a technical description (its “schema”) — what it’s called, what arguments it takes, what it does. That description has to sit somewhere the model can read it, and the model can only read what’s in its context window. If your harness has forty tools fully described in context, you’re paying that token cost on <em>every single turn</em>, whether or not any of those forty tools get used that turn. It’s like handing a new employee the entire 500-page employee handbook to re-read before every single task, instead of pointing them to the one relevant page when they need it.</p>
+<p>Every tool comes with a description (its “schema”): its name, its arguments and what it does. The model can only use what’s in its context window, so if you describe forty tools in full, you pay for all forty on every turn, whether or not they’re used. It’s like making a new employee re-read the whole handbook before every task instead of pointing them to the one page they need.</p>
 
-<p>The fix — and it’s the pattern I work inside of daily, since it’s literally how this environment I’m writing in behaves — is to show the model a short list of tool <em>names</em> by default, and only load the full technical description for a tool once something in the conversation suggests it’s actually needed:</p>
+<p>Claude Code handles this by showing the model only tool <em>names</em> by default and loading the full description once a tool looks necessary:</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># What the model sees by default — just names, cheap to include:
 CronCreate, CronDelete, WebFetch, SendMessage, ... (names only)
@@ -286,21 +282,21 @@ CronCreate, CronDelete, WebFetch, SendMessage, ... (names only)
 ToolSearch("select:WebFetch") → full parameter schema, now callable
 </code></pre></div></div>
 
-<p>This matters more as the tool list grows. MCP (defined above — the plug-in standard for external tools) makes it trivial to add a dozen integrations. Without deferred loading, every one of those tool descriptions sits in every prompt permanently, whether the current task touches Slack, a database, or neither.</p>
+<p>This matters more as the tool list grows. MCP makes it easy to add a dozen integrations, and without deferred loading every one of their descriptions sits in every prompt, even when the task has nothing to do with Slack or a database.</p>
 
-<h3 id="permission-modes--a-dial-not-an-onoff-switch">Permission modes — a dial, not an on/off switch</h3>
+<h3 id="permission-modes">Permission modes</h3>
 
-<p>The simplest possible harness is binary: the model can do anything, or it has to ask permission for everything. Neither extreme is good — the first is reckless, the second is so annoying that people just disable it. Claude Code’s actual modes point at something better: <code class="language-plaintext highlighter-rouge">default</code> (ask before risky actions), <code class="language-plaintext highlighter-rouge">acceptEdits</code> (auto-approve file edits but still ask about other things), <code class="language-plaintext highlighter-rouge">plan</code> (research and read only, no changes allowed at all), <code class="language-plaintext highlighter-rouge">bypassPermissions</code> (fully trusted, no asking). Permission posture is a dial the person running the agent sets based on how much they trust it and how bad it would be if something went wrong — not a single fixed setting. A file edit and a <code class="language-plaintext highlighter-rouge">git push --force</code> are not the same risk level and shouldn’t require the same approval step.</p>
+<p>The simplest harness is binary: the model can do anything, or it must ask about everything. The first is reckless and the second is so irritating that people switch it off. Claude Code has a few modes in between: <code class="language-plaintext highlighter-rouge">default</code> (ask before risky actions), <code class="language-plaintext highlighter-rouge">acceptEdits</code> (auto-approve file edits, ask about the rest), <code class="language-plaintext highlighter-rouge">plan</code> (read and research only) and <code class="language-plaintext highlighter-rouge">bypassPermissions</code> (no asking). It’s a dial you set based on how much you trust the agent and how bad a mistake would be. A file edit and a <code class="language-plaintext highlighter-rouge">git push --force</code> are not the same risk, so they shouldn’t need the same approval.</p>
 
-<h3 id="hooks--policy-enforced-in-code-not-requested-in-english">Hooks — policy enforced in code, not requested in English</h3>
+<h3 id="hooks">Hooks</h3>
 
-<p>You can <em>ask</em> a model in its instructions not to run destructive commands, and it will usually listen — “usually” is the key word. Or you can write a <strong>hook</strong>: a small script that runs automatically before a tool executes (a <code class="language-plaintext highlighter-rouge">PreToolUse</code> hook) and can block the call outright, regardless of what the model decided to do. The difference matters the moment “usually” isn’t good enough — anywhere there’s a compliance requirement, a security-sensitive repository, or an audit trail that has to be airtight. Put plainly: instructions in a prompt are a request. A hook is a rule the code enforces whether the model agrees or not. Don’t mix the two up when the stakes are real.</p>
+<p>You can tell a model in its instructions not to run destructive commands, and it will usually listen. “Usually” is the problem. A <strong>hook</strong> is a small script that runs before a tool executes (a <code class="language-plaintext highlighter-rouge">PreToolUse</code> hook) and can block the call whatever the model decided. That matters wherever “usually” isn’t good enough: compliance requirements, sensitive repositories, audit trails. A prompt instruction is a request. A hook is a rule the code enforces whether the model agrees or not.</p>
 
 <hr />
 
-<h2 id="anatomy-of-a-loop">Anatomy of a Loop</h2>
+<h2 id="what-a-loop-is-made-of">What a loop is made of</h2>
 
-<p>If the harness is the set of walls, the loop is what actually happens inside them, turn after turn: call the model, see what it wants to do, act on it if it’s allowed, feed the result back, and repeat — until there’s nothing left to do, or a limit gets hit.</p>
+<p>If the harness is the walls, the loop is what happens inside them: call the model, see what it wants to do, act on it if allowed, feed the result back, and repeat until there’s nothing left to do or a limit is hit.</p>
 
 <pre><code class="language-mermaid">%%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#313244', 'primaryTextColor': '#CDD6F4', 'primaryBorderColor': '#89B4FA', 'lineColor': '#A6ADC8', 'secondaryColor': '#1E1E2E', 'background': '#1E1E2E', 'mainBkg': '#313244', 'clusterBkg': '#24243E', 'clusterBorder': '#45475A', 'titleColor': '#CDD6F4', 'edgeLabelBackground': '#1E1E2E', 'fontFamily': 'JetBrains Mono, monospace', 'fontSize': '13px'}}}%%
 flowchart TD
@@ -329,13 +325,13 @@ flowchart TD
     BUDGET --&gt;|yes| ESCALATE["Halt · escalate to human"]:::gate
 </code></pre>
 
-<p>Walking through this in words: the model gets called. It replies with a <code class="language-plaintext highlighter-rouge">stop_reason</code> — a label the API attaches to every response telling you <em>why</em> it stopped generating. If that reason is <code class="language-plaintext highlighter-rouge">end_turn</code>, the model has a final answer and you hand it back to the user — done. If the reason is <code class="language-plaintext highlighter-rouge">tool_use</code>, the model is asking to run something, and <em>that’s</em> the moment the permission check from the harness section actually gets consulted. If it’s denied, the model is told so (as a <code class="language-plaintext highlighter-rouge">tool_result</code> — the standard way of feeding an action’s outcome back into the conversation) and gets to try something else. If it’s allowed, the tool runs, the result gets appended to the conversation, and the whole thing loops back to another model call — unless a budget or cost limit has been hit, in which case it stops and escalates to a human instead of continuing silently.</p>
+<p>In words: the model is called and replies with a <code class="language-plaintext highlighter-rouge">stop_reason</code>, a label saying why it stopped generating. If it’s <code class="language-plaintext highlighter-rouge">end_turn</code>, the model has a final answer and you return it. If it’s <code class="language-plaintext highlighter-rouge">tool_use</code>, the model wants to run something, and that’s when the permission check from the harness is consulted. If denied, the model is told so (as a <code class="language-plaintext highlighter-rouge">tool_result</code>, the standard way to feed an outcome back) and tries something else. If allowed, the tool runs, the result is appended to the conversation, and the loop goes round again, unless a budget or cost limit has been hit, in which case it stops and escalates to a human.</p>
 
-<p>The two decision diamonds — the permission check and the budget check — are the entire discipline. Everything else in that diagram is plumbing.</p>
+<p>The permission check and the budget check are, to me, the heart of it. The rest is plumbing.</p>
 
-<h3 id="a-minimal-loop-in-actual-code">A minimal loop, in actual code</h3>
+<h3 id="a-minimal-loop-in-code">A minimal loop in code</h3>
 
-<p>Every production agent framework wraps this in more ceremony, but the core of it is small enough to read start to finish, and doing that once makes the diagram click:</p>
+<p>Production frameworks add a lot of ceremony, but the core is small enough to read in one go:</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">run_loop</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="n">system_prompt</span><span class="p">,</span> <span class="n">tools</span><span class="p">,</span> <span class="n">user_message</span><span class="p">,</span> <span class="n">max_iterations</span><span class="o">=</span><span class="mi">25</span><span class="p">):</span>
     <span class="c1"># messages is the running conversation — every model reply and every
@@ -385,15 +381,15 @@ flowchart TD
 </span>    <span class="k">raise</span> <span class="n">IterationBudgetExceeded</span><span class="p">(</span><span class="sa">f</span><span class="s">"No terminal response after </span><span class="si">{</span><span class="n">max_iterations</span><span class="si">}</span><span class="s"> turns"</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p>Notice what’s deliberately <em>not</em> in this function: retry logic, summarizing old messages to save space, cost tracking, spawning other agents. Those are all real requirements for a production harness, but each one hooks into this same loop at one specific, narrow point — the <code class="language-plaintext highlighter-rouge">check_permission</code> call, the <code class="language-plaintext highlighter-rouge">execute_tool</code> call, or the iteration limit at the top. Resist the urge to build all of that before the basic loop is solid. A loop with a simple hardcoded iteration cap and a basic permission check that actually terminates correctly beats an elaborate one that doesn’t terminate at all.</p>
+<p>Note what’s missing: retry logic, summarising old messages, cost tracking and spawning other agents. A production harness needs all of those, but each hooks into this loop at one narrow point: the <code class="language-plaintext highlighter-rouge">check_permission</code> call, the <code class="language-plaintext highlighter-rouge">execute_tool</code> call or the iteration limit. Don’t build them before the basic loop works. A simple loop with a hardcoded cap and a basic permission check that terminates correctly beats an elaborate one that doesn’t.</p>
 
 <hr />
 
-<h2 id="subagents-loops-spawning-loops">Subagents: Loops Spawning Loops</h2>
+<h2 id="subagents">Subagents</h2>
 
-<p>Once the base loop above works, a natural next question comes up: what happens when one task is too big for one context window, or needs to be kept separate from the main conversation — a code reviewer that shouldn’t see the same back-and-forth as the person who wrote the code, or a research task that would otherwise clutter the main thread with dozens of search results?</p>
+<p>Once the basic loop works, the next question is what to do when a task is too big for one context window, or should be kept apart from the main conversation. A code reviewer shouldn’t see the author’s back-and-forth, and a research task shouldn’t fill the main thread with dozens of search results.</p>
 
-<p>The answer, in Claude Code’s model and in most serious multi-agent systems, is: do the same thing again, at a smaller scale. A <strong>subagent</strong> is a second, independent instance of the harness-plus-loop described above — its own tools, its own permission checks, its own iteration budget, its own conversation history — invoked by the main (“parent”) agent as if it were just another tool call.</p>
+<p>Claude Code, like most serious multi-agent systems, answers by doing the same thing again at a smaller scale. A <strong>subagent</strong> is a second, independent harness-plus-loop, with its own tools, permission checks, iteration budget and conversation history, which the parent agent invokes like any other tool.</p>
 
 <pre><code class="language-mermaid">%%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#313244', 'primaryTextColor': '#CDD6F4', 'primaryBorderColor': '#89B4FA', 'lineColor': '#A6ADC8', 'secondaryColor': '#1E1E2E', 'background': '#1E1E2E', 'mainBkg': '#313244', 'clusterBkg': '#24243E', 'clusterBorder': '#45475A', 'titleColor': '#CDD6F4', 'edgeLabelBackground': '#1E1E2E', 'fontFamily': 'JetBrains Mono, monospace', 'fontSize': '13px'}}}%%
 flowchart LR
@@ -411,43 +407,43 @@ flowchart LR
     R2 --&gt; P
 </code></pre>
 
-<p>Two details in that diagram matter more than the shape itself. First, <strong>“fresh context”</strong> — the subagent starts with no memory of the parent’s conversation, only what’s explicitly handed to it. Second, and more important: the parent only ever gets back the subagent’s <strong>final report</strong>, never its turn-by-turn transcript. It never sees every file the subagent read or every command it tried — just the summary at the end.</p>
+<p>Two details matter here. First, <strong>fresh context</strong>: the subagent starts with no memory of the parent’s conversation, only what it’s explicitly given. Second, the parent gets back only the subagent’s <strong>final report</strong>, not its turn-by-turn transcript.</p>
 
-<p>That single design choice is doing real work. <strong>Worktree isolation</strong> — giving each subagent its own copy of the project files to edit, instead of sharing one — prevents two agents from overwriting each other’s changes if they’re working in parallel. And hiding the intermediate steps keeps the parent’s own context window from filling up with a subagent’s internal back-and-forth, which is exactly the kind of context-window scarcity described earlier. This is the same idea I used in a multi-agent pipeline I described in an <a href="/blog/2026/06/06/sdlc-factory-autonomous-multi-agent-pipeline/">earlier post</a>: each stage only received the <em>finished output</em> of the stage before it, never that stage’s raw internal conversation. Harness and loop engineering aren’t really separable in practice — they’re the same design decision, looked at from two different angles.</p>
-
-<hr />
-
-<h2 id="where-this-breaks-in-practice">Where This Breaks in Practice</h2>
-
-<p><strong>Unbounded loops disguised as thoroughness.</strong> A model given a broad task and no iteration cap will happily read every file in a large project “to be thorough.” Wanting more context isn’t the bug — the bug is that nothing stopped it. An iteration cap isn’t a hack bolted on as an afterthought, it’s the loop’s only real safety valve, and it should scale with how risky the task is: a subagent that only reads files can reasonably be given more turns than one that’s allowed to delete or overwrite things.</p>
-
-<p><strong>Tool schema bloat.</strong> Every MCP integration you add puts more tool descriptions into the model’s context. Past a certain point, each additional tool costs more in context space than it adds in capability — and worse, it raises the odds the model picks the <em>wrong</em> tool for the job because there are too many similar-looking options. The fix is on-demand loading (described above), not simply “add fewer tools” — you often genuinely need the capability, just not paid for on every single turn whether it’s used or not.</p>
-
-<p><strong>Permission checks that only look at the tool name.</strong> <code class="language-plaintext highlighter-rouge">Bash</code> (a tool that runs a shell command) isn’t one risk level — <code class="language-plaintext highlighter-rouge">ls</code> (list files, harmless) and <code class="language-plaintext highlighter-rouge">rm -rf</code> (delete everything, recursively, no confirmation) are both “the Bash tool.” A harness that only checks <em>which tool</em> is being called, not <em>what it’s being asked to do</em>, ends up either too permissive (allow all <code class="language-plaintext highlighter-rouge">Bash</code> calls) or too annoying (ask about every single one, even harmless ones). The permission layer has to look at the actual arguments, not just which door the request came through.</p>
-
-<p><strong>Losing the “why” during context compaction.</strong> When a long-running loop’s conversation gets too big for the context window, older parts get summarized to make room — this is called <strong>compaction</strong>. It’s easy for that summary to keep <em>what</em> happened (which files were touched, which commands ran) while losing <em>why</em> (the reasoning that ruled out a different approach three steps earlier). A compaction summary that’s just a list of actions will cause the loop to re-try things it already decided against. Good compaction preserves the reasoning, not just the action log.</p>
-
-<p><strong>Confusing “the model refused” with “the harness blocked it.”</strong> These can look identical in a transcript but need opposite fixes. If the model itself is declining to do something reasonable, that’s a system-prompt problem — adjust the instructions. If a hook or a permission rule is silently blocking something it shouldn’t be, that’s a harness bug — and it’s easy to misdiagnose as “the model being difficult” when the real fix is in your <code class="language-plaintext highlighter-rouge">PreToolUse</code> hook, not in the wording of your prompt.</p>
+<p>That choice does real work. <strong>Worktree isolation</strong>, giving each subagent its own copy of the files, stops parallel agents overwriting each other’s changes. Hiding the intermediate steps keeps the parent’s context window from filling up. It’s the same idea I used in the pipeline from my <a href="/blog/2026/06/06/sdlc-factory-autonomous-multi-agent-pipeline/">earlier post</a>: each stage received only the finished output of the previous one, never its raw conversation. In practice harness and loop engineering aren’t really separable. They’re one design decision seen from two sides.</p>
 
 <hr />
 
-<h2 id="a-worked-example-a-ci-auto-fix-agent-why--what--how">A Worked Example: A CI Auto-Fix Agent, Why → What → How</h2>
+<h2 id="where-this-breaks-in-practice">Where this breaks in practice</h2>
 
-<p>Everything above is easier to hold onto against one concrete, start-to-finish scenario. This is the kind of agent teams reach for early: <strong>watch a pull request’s failing automated tests (CI, short for continuous integration) and have the agent push a fix.</strong></p>
+<p><strong>Unbounded loops that look like thoroughness.</strong> Given a broad task and no cap, a model will happily read every file in a large project “to be thorough.” Wanting more context isn’t the bug. Nothing stopping it is. An iteration cap is the loop’s real safety valve, not an afterthought, and it should scale with risk: a read-only subagent can reasonably get more turns than one that can delete or overwrite things.</p>
 
-<h3 id="why-you-need-this--what-the-naive-version-actually-does">Why you need this — what the naive version actually does</h3>
+<p><strong>Tool schema bloat.</strong> Each MCP integration adds tool descriptions to the context. Past a point, a new tool costs more in context than it adds in capability, and it raises the odds of the model picking the wrong tool among many similar ones. On-demand loading is the fix, rather than simply having fewer tools, since you often do need the capability, just not paid for on every turn.</p>
 
-<p>The naive build takes twenty minutes: give the model three tools — <code class="language-plaintext highlighter-rouge">Bash</code> (run shell commands), <code class="language-plaintext highlighter-rouge">Edit</code> (modify an existing file), <code class="language-plaintext highlighter-rouge">Write</code> (create a file). System prompt says <em>“Fix the failing tests in this PR. Don’t touch unrelated code.”</em> Wrap it in a loop that keeps calling the model until it says it’s done. Ship it.</p>
+<p><strong>Permission checks that only look at the tool name.</strong> <code class="language-plaintext highlighter-rouge">Bash</code> isn’t one risk level. <code class="language-plaintext highlighter-rouge">ls</code> and <code class="language-plaintext highlighter-rouge">rm -rf</code> are both “the Bash tool.” A harness that checks only which tool is called, and not what it’s asked to do, ends up too permissive (allow all <code class="language-plaintext highlighter-rouge">Bash</code>) or too annoying (ask about every call). The permission layer has to look at the arguments.</p>
 
-<p>Here’s what actually happens on the first real pull request, not a clean demo:</p>
+<p><strong>Losing the “why” in compaction.</strong> When a long conversation outgrows the context window, older parts are summarised to make room. This is <strong>compaction</strong>. It’s easy for the summary to keep <em>what</em> happened (files touched, commands run) and lose <em>why</em> (the reasoning that ruled out another approach earlier). A summary that’s just an action log makes the loop retry things it already rejected. Good compaction keeps the reasoning.</p>
+
+<p><strong>Confusing “the model refused” with “the harness blocked it.”</strong> They can look identical in a transcript but need opposite fixes. If the model is declining something reasonable, that’s a prompt problem. If a hook or permission rule is silently blocking something it shouldn’t, that’s a harness bug, and it’s easy to blame the model when the fix is in your <code class="language-plaintext highlighter-rouge">PreToolUse</code> hook.</p>
+
+<hr />
+
+<h2 id="a-worked-example-a-ci-auto-fix-agent">A worked example: a CI auto-fix agent</h2>
+
+<p>Here’s one concrete scenario, the kind of agent teams reach for early: <strong>watch a pull request’s failing tests (CI, continuous integration) and have the agent push a fix.</strong></p>
+
+<h3 id="what-the-naive-version-does">What the naive version does</h3>
+
+<p>The naive build takes twenty minutes. Give the model three tools: <code class="language-plaintext highlighter-rouge">Bash</code> (run shell commands), <code class="language-plaintext highlighter-rouge">Edit</code> (modify a file) and <code class="language-plaintext highlighter-rouge">Write</code> (create a file). The system prompt says <em>“Fix the failing tests in this PR. Don’t touch unrelated code.”</em> Wrap it in a loop that runs until the model says it’s done.</p>
+
+<p>Here’s what I’d expect on the first real pull request, as opposed to a clean demo:</p>
 
 <ol>
-  <li><strong>It runs forever.</strong> One of the failing tests is <em>flaky</em> — it fails intermittently for reasons unrelated to the code. The model “fixes” it, the flake reappears on the next run, the model reverts its own fix, the flake happens to pass by chance, the model declares victory, the tests rerun and the flake is back. Forty turns later it’s still bouncing between two versions of the same function.</li>
-  <li><strong>It edits files outside the PR.</strong> Nothing actually <em>enforced</em> “don’t touch unrelated code” — that instruction only works if the model happens to follow it. Partway through, it notices an unrelated warning two files over and “cleans it up while it’s in there.” What should have been a two-line fix now touches eleven files.</li>
-  <li><strong>It runs a destructive command.</strong> Trying to get to a clean starting state, it runs <code class="language-plaintext highlighter-rouge">git checkout .</code> — a command that discards <em>any</em> uncommitted changes in the project — to clear out what it assumes are stray edits. One of those “stray edits” was a colleague’s unsaved work sitting in the same workspace.</li>
+  <li><strong>It runs forever.</strong> One failing test is <em>flaky</em>, failing intermittently for reasons unrelated to the code. The model “fixes” it, the flake comes back, the model reverts its fix, the test passes by chance, the model declares victory, and the flake returns on the next run. Forty turns later it’s still flipping between two versions of one function.</li>
+  <li><strong>It edits files outside the PR.</strong> Nothing <em>enforces</em> “don’t touch unrelated code.” The instruction works only if the model happens to follow it. It spots an unrelated warning two files over and cleans it up while it’s there, and a two-line fix now touches eleven files.</li>
+  <li><strong>It runs a destructive command.</strong> To get a clean starting point, it runs <code class="language-plaintext highlighter-rouge">git checkout .</code>, which discards all uncommitted changes, including a colleague’s unsaved work in the same workspace.</li>
 </ol>
 
-<p>None of these are the model “misbehaving” in some mysterious sense. Each one is a specific missing control, and each maps directly onto the ideas from earlier in this post:</p>
+<p>None of this is mysterious misbehaviour. Each is a specific missing control, and each maps to something earlier in this post:</p>
 
 <table>
   <thead>
@@ -476,21 +472,21 @@ flowchart LR
   </tbody>
 </table>
 
-<h3 id="what-to-do-about-it">What to do about it</h3>
+<h3 id="the-fixes">The fixes</h3>
 
-<p>None of the fixes below require a new framework — they just require the permission check and the stop condition to actually <em>inspect what’s happening</em>, instead of trusting the prompt to be enough on its own:</p>
+<p>None of this needs a new framework. The permission check and the stop condition just have to inspect what’s actually happening instead of trusting the prompt:</p>
 
 <ul>
-  <li><strong>Restrict <code class="language-plaintext highlighter-rouge">Edit</code>/<code class="language-plaintext highlighter-rouge">Write</code> to the PR’s own changed-file list.</strong> Not “the whole repository,” not “the whole codebase” — specifically the files this PR already touches, nothing more. Anything outside that list gets denied before it ever executes.</li>
-  <li><strong>Check the actual <code class="language-plaintext highlighter-rouge">Bash</code> command text, not just the fact that <code class="language-plaintext highlighter-rouge">Bash</code> was called.</strong> A deny-list of destructive patterns — <code class="language-plaintext highlighter-rouge">rm -rf</code>, <code class="language-plaintext highlighter-rouge">git push --force</code>, <code class="language-plaintext highlighter-rouge">git checkout .</code>, <code class="language-plaintext highlighter-rouge">git reset --hard</code> — checked against every command before it runs.</li>
-  <li><strong>Replace “the model says it’s done” with an actual progress signal.</strong> Track how many tests are failing after each attempt. If that number hasn’t gone down across the last few tries, that’s not thoroughness — that’s a stuck loop. Stop and hand it to a human instead of quietly burning through the rest of the budget.</li>
+  <li><strong>Restrict <code class="language-plaintext highlighter-rouge">Edit</code>/<code class="language-plaintext highlighter-rouge">Write</code> to the files the PR already changes.</strong> Anything else is denied before it runs.</li>
+  <li><strong>Check the actual <code class="language-plaintext highlighter-rouge">Bash</code> command text.</strong> Match every command against a deny-list of destructive patterns such as <code class="language-plaintext highlighter-rouge">rm -rf</code>, <code class="language-plaintext highlighter-rouge">git push --force</code>, <code class="language-plaintext highlighter-rouge">git checkout .</code> and <code class="language-plaintext highlighter-rouge">git reset --hard</code>.</li>
+  <li><strong>Replace “the model says it’s done” with a progress signal.</strong> Track how many tests fail after each attempt. If the number hasn’t dropped over the last few tries, the loop is stuck, not thorough. Stop and hand it to a human.</li>
 </ul>
 
-<h3 id="how-to-build-it">How to build it</h3>
+<h3 id="building-it">Building it</h3>
 
-<p>Both pieces below are simple, deterministic checks — plain code, not another call to the model — which is exactly why they’re cheap enough to run on every single tool call without slowing anything down or costing anything extra.</p>
+<p>Both checks are plain deterministic code, not another model call, so they’re cheap enough to run on every tool call.</p>
 
-<p><strong>First, the scope check.</strong> This plugs into the exact same <code class="language-plaintext highlighter-rouge">check_permission</code> step from the minimal loop shown earlier — it runs <em>before</em> a tool executes, so a bad call never happens in the first place:</p>
+<p><strong>The scope check</strong> plugs into the same <code class="language-plaintext highlighter-rouge">check_permission</code> step as the minimal loop. It runs before a tool executes, so a bad call never happens:</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">re</span>
 
@@ -520,7 +516,7 @@ flowchart LR
     <span class="k">return</span> <span class="s">"allowed"</span><span class="p">,</span> <span class="bp">None</span>
 </code></pre></div></div>
 
-<p><strong>Second, the progress check.</strong> This plugs into the loop itself — it runs <em>after</em> each tool result comes back, watching for the “no improvement” pattern. The only new piece of state compared to the minimal loop earlier is <code class="language-plaintext highlighter-rouge">failure_counts</code>, a running list of how many tests failed after each attempt:</p>
+<p><strong>The progress check</strong> lives in the loop itself and runs after each tool result. The only new state is <code class="language-plaintext highlighter-rouge">failure_counts</code>, a list of how many tests failed after each attempt:</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">run_ci_fix_loop</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="n">system_prompt</span><span class="p">,</span> <span class="n">tools</span><span class="p">,</span> <span class="n">pr_context</span><span class="p">,</span> <span class="n">max_iterations</span><span class="o">=</span><span class="mi">15</span><span class="p">):</span>
     <span class="n">messages</span> <span class="o">=</span> <span class="p">[{</span><span class="s">"role"</span><span class="p">:</span> <span class="s">"user"</span><span class="p">,</span> <span class="s">"content"</span><span class="p">:</span> <span class="n">pr_context</span><span class="p">}]</span>
@@ -563,7 +559,7 @@ flowchart LR
     <span class="n">escalate_to_human</span><span class="p">(</span><span class="n">reason</span><span class="o">=</span><span class="s">"iteration budget exceeded"</span><span class="p">,</span> <span class="n">transcript</span><span class="o">=</span><span class="n">messages</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p><strong>Third, a backup layer for the destructive-command case.</strong> This one lives <em>outside</em> the Python code entirely, as a <strong>hook</strong> (defined earlier) — so even if there’s a bug in <code class="language-plaintext highlighter-rouge">check_permission</code> someday, this second, independently-maintained check still catches it:</p>
+<p><strong>A backup for destructive commands</strong> lives outside the Python entirely, as a <strong>hook</strong>, so a bug in <code class="language-plaintext highlighter-rouge">check_permission</code> doesn’t remove the protection:</p>
 
 <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">//</span><span class="w"> </span><span class="err">.claude/settings.json</span><span class="w"> </span><span class="err">—</span><span class="w"> </span><span class="err">enforced</span><span class="w"> </span><span class="err">regardless</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">what</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">loop</span><span class="w"> </span><span class="err">code</span><span class="w"> </span><span class="err">does</span><span class="w">
 </span><span class="p">{</span><span class="w">
@@ -578,23 +574,23 @@ flowchart LR
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div></div>
 
-<p>That’s defense in depth, not needless duplication — <code class="language-plaintext highlighter-rouge">check_permission</code> and the hook are two separate pieces of code, maintained separately, and a mistake in one doesn’t remove the protection from the other.</p>
+<p>That’s defence in depth rather than duplication. The two checks are separate pieces of code, so a mistake in one leaves the other intact.</p>
 
-<h3 id="what-this-actually-buys-you">What this actually buys you</h3>
+<h3 id="what-changes">What changes</h3>
 
-<p>Run this improved version against the same flaky-test PR: the progress check fires after three flat test runs instead of forty turns of silent back-and-forth. Run it against the “let me also clean up this unrelated file” case: the <code class="language-plaintext highlighter-rouge">Edit</code> call gets denied before it ever touches disk, and the model is told <em>why</em> — so it adjusts instead of blindly retrying. Run it against the <code class="language-plaintext highlighter-rouge">git checkout .</code> case: it’s blocked twice — once by the argument check in Python, once by the hook — and either way, there’s a clear record of what was attempted and why it was stopped.</p>
+<p>On the flaky-test PR, the progress check fires after three flat test runs instead of forty turns of back-and-forth. On the “clean up this unrelated file” case, the <code class="language-plaintext highlighter-rouge">Edit</code> is denied before it touches disk and the model is told why, so it adjusts. On <code class="language-plaintext highlighter-rouge">git checkout .</code>, the command is blocked twice, once by the argument check and once by the hook, and there’s a record of what was attempted.</p>
 
-<p>Same task, same underlying model, same intent in the prompt. The only thing that changed is that the harness and the loop stopped assuming the prompt alone was enough to keep the model inside the lines.</p>
+<p>Same task, same model, same prompt. The only difference is that the harness and loop no longer assume the prompt alone will keep the model in line.</p>
 
 <hr />
 
-<h2 id="closing-thoughts">Closing Thoughts</h2>
+<h2 id="closing-thoughts">Closing thoughts</h2>
 
-<p>Prompt engineering optimizes a single model response. Harness engineering and loop engineering optimize <em>a system that takes many actions on its own initiative</em> — which is what “agent” actually means once you get past the marketing, whether or not that word shows up anywhere in your architecture. The two are cleanly separable in theory: harness is what’s allowed, loop is how long it runs and how it decides to keep going. In practice they’re tightly coupled, because every property you actually care about in production — bounded cost, bounded blast radius, graceful failure instead of silent failure, the ability to recover from a mistake — gets enforced right at the seam between the two.</p>
+<p>Prompt engineering tunes a single response. Harness and loop engineering are about a system that takes many actions on its own. In theory they’re separate: the harness is what’s allowed, the loop is how long it runs and when it stops. In practice they’re tightly linked, because the things you care about in production (bounded cost, bounded blast radius, loud failures instead of silent ones, being able to recover from a mistake) are all enforced where the two meet.</p>
 
-<p>If you’re building on top of an existing harness like Claude Code or the Claude Agent SDK rather than writing the loop yourself, this discipline doesn’t disappear — it just moves. You’re not writing <code class="language-plaintext highlighter-rouge">check_permission</code> by hand, but you <em>are</em> writing <code class="language-plaintext highlighter-rouge">settings.json</code> rules, hooks, and <code class="language-plaintext highlighter-rouge">CLAUDE.md</code> scope. You’re not writing the iteration cap yourself, but you <em>are</em> deciding subagent boundaries and what information is allowed to cross them. The underlying decisions are the same ones described in this post; only who’s responsible for making them changes.</p>
+<p>If you build on an existing harness like Claude Code or the Claude Agent SDK, the work doesn’t disappear. It moves. You won’t write <code class="language-plaintext highlighter-rouge">check_permission</code> by hand, but you will write <code class="language-plaintext highlighter-rouge">settings.json</code> rules, hooks and <code class="language-plaintext highlighter-rouge">CLAUDE.md</code> scope. You won’t write the iteration cap, but you will decide subagent boundaries and what information crosses them.</p>
 
-<p>If you’re building your first agent, start with the seam, not the prompt. Get the permission boundary and the stop condition right before anything else — everything downstream is far easier to fix once those two hold.</p>
+<p>If you’re building your first agent, start with the permission boundary and the stop condition, before the prompt. Everything else is easier to fix once those two are solid.</p>
 
             </div>
 

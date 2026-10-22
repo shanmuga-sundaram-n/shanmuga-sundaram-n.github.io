@@ -4,74 +4,52 @@ title: "Why is Kafka So Fast? Unveiling the Secrets Behind Kafka's Speed"
 date: 2024-10-17 12:00:00 +0000
 categories: [engineering, distributed-systems]
 tags: [kafka, performance, distributed-systems, streaming, backend]
-description: "A deep dive into the engineering decisions that make Apache Kafka one of the fastest messaging systems — sequential I/O, zero-copy, batching, compression, and intelligent caching."
+description: "A deep dive into the engineering decisions that make Apache Kafka one of the fastest messaging systems, sequential I/O, zero-copy, batching, compression, and intelligent caching."
 image: "/assets/images/blog/kafka-speed.webp"
 ---
 
 ![Why is Kafka So Fast?](/assets/images/blog/kafka-speed.webp)
 
-Apache Kafka is renowned for its extraordinary throughput and low latency. But what actually makes it so fast? The answer lies in a combination of deliberate engineering decisions that work together to minimize overhead at every layer.
+People often ask me how Kafka pushes millions of messages a second on fairly ordinary hardware. There's no magic in it. It's a handful of design choices that each cut out a bit of overhead, and they add up.
 
----
+## It only ever appends
 
-## 1. Sequential I/O: Optimizing Disk Access
+Kafka writes to the end of a log file and never goes back to update anything in the middle. That makes disk access sequential, and sequential reads and writes are far faster than random ones. On spinning disks the difference is huge because the head doesn't have to jump around. Even on SSDs it still helps.
 
-Kafka employs an **append-only log** architecture that leverages sequential rather than random disk access. Messages are written in the order they arrive and stored sequentially — data is continuously appended to the end of the log file.
+Picture thousands of IoT sensors sending readings. Each reading just lands at the tail of the log. Nothing has to be searched for or moved.
 
-This approach minimizes seek time on mechanical drives. When handling thousands of messages per second from IoT sensors, each new entry simply gets added to the log's end, avoiding the expensive physical movement of disk read/write heads.
+## Zero-copy
 
-Sequential reads and writes are orders of magnitude faster than random access — Kafka exploits this at the core of its storage design.
+The usual way to send a file over the network is to read it from disk into kernel memory, copy it into your application's memory, then copy it back into a kernel socket buffer. That's a lot of copying for no good reason.
 
----
+Kafka uses the `sendfile()` system call on Linux, which tells the kernel to move the data from the disk cache straight to the network socket. The data never enters the JVM. You save CPU cycles and a lot of memory traffic, which matters a great deal when you're serving big batches to many consumers.
 
-## 2. Zero-Copy Principle: Efficient Data Transfer
+## Compression
 
-Traditionally, transferring data from disk to network involves multiple copies through kernel and user-space buffers. Kafka bypasses this with **zero-copy** using system calls like `sendfile()` on Linux.
+Producers can compress a whole batch of messages with GZIP, Snappy or LZ4, and consumers decompress it on the other end. The broker generally stores the batch as it arrived.
 
-This technique instructs the kernel to move data directly from the disk buffer to the network socket buffer — eliminating unnecessary intermediate copies, reducing CPU overhead, and maximizing delivery throughput.
+It pays off most with repetitive data such as application logs or JSON events, where you can shrink the payload a lot. Less data on the wire and less on disk.
 
-The practical benefit: transferring a 1 GB batch of logs bypasses the costly round-trip through user space entirely.
+## Batching
 
----
+Kafka doesn't treat messages one at a time. It groups them into batches for both the network and the disk. If you batch 100 metrics together, you do one write and one round trip rather than 100 of each.
 
-## 3. Message Compression: Reducing Transmission Size
+Every I/O operation has a fixed cost no matter how small the payload is. Batching spreads that cost over many messages. The trade-off is a little extra latency while a batch fills, which you tune with settings like `linger.ms` and `batch.size`.
 
-Kafka supports compression algorithms including **GZIP, Snappy, and LZ4** at the producer level. Compression is applied to message batches before transmission, then decompressed by consumers.
+## The OS page cache
 
-This is particularly valuable when handling repetitive data like application logs, where compression ratios can be significant — reducing both network bandwidth and storage requirements.
+Kafka doesn't build a large cache of its own inside the JVM. It leans on the operating system's page cache instead. Recently written segments are usually still sitting in memory, so a consumer that is keeping up reads straight from RAM and the disk is barely touched.
 
----
+This also keeps the heap small, so garbage collection pauses stay out of the way. I think it's one of the smartest choices in the whole design.
 
-## 4. Message Batching: Efficient Processing
+## Putting it together
 
-Rather than handling individual messages one at a time, Kafka groups multiple messages into **batches** before disk writes or network transmission. Grouping 100 metrics into a single batch:
+| Technique | What it saves |
+|-----------|---------------|
+| Sequential I/O | Disk seeks |
+| Zero-copy | Extra memory copies and CPU |
+| Compression | Bandwidth and storage |
+| Batching | Per-message I/O overhead |
+| Page cache | Disk reads |
 
-- Reduces the number of I/O operations
-- Decreases network round-trips
-- Lowers broker CPU load
-
-This amortises the fixed overhead of each operation across many messages, dramatically improving throughput.
-
----
-
-## 5. Efficient Memory Management and Caching
-
-Kafka maintains **in-memory indexes** and leverages the OS page cache for recently accessed log segments. This enables rapid message retrieval without frequent disk reads — particularly when consumers request recently produced messages, which are almost always already in the page cache.
-
-Kafka intentionally relies on the OS page cache rather than implementing its own heap-based caching, keeping JVM garbage collection pressure low.
-
----
-
-## Key Takeaway
-
-Kafka's performance is not the result of a single trick — it's a comprehensive engineering approach:
-
-| Technique | Benefit |
-|-----------|---------|
-| Sequential I/O | Eliminates random disk seek time |
-| Zero-copy | Removes redundant data copies |
-| Compression | Reduces bandwidth and storage |
-| Batching | Amortises I/O overhead across messages |
-| Page cache | Fast reads without disk access |
-
-Together, these decisions make Kafka capable of handling millions of messages per second with consistently low latency — a system designed from the ground up for high-throughput streaming.
+None of these is clever on its own. Kafka is fast because it applies all of them together, and because the log-based design makes each one easy to do.

@@ -4,12 +4,12 @@ title: "Building RAG That Actually Works: Lessons from the Trenches"
 date: 2026-03-21 12:00:00 +0000
 categories: [ai, engineering, rag]
 tags: [rag, langchain, chromadb, openai, vector-search, llm]
-description: "A practitioner's guide to building production-grade RAG pipelines — covering chunking strategy, retrieval tuning, re-ranking, and evaluation. Lessons from real failures, not sanitized tutorials."
+description: "A practitioner's guide to building production-grade RAG pipelines, covering chunking strategy, retrieval tuning, re-ranking, and evaluation. Lessons from real failures, not sanitized tutorials."
 ---
 
-I've read probably a dozen RAG tutorials. They all do the same thing: show you how to embed a handful of PDFs into a vector store, run a similarity search, stuff the results into a prompt, and call it a production pipeline. Then you try to use the same approach on real data — thousands of documents, mixed formats, users with messy natural language queries — and the whole thing falls apart. The answers are vague, wrong, or confidently referencing documents that have nothing to do with the question.
+I've read probably a dozen RAG tutorials. They all do the same thing: show you how to embed a handful of PDFs into a vector store, run a similarity search, stuff the results into a prompt, and call it a production pipeline. Then you try to use the same approach on real data, thousands of documents, mixed formats, users with messy natural language queries, and the whole thing falls apart. The answers are vague, wrong, or confidently referencing documents that have nothing to do with the question.
 
-That gap between "works in the tutorial" and "works in production" is what this post is about. I've built a few of these pipelines now, and I've made almost every mistake there is to make — wrong chunk sizes, no overlap, skipping the re-ranker, shipping without any evaluation. I'm going to walk through the full pipeline — from chunking to evaluation — not as a sanitized tutorial, but as the thing I wish I'd had when I started building this stuff for real.
+That gap between "works in the tutorial" and "works in production" is what this post is about. I've built a few of these pipelines now, and I've made almost every mistake there is to make, wrong chunk sizes, no overlap, skipping the re-ranker, shipping without any evaluation. I'm going to walk through the full pipeline, from chunking to evaluation, not as a sanitized tutorial, but as the thing I wish I'd had when I started building this stuff for real.
 
 We'll use LangChain, ChromaDB, and OpenAI throughout. If you use different tools, the concepts all transfer.
 
@@ -832,7 +832,7 @@ I'm still not 100% sure semantic chunking is worth the overhead for most applica
 
 The honest answer is that RAG is still an unsolved problem. The pipeline in this post works well, but I've been watching a few developments closely.
 
-Query rewriting is probably the next thing I add to this stack — having the LLM rephrase the user's raw question before retrieval catches a lot of cases where users ask things in a way that's natural for a human but terrible for semantic search. Hybrid search (combining BM25 keyword matching with vector similarity) is also on my list, especially for domains where exact terminology matters.
+Query rewriting is probably the next thing I add to this stack, having the LLM rephrase the user's raw question before retrieval catches a lot of cases where users ask things in a way that's natural for a human but terrible for semantic search. Hybrid search (combining BM25 keyword matching with vector similarity) is also on my list, especially for domains where exact terminology matters.
 
 What I keep coming back to, though, is something less exciting: better document preparation. The more time I've spent on these systems, the more I believe that the quality of your source documents matters more than almost any retrieval optimization you can apply downstream. How they're structured, how consistently they're formatted, how much noise is stripped out before they hit the chunker: all of that compounds through every stage of the pipeline. Garbage in, garbage out, regardless of how clever your pipeline is.
 
