@@ -143,11 +143,11 @@
             <h1 class="post-title-main">Stop Using a Language Model for Everything. Here's What I Use Instead.</h1>
 
             <div class="post-content">
-                <p>Most enterprise agent pipelines have the same assumption baked in from the start: the AI layer is an LLM, every call goes through it, and the question is just which one. I built a production pipeline with that assumption and ran it long enough to start questioning it.</p>
+                <p>Most enterprise agent pipelines start from the same assumption: the AI layer is an LLM, every call goes through it, and the only open question is which one. I built a production pipeline on that assumption, and after running it for a while I started to doubt it.</p>
 
-<p>When I profiled the call breakdown, roughly 80% of the AI work was structured decision-making. Classify this intent. Score this document for relevance. Extract these fields from an unstructured input. None of those outputs were ever read by a human. They fed directly into the next system. I was paying frontier LLM prices and tolerating LLM latency for tasks that didn’t need generative capability at all. And occasionally the model would invent a field that wasn’t in the input, because nothing in its architecture prevents that.</p>
+<p>I profiled the calls and about 80% of the AI work was structured decision-making: classify this intent, score this document for relevance, pull these fields out of some messy input. No human ever read those outputs. They went straight into the next system. So I was paying frontier prices and waiting on LLM latency for work that didn’t need generation at all. Every so often the model also invented a field that wasn’t in the input, which is what you get when nothing in the architecture stops it.</p>
 
-<p>That’s what prompted me to evaluate Jev, released in September 2026 by TypeSafe AI, founded by Diogo Almeida (formerly OpenAI).</p>
+<p>That made me look at Jev, released in September 2026 by TypeSafe AI, founded by Diogo Almeida (formerly OpenAI).</p>
 
 <h2 id="what-system-one-models-actually-are">What System One Models Actually Are</h2>
 
@@ -157,23 +157,19 @@
 
 <p>The calibration is as important as the typing. An LLM prompted to express confidence tends to express consistent confidence, not accurate confidence. Calibrated means when Jev reports 90% confidence, it’s right 90% of the time statistically across those calls. That becomes a real architectural control surface: you set the threshold for autonomous action versus escalation, and the threshold is meaningful.</p>
 
-<h2 id="the-two-stack-architecture">The Two-Stack Architecture</h2>
+<h2 id="what-this-looks-like-in-code">What This Looks Like in Code</h2>
 
-<p>Most real agent pipelines have two kinds of work running through the same model class: decision-making at the edges and synthesis at the core. Separating them is what makes the cost and latency gap meaningful.</p>
+<p>Real agent pipelines run two kinds of work through the same model: decisions at the edges and synthesis at the core. Jev takes the decisions, and an LLM stays on anything a person will read. The confidence threshold ties the two together. With an LLM, “escalate if unsure” means prompt engineering and hoping the model reports its own uncertainty honestly. With Jev, it’s a numeric cutoff on a calibrated score, so you can set it and test it.</p>
 
 <pre><code class="language-mermaid">flowchart TD
-    A([Incoming Query]) --&gt; B["Jev: Intent Classification\n70–500ms · $0.042/MTok"]
-    B --&gt; C{Confidence\nScore}
-    C --&gt;|"&gt; 0.85 · High confidence"| D[Route Directly\nStructured action]
-    C --&gt;|"&lt; 0.85 · Low confidence"| E[Escalate to LLM\nClaude / GPT]
-    E --&gt; F[Synthesis + Generation\nOutput a human reads]
+    A([Incoming Query]) --&gt; B["Jev: Intent Classification&lt;br/&gt;70–500ms · $0.042/MTok"]
+    B --&gt; C{Confidence&lt;br/&gt;Score}
+    C --&gt;|"&gt; 0.85 · High confidence"| D["Route Directly&lt;br/&gt;Structured action"]
+    C --&gt;|"&lt; 0.85 · Low confidence"| E["Escalate to LLM&lt;br/&gt;Claude / GPT"]
+    E --&gt; F["Synthesis + Generation&lt;br/&gt;Output a human reads"]
     D --&gt; G([Pipeline continues])
     F --&gt; G
 </code></pre>
-
-<p>The confidence threshold is the key architectural lever. With an LLM, “escalate if unsure” requires prompt engineering and hoping the model accurately signals its own uncertainty. With Jev, it’s a numeric cutoff on calibrated output. You set it, it’s testable, it’s consistent.</p>
-
-<h2 id="what-this-looks-like-in-code">What This Looks Like in Code</h2>
 
 <p>Here’s a routing step from a RAG intake pipeline. The before version uses an LLM to classify whether an incoming query needs retrieval:</p>
 
@@ -185,7 +181,7 @@
 <span class="n">needs_retrieval</span> <span class="o">=</span> <span class="s">"yes"</span> <span class="ow">in</span> <span class="n">response</span><span class="p">.</span><span class="n">content</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">text</span><span class="p">.</span><span class="n">lower</span><span class="p">()</span>
 </code></pre></div></div>
 
-<p>The failure mode here is invisible: the model parses and responds in ways that look right and aren’t. It might say “Yes, retrieval is needed” or “Retrieval would be appropriate here” or add caveats that break the parse. The Jev version:</p>
+<p>The failure here is easy to miss because the output looks fine. The model might say “Yes, retrieval is needed” or “Retrieval would be appropriate here” or add caveats that break the parse. The Jev version:</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># After: Jev typed decision with calibrated confidence
 </span><span class="n">result</span> <span class="o">=</span> <span class="n">jev</span><span class="p">.</span><span class="n">decide</span><span class="p">(</span>
@@ -201,7 +197,7 @@
     <span class="n">escalate_to_llm</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p>The difference isn’t just cleaner code. The schema fails loudly at definition time, not silently at runtime. And the confidence gate is a real signal, not a parsed string.</p>
+<p>It’s cleaner, but that’s the smaller benefit. A bad schema fails when you define it instead of quietly misbehaving in production, and the confidence check is a real number, not a string you hoped to parse.</p>
 
 <h2 id="the-cost-and-latency-gap">The Cost and Latency Gap</h2>
 
@@ -209,13 +205,272 @@
 
 <p>For classification, routing, and structured extraction workloads, that’s roughly 100x cheaper and 40 to 200x faster. TypeSafe published results from Jack and Jill, a hiring platform: they replaced an LLM-based candidate screening pipeline with Jev and got 88% cost reduction, 2x throughput, and 10 days from test to production.</p>
 
+<h2 id="workflows-where-jev-changes-the-math">Workflows Where Jev Changes the Math</h2>
+
+<p>Each workflow below follows the same layout: what it does, the flow, then the code. The code uses the same <code class="language-plaintext highlighter-rouge">jev.decide</code> shape as the routing example above. I’m showing the shape of each integration, so check the exact calls against TypeSafe’s docs before you copy anything.</p>
+
+<h3 id="six-patterns-from-typesafe">Six patterns from TypeSafe</h3>
+
+<h4 id="1-ticket-routing">1. Ticket routing</h4>
+
+<p>Give Jev a support ticket and your team list, and it picks one team and tells you how sure it is. If it isn’t sure enough, the ticket waits for a person. On a 77-intent test this came out about 84x cheaper than routing through Opus 5.5. The bigger win for me is the confidence score. When an LLM answers “Billing team”, you have no idea whether that was a firm call or a coin flip.</p>
+
+<pre><code class="language-mermaid">flowchart LR
+    T([Support ticket]) --&gt; J["Jev: pick one team&lt;br/&gt;from taxonomy"]
+    J --&gt; C{Confidence}
+    C --&gt;|"≥ threshold"| Q["Assign to team queue&lt;br/&gt;(Billing / Tech / General)"]
+    C --&gt;|"&lt; threshold"| H[Hold for human triage]
+    Q --&gt; Done([Ticket routed])
+    H --&gt; Done
+</code></pre>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">TEAMS</span> <span class="o">=</span> <span class="p">[</span><span class="s">"billing"</span><span class="p">,</span> <span class="s">"technical"</span><span class="p">,</span> <span class="s">"account"</span><span class="p">,</span> <span class="s">"general"</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">route_ticket</span><span class="p">(</span><span class="n">ticket</span><span class="p">):</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">jev</span><span class="p">.</span><span class="n">decide</span><span class="p">(</span>
+        <span class="nb">input</span><span class="o">=</span><span class="n">ticket</span><span class="p">.</span><span class="n">body</span><span class="p">,</span>
+        <span class="n">schema</span><span class="o">=</span><span class="p">{</span><span class="s">"team"</span><span class="p">:</span> <span class="p">{</span><span class="s">"type"</span><span class="p">:</span> <span class="s">"enum"</span><span class="p">,</span> <span class="s">"values"</span><span class="p">:</span> <span class="n">TEAMS</span><span class="p">}},</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">r</span><span class="p">.</span><span class="n">confidence</span> <span class="o">&gt;=</span> <span class="mf">0.85</span><span class="p">:</span>
+        <span class="n">queues</span><span class="p">[</span><span class="n">r</span><span class="p">.</span><span class="n">team</span><span class="p">].</span><span class="n">put</span><span class="p">(</span><span class="n">ticket</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">triage_queue</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="n">ticket</span><span class="p">,</span> <span class="n">hint</span><span class="o">=</span><span class="n">r</span><span class="p">.</span><span class="n">team</span><span class="p">)</span>  <span class="c1"># a human still sees the best guess
+</span></code></pre></div></div>
+
+<h4 id="2-content-moderation">2. Content moderation</h4>
+
+<p>Ask one yes/no question per policy, like “is this offensive?”. Jev acts when it’s confident and sends the grey area to a person. There’s no string parsing and no made-up explanation of why something crosses the line. TypeSafe reports the best moderation score of the six models in their published test.</p>
+
+<pre><code class="language-mermaid">flowchart LR
+    P([User content]) --&gt; J["Jev: one yes/no&lt;br/&gt;question per policy"]
+    J --&gt; C{Verdict and&lt;br/&gt;confidence}
+    C --&gt;|"Violates · high"| R[Remove automatically]
+    C --&gt;|"Clean · high"| A[Publish]
+    C --&gt;|"Grey zone"| H[Human reviewer queue]
+</code></pre>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">POLICIES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">"harassment"</span><span class="p">:</span> <span class="s">"Is this content harassing toward a person or group?"</span><span class="p">,</span>
+    <span class="s">"spam"</span><span class="p">:</span> <span class="s">"Is this content unsolicited promotion or spam?"</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">def</span> <span class="nf">moderate</span><span class="p">(</span><span class="n">post</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">question</span> <span class="ow">in</span> <span class="n">POLICIES</span><span class="p">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">jev</span><span class="p">.</span><span class="n">decide</span><span class="p">(</span>
+            <span class="nb">input</span><span class="o">=</span><span class="n">post</span><span class="p">.</span><span class="n">text</span><span class="p">,</span>
+            <span class="n">schema</span><span class="o">=</span><span class="p">{</span><span class="s">"violates"</span><span class="p">:</span> <span class="p">{</span><span class="s">"type"</span><span class="p">:</span> <span class="s">"bool"</span><span class="p">,</span> <span class="s">"question"</span><span class="p">:</span> <span class="n">question</span><span class="p">}},</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">r</span><span class="p">.</span><span class="n">violates</span> <span class="ow">and</span> <span class="n">r</span><span class="p">.</span><span class="n">confidence</span> <span class="o">&gt;</span> <span class="mf">0.9</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">remove</span><span class="p">(</span><span class="n">post</span><span class="p">,</span> <span class="n">reason</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">r</span><span class="p">.</span><span class="n">confidence</span> <span class="o">&lt;=</span> <span class="mf">0.9</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">review_queue</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="n">post</span><span class="p">,</span> <span class="n">policy</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">publish</span><span class="p">(</span><span class="n">post</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h4 id="3-ai-judges">3. AI judges</h4>
+
+<p>Most teams sample a few agent runs and review those by hand. Instead, put Jev on every run and ask “does a human need to see this?” A check takes about 0.4s, against roughly 10s for an LLM judge, so you can afford to look at all of them rather than a sample. For anything where a miss is costly, that coverage matters more than the cost savings.</p>
+
+<pre><code class="language-mermaid">flowchart LR
+    Run([Every agent run]) --&gt; J["Jev judge · ~0.4s&lt;br/&gt;Does a human need to see this?"]
+    J --&gt; C{Needs review?}
+    C --&gt;|"No · high confidence"| Log[Log and move on]
+    C --&gt;|"Yes or unsure"| Rev[Flag for human review]
+    Log --&gt; Cov["100% coverage&lt;br/&gt;not a sample"]
+    Rev --&gt; Cov
+</code></pre>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">judge_run</span><span class="p">(</span><span class="n">run</span><span class="p">):</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">jev</span><span class="p">.</span><span class="n">decide</span><span class="p">(</span>
+        <span class="nb">input</span><span class="o">=</span><span class="n">run</span><span class="p">.</span><span class="n">transcript</span><span class="p">,</span>
+        <span class="n">schema</span><span class="o">=</span><span class="p">{</span><span class="s">"needs_human"</span><span class="p">:</span> <span class="p">{</span><span class="s">"type"</span><span class="p">:</span> <span class="s">"bool"</span><span class="p">}},</span>
+    <span class="p">)</span>
+    <span class="c1"># Unsure counts as "yes". It's cheaper to over-flag than to miss one.
+</span>    <span class="k">if</span> <span class="n">r</span><span class="p">.</span><span class="n">needs_human</span> <span class="ow">or</span> <span class="n">r</span><span class="p">.</span><span class="n">confidence</span> <span class="o">&lt;</span> <span class="mf">0.8</span><span class="p">:</span>
+        <span class="n">review_queue</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="n">run</span><span class="p">)</span>
+    <span class="n">metrics</span><span class="p">.</span><span class="n">incr</span><span class="p">(</span><span class="s">"runs_judged"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h4 id="4-agent-safety-gates">4. Agent safety gates</h4>
+
+<p>Put Jev between the agent and its tools. Before any tool call runs, Jev scores it for risk, and the risky ones are stopped. LangChain’s harness already supports this as a pluggable interceptor, so you don’t have to build the plumbing yourself.</p>
+
+<pre><code class="language-mermaid">sequenceDiagram
+    participant Agent
+    participant Jev as Jev gate
+    participant Tool
+    participant Human
+    Agent-&gt;&gt;Jev: Proposed tool call
+    Jev-&gt;&gt;Jev: Score risk
+    alt Low risk
+        Jev-&gt;&gt;Tool: Execute
+        Tool--&gt;&gt;Agent: Result
+    else Medium risk or low confidence
+        Jev-&gt;&gt;Human: Ask approval
+        Human--&gt;&gt;Jev: Approve or deny
+    else High risk
+        Jev--&gt;&gt;Agent: Blocked before execution
+    end
+</code></pre>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">guarded_call</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">jev</span><span class="p">.</span><span class="n">decide</span><span class="p">(</span>
+        <span class="nb">input</span><span class="o">=</span><span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">tool</span><span class="p">.</span><span class="n">name</span><span class="si">}</span><span class="s">(</span><span class="si">{</span><span class="n">args</span><span class="si">}</span><span class="s">)"</span><span class="p">,</span>
+        <span class="n">schema</span><span class="o">=</span><span class="p">{</span><span class="s">"risk"</span><span class="p">:</span> <span class="p">{</span><span class="s">"type"</span><span class="p">:</span> <span class="s">"enum"</span><span class="p">,</span> <span class="s">"values"</span><span class="p">:</span> <span class="p">[</span><span class="s">"low"</span><span class="p">,</span> <span class="s">"medium"</span><span class="p">,</span> <span class="s">"high"</span><span class="p">]}},</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">r</span><span class="p">.</span><span class="n">risk</span> <span class="o">==</span> <span class="s">"high"</span> <span class="ow">and</span> <span class="n">r</span><span class="p">.</span><span class="n">confidence</span> <span class="o">&gt;</span> <span class="mf">0.8</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">ToolBlocked</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">tool</span><span class="p">.</span><span class="n">name</span><span class="si">}</span><span class="s"> blocked by safety gate"</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">r</span><span class="p">.</span><span class="n">risk</span> <span class="o">!=</span> <span class="s">"low"</span> <span class="ow">or</span> <span class="n">r</span><span class="p">.</span><span class="n">confidence</span> <span class="o">&lt;</span> <span class="mf">0.8</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">ask_human_approval</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">ToolBlocked</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">tool</span><span class="p">.</span><span class="n">name</span><span class="si">}</span><span class="s"> denied by reviewer"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">tool</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="o">**</span><span class="n">args</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h4 id="5-model-routing">5. Model routing</h4>
+
+<p>Before a frontier model call, Jev labels the request easy or hard. Easy ones go to a smaller, cheaper model, and hard ones go to the big one. That way you only pay reasoning-model prices when the problem needs reasoning. If Jev isn’t sure, I send the request to the big model, because a bad answer costs more than the price difference.</p>
+
+<pre><code class="language-mermaid">flowchart LR
+    Req([Incoming request]) --&gt; J["Jev: easy or hard?"]
+    J --&gt; C{Label}
+    C --&gt;|Easy| S["Small, cheap model"]
+    C --&gt;|Hard| B["Frontier reasoning model"]
+    C --&gt;|"Low confidence"| B
+    S --&gt; Out([Response])
+    B --&gt; Out
+</code></pre>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">answer</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">jev</span><span class="p">.</span><span class="n">decide</span><span class="p">(</span>
+        <span class="nb">input</span><span class="o">=</span><span class="n">request</span><span class="p">.</span><span class="n">text</span><span class="p">,</span>
+        <span class="n">schema</span><span class="o">=</span><span class="p">{</span><span class="s">"difficulty"</span><span class="p">:</span> <span class="p">{</span><span class="s">"type"</span><span class="p">:</span> <span class="s">"enum"</span><span class="p">,</span> <span class="s">"values"</span><span class="p">:</span> <span class="p">[</span><span class="s">"easy"</span><span class="p">,</span> <span class="s">"hard"</span><span class="p">]}},</span>
+    <span class="p">)</span>
+    <span class="n">easy</span> <span class="o">=</span> <span class="n">r</span><span class="p">.</span><span class="n">difficulty</span> <span class="o">==</span> <span class="s">"easy"</span> <span class="ow">and</span> <span class="n">r</span><span class="p">.</span><span class="n">confidence</span> <span class="o">&gt;</span> <span class="mf">0.85</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="s">"claude-haiku-5-5"</span> <span class="k">if</span> <span class="n">easy</span> <span class="k">else</span> <span class="s">"claude-opus-5-5"</span>
+    <span class="k">return</span> <span class="n">claude</span><span class="p">.</span><span class="n">messages</span><span class="p">.</span><span class="n">create</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">messages</span><span class="o">=</span><span class="n">request</span><span class="p">.</span><span class="n">messages</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h4 id="6-docs-audit">6. Docs audit</h4>
+
+<p>Pair up every paragraph with every other paragraph and ask “do these contradict?” Jev throws away the pairs that agree, so the LLM only reads what’s left. TypeSafe ran this on their own help center and found 59 contradictions in 6 minutes.</p>
+
+<pre><code class="language-mermaid">flowchart LR
+    D([Help center docs]) --&gt; P["Build all&lt;br/&gt;paragraph pairs"]
+    P --&gt; J["Jev: do these&lt;br/&gt;contradict?"]
+    J --&gt;|"Agree · dropped"| X[Discard]
+    J --&gt;|"Possible conflict"| L["LLM reads only&lt;br/&gt;the remainder"]
+    L --&gt; R([59 contradictions&lt;br/&gt;in 6 minutes])
+</code></pre>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">combinations</span>
+
+<span class="k">def</span> <span class="nf">audit</span><span class="p">(</span><span class="n">paragraphs</span><span class="p">):</span>
+    <span class="n">suspects</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">combinations</span><span class="p">(</span><span class="n">paragraphs</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">jev</span><span class="p">.</span><span class="n">decide</span><span class="p">(</span>
+            <span class="nb">input</span><span class="o">=</span><span class="sa">f</span><span class="s">"A: </span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="se">\n\n</span><span class="s">B: </span><span class="si">{</span><span class="n">b</span><span class="si">}</span><span class="s">"</span><span class="p">,</span>
+            <span class="n">schema</span><span class="o">=</span><span class="p">{</span><span class="s">"contradicts"</span><span class="p">:</span> <span class="p">{</span><span class="s">"type"</span><span class="p">:</span> <span class="s">"bool"</span><span class="p">}},</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">r</span><span class="p">.</span><span class="n">contradicts</span> <span class="ow">or</span> <span class="n">r</span><span class="p">.</span><span class="n">confidence</span> <span class="o">&lt;</span> <span class="mf">0.8</span><span class="p">:</span>
+            <span class="n">suspects</span><span class="p">.</span><span class="n">append</span><span class="p">((</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
+    <span class="c1"># Only the suspicious pairs ever reach the expensive model
+</span>    <span class="k">return</span> <span class="p">[</span><span class="n">explain_conflict</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">suspects</span><span class="p">]</span>
+</code></pre></div></div>
+
+<h3 id="three-more-from-enterprise-pipelines">Three more from enterprise pipelines</h3>
+
+<p>These follow the same logic, though they aren’t from TypeSafe’s published list.</p>
+
+<h4 id="7-rag-pre-filtering">7. RAG pre-filtering</h4>
+
+<p>Before you hand retrieved chunks to the LLM, have Jev score each one against the query and drop the weak ones. You get a smaller context, a lower bill and usually a tighter answer. On a 500-chunk retrieval, cutting 60% of the low-relevance chunks before synthesis adds up fast.</p>
+
+<pre><code class="language-mermaid">flowchart LR
+    Q([Query]) --&gt; V[Vector retrieval&lt;br/&gt;500 chunks]
+    V --&gt; J["Jev: relevance&lt;br/&gt;score per chunk"]
+    J --&gt;|"Below threshold · ~60%"| Drop[Dropped]
+    J --&gt;|"Relevant · ~40%"| L["LLM synthesis&lt;br/&gt;smaller context"]
+    L --&gt; A([Tighter, cheaper answer])
+</code></pre>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">answer_with_context</span><span class="p">(</span><span class="n">query</span><span class="p">):</span>
+    <span class="n">chunks</span> <span class="o">=</span> <span class="n">vector_store</span><span class="p">.</span><span class="n">search</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+    <span class="n">keep</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">chunks</span><span class="p">:</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">jev</span><span class="p">.</span><span class="n">decide</span><span class="p">(</span>
+            <span class="nb">input</span><span class="o">=</span><span class="sa">f</span><span class="s">"Query: </span><span class="si">{</span><span class="n">query</span><span class="si">}</span><span class="se">\n\n</span><span class="s">Passage: </span><span class="si">{</span><span class="n">chunk</span><span class="p">.</span><span class="n">text</span><span class="si">}</span><span class="s">"</span><span class="p">,</span>
+            <span class="n">schema</span><span class="o">=</span><span class="p">{</span><span class="s">"relevant"</span><span class="p">:</span> <span class="p">{</span><span class="s">"type"</span><span class="p">:</span> <span class="s">"bool"</span><span class="p">}},</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">r</span><span class="p">.</span><span class="n">relevant</span> <span class="ow">and</span> <span class="n">r</span><span class="p">.</span><span class="n">confidence</span> <span class="o">&gt;</span> <span class="mf">0.7</span><span class="p">:</span>
+            <span class="n">keep</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">synthesize</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">keep</span><span class="p">)</span>  <span class="c1"># one LLM call over the survivors
+</span></code></pre></div></div>
+
+<h4 id="8-abuse-and-rate-limit-scoring">8. Abuse and rate-limit scoring</h4>
+
+<p>Score inbound requests for bot patterns or abuse before they get anywhere near expensive processing. If Jev says a request is clearly abusive at 0.95 confidence, nobody needs an LLM’s opinion on it. This check belongs at the API gateway, not inside the agent loop.</p>
+
+<pre><code class="language-mermaid">flowchart LR
+    R([Inbound request]) --&gt; G[API gateway]
+    G --&gt; J["Jev: abuse and&lt;br/&gt;bot score"]
+    J --&gt; C{Result}
+    C --&gt;|"Abusive · 0.95"| B[Block or rate-limit]
+    C --&gt;|"Clean"| Agent[Agent loop and LLM]
+    C --&gt;|"Uncertain"| Ch[Challenge or throttle]
+</code></pre>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">gateway_middleware</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">next_handler</span><span class="p">):</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">jev</span><span class="p">.</span><span class="n">decide</span><span class="p">(</span>
+        <span class="nb">input</span><span class="o">=</span><span class="n">request</span><span class="p">.</span><span class="n">summary</span><span class="p">(),</span>  <span class="c1"># headers, rate, payload shape
+</span>        <span class="n">schema</span><span class="o">=</span><span class="p">{</span><span class="s">"traffic"</span><span class="p">:</span> <span class="p">{</span><span class="s">"type"</span><span class="p">:</span> <span class="s">"enum"</span><span class="p">,</span> <span class="s">"values"</span><span class="p">:</span> <span class="p">[</span><span class="s">"clean"</span><span class="p">,</span> <span class="s">"bot"</span><span class="p">,</span> <span class="s">"abusive"</span><span class="p">]}},</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">r</span><span class="p">.</span><span class="n">traffic</span> <span class="o">==</span> <span class="s">"abusive"</span> <span class="ow">and</span> <span class="n">r</span><span class="p">.</span><span class="n">confidence</span> <span class="o">&gt;=</span> <span class="mf">0.95</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="mi">429</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">r</span><span class="p">.</span><span class="n">traffic</span> <span class="o">!=</span> <span class="s">"clean"</span> <span class="ow">or</span> <span class="n">r</span><span class="p">.</span><span class="n">confidence</span> <span class="o">&lt;</span> <span class="mf">0.8</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">challenge</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>  <span class="c1"># CAPTCHA or throttle
+</span>    <span class="k">return</span> <span class="n">next_handler</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h4 id="9-structured-extraction-routing">9. Structured extraction routing</h4>
+
+<p>If you need to pull fields out of unstructured input, classify the document type first. A purchase order, a support email and a legal notice each need a different extraction schema. The classification step is quick and typed. The extraction step that follows is smaller and more accurate because it already knows what it’s reading.</p>
+
+<pre><code class="language-mermaid">flowchart LR
+    Doc([Unstructured document]) --&gt; J["Jev: document type"]
+    J --&gt; C{Type}
+    C --&gt;|Purchase order| S1["PO schema&lt;br/&gt;vendor, items, total"]
+    C --&gt;|Support email| S2["Email schema&lt;br/&gt;product, issue, urgency"]
+    C --&gt;|Legal notice| S3["Legal schema&lt;br/&gt;parties, deadline, clause"]
+    C --&gt;|"Low confidence"| H[Human or generic LLM extraction]
+    S1 --&gt; E["Targeted extraction"]
+    S2 --&gt; E
+    S3 --&gt; E
+    E --&gt; Out([Typed record])
+</code></pre>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">SCHEMAS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">"purchase_order"</span><span class="p">:</span> <span class="p">{</span><span class="s">"vendor"</span><span class="p">:</span> <span class="s">"str"</span><span class="p">,</span> <span class="s">"items"</span><span class="p">:</span> <span class="s">"list"</span><span class="p">,</span> <span class="s">"total"</span><span class="p">:</span> <span class="s">"float"</span><span class="p">},</span>
+    <span class="s">"support_email"</span><span class="p">:</span> <span class="p">{</span><span class="s">"product"</span><span class="p">:</span> <span class="s">"str"</span><span class="p">,</span> <span class="s">"issue"</span><span class="p">:</span> <span class="s">"str"</span><span class="p">,</span> <span class="s">"urgency"</span><span class="p">:</span> <span class="s">"str"</span><span class="p">},</span>
+    <span class="s">"legal_notice"</span><span class="p">:</span> <span class="p">{</span><span class="s">"parties"</span><span class="p">:</span> <span class="s">"list"</span><span class="p">,</span> <span class="s">"deadline"</span><span class="p">:</span> <span class="s">"date"</span><span class="p">,</span> <span class="s">"clause"</span><span class="p">:</span> <span class="s">"str"</span><span class="p">},</span>
+<span class="p">}</span>
+
+<span class="k">def</span> <span class="nf">extract</span><span class="p">(</span><span class="n">doc</span><span class="p">):</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">jev</span><span class="p">.</span><span class="n">decide</span><span class="p">(</span>
+        <span class="nb">input</span><span class="o">=</span><span class="n">doc</span><span class="p">.</span><span class="n">text</span><span class="p">,</span>
+        <span class="n">schema</span><span class="o">=</span><span class="p">{</span><span class="s">"doc_type"</span><span class="p">:</span> <span class="p">{</span><span class="s">"type"</span><span class="p">:</span> <span class="s">"enum"</span><span class="p">,</span> <span class="s">"values"</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">SCHEMAS</span><span class="p">)}},</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">r</span><span class="p">.</span><span class="n">confidence</span> <span class="o">&lt;</span> <span class="mf">0.85</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">generic_llm_extract</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">jev</span><span class="p">.</span><span class="n">decide</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="n">doc</span><span class="p">.</span><span class="n">text</span><span class="p">,</span> <span class="n">schema</span><span class="o">=</span><span class="n">SCHEMAS</span><span class="p">[</span><span class="n">r</span><span class="p">.</span><span class="n">doc_type</span><span class="p">]).</span><span class="n">fields</span>
+</code></pre></div></div>
+
 <h2 id="the-decision-rule">The Decision Rule</h2>
 
-<p>If the AI call ends with a human reading the output, use an LLM. If it ends with your code acting on the output, evaluate Jev first.</p>
+<p>My rule of thumb: if a person ends up reading the output, use an LLM. If your code acts on the output, try Jev first.</p>
 
-<p>The second category is larger than most architects realize. Routing, intent classification, entity extraction, confidence gating, relevance scoring. These are all structured decision tasks running at LLM prices inside most pipelines today, not because they need generative capability but because LLMs are the default reach.</p>
+<p>The second bucket is bigger than most people expect. Routing, intent classification, entity extraction, confidence gating and relevance scoring are all decision work, and most pipelines run them at LLM prices simply because an LLM is what everyone reaches for first.</p>
 
-<p>The enterprise AI conversation has spent two years on which LLM vendor to use. For the decision-making workload inside a real agent pipeline, that’s the wrong question. The question is which model class.</p>
+<p>We’ve spent two years arguing about which LLM vendor to pick. For the decision work inside a real agent pipeline, that’s the wrong question. The better one is which kind of model the job needs.</p>
 
             </div>
 
