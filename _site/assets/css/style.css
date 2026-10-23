@@ -246,11 +246,18 @@ strong { font-weight: 600; color: var(--color-text-primary); }
 
 .skill-name { font-weight: 600; font-size: var(--font-size-sm); color: var(--color-text-primary); }
 
-.tags { display: flex; flex-wrap: wrap; gap: var(--space-xs); }
+/* Tags: mono text under a divider, slash separated (shared by projects and posts) */
+.tags { display: block; margin-bottom: var(--space-md); padding-top: var(--space-md); border-top: 1px solid var(--color-border); font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: var(--font-size-sm); line-height: 1.8; color: var(--color-text-secondary); }
 
-.tag { display: inline-block; padding: var(--space-xs) var(--space-sm); background: var(--color-surface); color: var(--color-accent-primary); border-radius: var(--radius-full); font-size: var(--font-size-sm); font-weight: 500; border: 1px solid rgba(99, 102, 241, 0.3); transition: all var(--transition-base); }
+.tags::before { content: "Tags"; display: block; margin-bottom: var(--space-xs); font-family: var(--font-body, inherit); font-size: var(--font-size-xs, 0.75rem); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-text-primary); }
 
-.tag:hover { background: var(--color-accent-primary); color: white; transform: scale(1.05); }
+.project-card .tags::before { content: "Stack"; }
+
+.tag { display: inline; padding: 0; background: none; border: 0; border-radius: 0; color: var(--color-text-secondary); font-weight: 400; transition: color var(--transition-base); }
+
+.tag:hover { color: var(--color-accent-primary); }
+
+.tag:not(:last-child)::after { content: " / "; white-space: pre-wrap; color: var(--color-accent-primary); }
 
 /* ============================================ PROJECT CARDS ============================================ */
 .project-card { display: flex; flex-direction: column; background: var(--color-bg-secondary); border-radius: var(--radius-lg); overflow: hidden; transition: all var(--transition-base); border: 1px solid var(--color-border); }
@@ -280,17 +287,6 @@ strong { font-weight: 600; color: var(--color-text-primary); }
 .project-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-lg); }
 
 @media (max-width: 768px) { .project-grid { grid-template-columns: 1fr; } }
-/* Tags inside projects: mono text under a divider, slash separated */
-.project-card .tags { display: block; margin-bottom: var(--space-md); padding-top: var(--space-md); border-top: 1px solid var(--color-border); font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: var(--font-size-sm); line-height: 1.8; color: var(--color-text-secondary); }
-
-.project-card .tags::before { content: "Stack"; display: block; margin-bottom: var(--space-xs); font-family: var(--font-body, inherit); font-size: var(--font-size-xs, 0.75rem); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-text-primary); }
-
-.project-card .tag { display: inline; padding: 0; background: none; border: 0; border-radius: 0; color: var(--color-text-secondary); font-weight: 400; }
-
-.project-card .tag:hover { background: none; color: var(--color-accent-primary); transform: none; }
-
-.project-card .tag:not(:last-child)::after { content: " / "; white-space: pre-wrap; color: var(--color-accent-primary); }
-
 /* ============================================ OPEN SOURCE CARDS ============================================ */
 .section-inner { margin-bottom: var(--space-2xl); }
 
