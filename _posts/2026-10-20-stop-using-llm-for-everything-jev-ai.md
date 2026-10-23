@@ -76,6 +76,54 @@ Frontier LLMs run $0.20 to $10 per million input tokens with response times of 3
 
 For classification, routing, and structured extraction workloads, that's roughly 100x cheaper and 40 to 200x faster. TypeSafe published results from Jack and Jill, a hiring platform: they replaced an LLM-based candidate screening pipeline with Jev and got 88% cost reduction, 2x throughput, and 10 days from test to production.
 
+## Workflows Where Jev Changes the Math
+
+TypeSafe published six production patterns. Here they are with the numbers, plus three more that come up repeatedly in enterprise pipelines.
+
+**Ticket routing** — Feed Jev a support ticket and your team taxonomy. It returns one team with a calibrated confidence score. Below threshold, it holds for a human. On a 77-intent test, that came in at roughly 84x cheaper than routing through Opus 5.5. You also get confidence gating the LLM version doesn't give you: an LLM that says "Billing team" has no way to tell you how sure it is.
+
+**Content moderation** — Ask one yes/no question per policy: "is this offensive?" Jev acts at high confidence, routes the grey zone to a person. No string parsing, no hallucinated reasoning about why something crosses the line. TypeSafe reports the best moderation score across six models in their published test.
+
+**AI judges** — Instead of sampling your agent runs for quality review, put Jev on every run asking "does a human need to see this?" At 0.4s per check versus 10s for an LLM judge, you can cover 100% of runs instead of a sample. The coverage gap alone is worth the switch for anything safety-critical.
+
+**Agent safety gates** — Put Jev between your agent and its tools. It scores each tool call for risk before execution. High-risk calls get blocked before they run. LangChain's harness already supports this pattern as a pluggable interceptor.
+
+**Model routing** — Before a frontier model call, Jev labels the request easy or hard. Easy requests go to a smaller, cheaper model. Hard ones reach the big model. You pay reasoning-model prices only where the problem actually requires reasoning.
+
+**Docs audit** — Pair every paragraph with every other paragraph and ask "do these contradict?" Jev drops the agreeing pairs. The LLM reads only the remainder. TypeSafe ran this on their own help center: 59 contradictions found in 6 minutes.
+
+Three more that follow the same logic:
+
+**RAG pre-filtering** — Before passing retrieved chunks to the LLM, have Jev score each one for relevance to the query. Drop chunks below threshold. Smaller context means lower cost and tighter answers. On a 500-chunk retrieval, dropping 60% of low-relevance chunks before synthesis isn't a small optimization.
+
+**Abuse and rate-limit scoring** — Score inbound requests for bot patterns, abuse signals, or intent categories before they reach expensive processing. A request Jev classifies as clearly abusive at 0.95 confidence doesn't need an LLM opinion. This belongs at the API gateway layer, not inside the agent loop.
+
+**Structured extraction routing** — When you need to extract specific fields from unstructured input, use Jev to pre-classify the document type first. A purchase order, a support email, and a legal notice all have different extraction schemas. The classification step is fast and typed; the extraction step is smaller and better targeted because it already knows what it's reading.
+
+```mermaid
+flowchart LR
+    Input([Unstructured Input]) --> Jev
+
+    subgraph Jev["Jev Decision Layer · 70–500ms · $0.042/MTok"]
+        direction TB
+        R1[Ticket routing · 84x cheaper]
+        R2[Content moderation · best score of 6]
+        R3[AI judges · 0.4s vs 10s LLM]
+        R4[Agent safety gates]
+        R5[Model routing · easy vs hard]
+        R6[Docs audit · 59 issues in 6 min]
+        R7[RAG pre-filter]
+        R8[Abuse scoring]
+        R9[Extraction routing]
+    end
+
+    Jev -->|High confidence| Action[Autonomous action]
+    Jev -->|Low confidence| LLM[Escalate to LLM]
+    Jev -->|Risk flag| Block[Block / Hold for human]
+```
+
+The pattern across all nine is the same: Jev handles the decision, an LLM handles the generation. The moment you collapse those two into one model call, you are paying generation prices for a decision that does not need a generated response.
+
 ## The Decision Rule
 
 If the AI call ends with a human reading the output, use an LLM. If it ends with your code acting on the output, evaluate Jev first.
