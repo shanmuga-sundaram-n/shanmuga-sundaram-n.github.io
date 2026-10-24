@@ -23,7 +23,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-  <title>The Runner Has No LLM: A Deterministic Pipeline for Claude Code | Shanmuga Sundaram Natarajan's Personal Website</title>
+  <title>Spec to Merge with Four Human Gates: A Deterministic Runner for Claude Code | Shanmuga Sundaram Natarajan's Personal Website</title>
 
   <!-- SEO Meta Tags -->
   <meta name="description"
@@ -31,7 +31,7 @@
   <meta name="author" content="Shanmuga Sundaram Natarajan (Shan)">
 
   <!-- Open Graph -->
-  <meta property="og:title" content="The Runner Has No LLM: A Deterministic Pipeline for Claude Code">
+  <meta property="og:title" content="Spec to Merge with Four Human Gates: A Deterministic Runner for Claude Code">
   <meta property="og:description"
     content="A dependency-free Node runner drives ten Claude Code agents through fresh sessions, a spec-to-test trace and four human gates. How it works, where it breaks.">
   <meta property="og:type" content="website">
@@ -39,7 +39,7 @@
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="The Runner Has No LLM: A Deterministic Pipeline for Claude Code">
+  <meta name="twitter:title" content="Spec to Merge with Four Human Gates: A Deterministic Runner for Claude Code">
   <meta name="twitter:description"
     content="A dependency-free Node runner drives ten Claude Code agents through fresh sessions, a spec-to-test trace and four human gates. How it works, where it breaks.">
 
@@ -61,9 +61,9 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>The Runner Has No LLM: A Deterministic Pipeline for Claude Code | Shanmuga Sundaram Natarajan’s Personal Website</title>
+<title>Spec to Merge with Four Human Gates: A Deterministic Runner for Claude Code | Shanmuga Sundaram Natarajan’s Personal Website</title>
 <meta name="generator" content="Jekyll v3.9.3" />
-<meta property="og:title" content="The Runner Has No LLM: A Deterministic Pipeline for Claude Code" />
+<meta property="og:title" content="Spec to Merge with Four Human Gates: A Deterministic Runner for Claude Code" />
 <meta name="author" content="Shanmuga Sundaram Natarajan (Shan)" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="A dependency-free Node runner drives ten Claude Code agents through fresh sessions, a spec-to-test trace and four human gates. How it works, where it breaks." />
@@ -74,9 +74,9 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2026-10-24T14:30:00+05:30" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="The Runner Has No LLM: A Deterministic Pipeline for Claude Code" />
+<meta property="twitter:title" content="Spec to Merge with Four Human Gates: A Deterministic Runner for Claude Code" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Shanmuga Sundaram Natarajan (Shan)"},"dateModified":"2026-10-24T14:30:00+05:30","datePublished":"2026-10-24T14:30:00+05:30","description":"A dependency-free Node runner drives ten Claude Code agents through fresh sessions, a spec-to-test trace and four human gates. How it works, where it breaks.","headline":"The Runner Has No LLM: A Deterministic Pipeline for Claude Code","mainEntityOfPage":{"@type":"WebPage","@id":"https://shanmuga-sundaram-n.github.io/blog/2026/10/24/the-runner-has-no-llm-openspec-agentic-kit/"},"url":"https://shanmuga-sundaram-n.github.io/blog/2026/10/24/the-runner-has-no-llm-openspec-agentic-kit/"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Shanmuga Sundaram Natarajan (Shan)"},"dateModified":"2026-10-24T14:30:00+05:30","datePublished":"2026-10-24T14:30:00+05:30","description":"A dependency-free Node runner drives ten Claude Code agents through fresh sessions, a spec-to-test trace and four human gates. How it works, where it breaks.","headline":"Spec to Merge with Four Human Gates: A Deterministic Runner for Claude Code","mainEntityOfPage":{"@type":"WebPage","@id":"https://shanmuga-sundaram-n.github.io/blog/2026/10/24/the-runner-has-no-llm-openspec-agentic-kit/"},"url":"https://shanmuga-sundaram-n.github.io/blog/2026/10/24/the-runner-has-no-llm-openspec-agentic-kit/"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -151,10 +151,10 @@
                 <span><i class="fas fa-folder"></i> ai, engineering, agents</span>
                 
                 
-                <span><i class="far fa-clock"></i> 21 min read</span>
+                <span><i class="far fa-clock"></i> 22 min read</span>
             </div>
 
-            <h1 class="post-title-main">The Runner Has No LLM: A Deterministic Pipeline for Claude Code</h1>
+            <h1 class="post-title-main">Spec to Merge with Four Human Gates: A Deterministic Runner for Claude Code</h1>
 
             <div class="post-content">
                 <p>Ten AI agents write the research, specs, design, tests and code for one change in my delivery pipeline, and none of them decides what happens next. A plain Node program does. It reads a status command, starts the next agent, runs checks that involve no model, and stops at four points where a human has to say yes. The model still produces the inputs to those decisions, and I mark where that matters.</p>
@@ -512,6 +512,14 @@ The system SHALL allow a partner to refund a settled payout within 30 days of se
 <p>Two limits matter for architects. The children draft their cross-repo contracts independently and do not read each other’s artifacts, so you must compare the contract sections yourself at the first two gates. And merges happen per repo as each child finishes, not as one atomic release, so the rollout order has to be planned in the contracts. An <code class="language-plaintext highlighter-rouge">ordered-initiative-release</code> proposal for that is written but not built.</p>
 
 <p>The dashboard (<code class="language-plaintext highlighter-rouge">node bin/agentic.mjs dashboard</code>) is a local page on <code class="language-plaintext highlighter-rouge">127.0.0.1</code> over a SQLite database, using Node’s built-in <code class="language-plaintext highlighter-rouge">node:sqlite</code>, so it needs Node 22.13 or later. The JSON files in <code class="language-plaintext highlighter-rouge">state/</code> stay the source of truth, and the database is a cache you can delete and rebuild. It follows the same rule as the rest of the kit: the pipeline works without the dashboard, and the dashboard cannot corrupt the pipeline.</p>
+
+<p>Here it is after my two real runs against a todo app. The top row counts changes by state, the table shows each change’s four stages and gates, and the side panels show recent activity and spend by repo and by agent.</p>
+
+<p><img loading="lazy" decoding="async" src="/assets/images/projects/agentic-hub-overview.png" alt="Agentic hub dashboard overview: two merged changes, per-stage pipeline progress, risk tags, cost, recent activity feed and spend by agent" /></p>
+
+<p>Opening a change shows its stepper, each stage’s gate and the artifacts the agents wrote. This is the login change, showing <code class="language-plaintext highlighter-rouge">proposal.md</code>. The <code class="language-plaintext highlighter-rouge">checks</code> row under the build stage is red (3 of 4 pass) while every gate is approved, which is the override story in <a href="/blog/2026/10/24/loop-engineering-is-not-the-agent-loop/">the companion post</a>.</p>
+
+<p><img loading="lazy" decoding="async" src="/assets/images/projects/agentic-hub-change-detail.png" alt="Agentic hub change detail: four-stage stepper with approved gates, a failing checks step, and tabs for each artifact including proposal.md" /></p>
 
 <h2 id="where-the-model-still-votes">Where the model still votes</h2>
 

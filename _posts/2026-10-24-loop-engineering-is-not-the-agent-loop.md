@@ -205,6 +205,12 @@ This is Osmani's sub-agent point in practice: agents tend to grade their own wor
 - At G3 the checks showed `tasks complete` failing and the verifier's verdict was still FAIL. Per the [README](https://github.com/shanmuga-sundaram-n/openspec-agentic-kit/blob/main/README.md#gates), approving with a failing check takes an explicit override. I approved with the note "Skip Manual run and update done."
 - The retrospective agent, which runs after G3, flagged both and proposed rules for the next change: require scenarios for threat-model controls, require a delta spec when an existing capability changes behavior, and record a written waiver for manual tasks.
 
+The dashboard shows both records. The `checks` tab lists `tasks complete` as failed, with the one unticked manual task, and the `approvals` tab lists the G3 decision as "approved (override)" with my note.
+
+![Agentic hub checks tab for the login change: openspec validate, tests and spec-to-test trace pass, tasks complete fails with 29 of 30 tasks done](/assets/images/projects/agentic-hub-checks.png)
+
+![Agentic hub approvals tab: G1 to G4 decisions for the login change, with G3 recorded as approved (override) and the note "Skip Manual run and update done"](/assets/images/projects/agentic-hub-approvals.png)
+
 The gate worked in the sense that it listed the blockers, made override a deliberate act and recorded it in `approvals.md`. It did not make me read them. A human gate is a stop condition with exactly the reliability of the human at it, and the pipeline had no mechanism to notice that a rubber stamp had happened.
 
 ## Which layer to fix

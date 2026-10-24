@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "The Runner Has No LLM: A Deterministic Pipeline for Claude Code"
+title: "Spec to Merge with Four Human Gates: A Deterministic Runner for Claude Code"
 date: 2026-10-24 09:00:00 +0000
 categories: [ai, engineering, agents]
 tags: [openspec, claude-code, multi-agent, agentic-sdlc, spec-driven-development, human-in-the-loop, deterministic-checks, nodejs, agentic-ai]
@@ -267,6 +267,14 @@ Its limits are known and written down. Lessons only add; nothing is retired auto
 Two limits matter for architects. The children draft their cross-repo contracts independently and do not read each other's artifacts, so you must compare the contract sections yourself at the first two gates. And merges happen per repo as each child finishes, not as one atomic release, so the rollout order has to be planned in the contracts. An `ordered-initiative-release` proposal for that is written but not built.
 
 The dashboard (`node bin/agentic.mjs dashboard`) is a local page on `127.0.0.1` over a SQLite database, using Node's built-in `node:sqlite`, so it needs Node 22.13 or later. The JSON files in `state/` stay the source of truth, and the database is a cache you can delete and rebuild. It follows the same rule as the rest of the kit: the pipeline works without the dashboard, and the dashboard cannot corrupt the pipeline.
+
+Here it is after my two real runs against a todo app. The top row counts changes by state, the table shows each change's four stages and gates, and the side panels show recent activity and spend by repo and by agent.
+
+![Agentic hub dashboard overview: two merged changes, per-stage pipeline progress, risk tags, cost, recent activity feed and spend by agent](/assets/images/projects/agentic-hub-overview.png)
+
+Opening a change shows its stepper, each stage's gate and the artifacts the agents wrote. This is the login change, showing `proposal.md`. The `checks` row under the build stage is red (3 of 4 pass) while every gate is approved, which is the override story in [the companion post]({% post_url 2026-10-24-loop-engineering-is-not-the-agent-loop %}).
+
+![Agentic hub change detail: four-stage stepper with approved gates, a failing checks step, and tabs for each artifact including proposal.md](/assets/images/projects/agentic-hub-change-detail.png)
 
 ## Where the model still votes
 

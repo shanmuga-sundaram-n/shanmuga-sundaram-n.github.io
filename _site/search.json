@@ -117,7 +117,7 @@
   
     
     {
-      "title": "The Runner Has No LLM: A Deterministic Pipeline for Claude Code",
+      "title": "Spec to Merge with Four Human Gates: A Deterministic Runner for Claude Code",
       "url": "/blog/2026/10/24/the-runner-has-no-llm-openspec-agentic-kit/",
       "description": "A dependency-free Node runner drives ten Claude Code agents through fresh sessions, a spec-to-test trace and four human gates. How it works, where it breaks.",
       "excerpt": "Ten AI agents write the research, specs, design, tests and code for one change in my delivery pipeline, and none of them decides what happens next. A plain Node program does. It reads a status command, starts the next agent, runs checks that involve no model, and stops at four points where a huma...",

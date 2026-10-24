@@ -153,7 +153,7 @@
                 <span><i class="fas fa-folder"></i> ai, engineering, agents</span>
                 
                 
-                <span><i class="far fa-clock"></i> 18 min read</span>
+                <span><i class="far fa-clock"></i> 19 min read</span>
             </div>
 
             <h1 class="post-title-main">Loop Engineering Is Not the Agent Loop: Data From Two Runs</h1>
@@ -460,6 +460,12 @@ pass 6: open=6.7,7.2,7.3  stalled=true
   <li>At G3 the checks showed <code class="language-plaintext highlighter-rouge">tasks complete</code> failing and the verifier’s verdict was still FAIL. Per the <a href="https://github.com/shanmuga-sundaram-n/openspec-agentic-kit/blob/main/README.md#gates">README</a>, approving with a failing check takes an explicit override. I approved with the note “Skip Manual run and update done.”</li>
   <li>The retrospective agent, which runs after G3, flagged both and proposed rules for the next change: require scenarios for threat-model controls, require a delta spec when an existing capability changes behavior, and record a written waiver for manual tasks.</li>
 </ul>
+
+<p>The dashboard shows both records. The <code class="language-plaintext highlighter-rouge">checks</code> tab lists <code class="language-plaintext highlighter-rouge">tasks complete</code> as failed, with the one unticked manual task, and the <code class="language-plaintext highlighter-rouge">approvals</code> tab lists the G3 decision as “approved (override)” with my note.</p>
+
+<p><img loading="lazy" decoding="async" src="/assets/images/projects/agentic-hub-checks.png" alt="Agentic hub checks tab for the login change: openspec validate, tests and spec-to-test trace pass, tasks complete fails with 29 of 30 tasks done" /></p>
+
+<p><img loading="lazy" decoding="async" src="/assets/images/projects/agentic-hub-approvals.png" alt="Agentic hub approvals tab: G1 to G4 decisions for the login change, with G3 recorded as approved (override) and the note &quot;Skip Manual run and update done&quot;" /></p>
 
 <p>The gate worked in the sense that it listed the blockers, made override a deliberate act and recorded it in <code class="language-plaintext highlighter-rouge">approvals.md</code>. It did not make me read them. A human gate is a stop condition with exactly the reliability of the human at it, and the pipeline had no mechanism to notice that a rubber stamp had happened.</p>
 
