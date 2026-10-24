@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="dark" data-theme="orange-red">
+
+<head>
+  <meta charset="UTF-8">
+
+  <!-- ⚡ Anti-FOUC: read theme from localStorage and apply BEFORE any render -->
+  <script>
+    (function () {
+      var mode = localStorage.getItem('site-mode') || 'dark';
+      var html = document.documentElement;
+      html.setAttribute('data-mode', mode);
+      html.setAttribute('data-theme', 'orange-red');
+      // Suppress transition animations on first paint
+      html.classList.add('no-transitions');
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Open+Sans:wght@300;400;600;700&family=Raleway:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <title>Loop Engineering Is Not the Agent Loop: Data From Two Runs | Shanmuga Sundaram Natarajan's Personal Website</title>
+
+  <!-- SEO Meta Tags -->
+  <meta name="description"
+    content="Loop engineering now means the system above your agents, not the tool loop inside one. Cost and failure data from two runs of my OpenSpec pipeline.">
+  <meta name="author" content="Shanmuga Sundaram Natarajan (Shan)">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Loop Engineering Is Not the Agent Loop: Data From Two Runs">
+  <meta property="og:description"
+    content="Loop engineering now means the system above your agents, not the tool loop inside one. Cost and failure data from two runs of my OpenSpec pipeline.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://shanmuga-sundaram-n.github.io/blog/2026/10/24/loop-engineering-is-not-the-agent-loop/">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Loop Engineering Is Not the Agent Loop: Data From Two Runs">
+  <meta name="twitter:description"
+    content="Loop engineering now means the system above your agents, not the tool loop inside one. Cost and failure data from two runs of my OpenSpec pipeline.">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/assets/images/projects/website-logo-matched.png">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="stylesheet" href="/assets/css/theme-switcher.css">
+
+  <!-- Remove no-transitions class after first paint so user interactions animate normally -->
+  <script>
+    window.addEventListener('load', function () {
+      document.documentElement.classList.remove('no-transitions');
+    });
+  </script>
+
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Loop Engineering Is Not the Agent Loop: Data From Two Runs | Shanmuga Sundaram Natarajan’s Personal Website</title>
+<meta name="generator" content="Jekyll v3.9.3" />
+<meta property="og:title" content="Loop Engineering Is Not the Agent Loop: Data From Two Runs" />
+<meta name="author" content="Shanmuga Sundaram Natarajan (Shan)" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Loop engineering now means the system above your agents, not the tool loop inside one. Cost and failure data from two runs of my OpenSpec pipeline." />
+<meta property="og:description" content="Loop engineering now means the system above your agents, not the tool loop inside one. Cost and failure data from two runs of my OpenSpec pipeline." />
+<link rel="canonical" href="https://shanmuga-sundaram-n.github.io/blog/2026/10/24/loop-engineering-is-not-the-agent-loop/" />
+<meta property="og:url" content="https://shanmuga-sundaram-n.github.io/blog/2026/10/24/loop-engineering-is-not-the-agent-loop/" />
+<meta property="og:site_name" content="Shanmuga Sundaram Natarajan’s Personal Website" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2026-10-24T14:30:00+05:30" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Loop Engineering Is Not the Agent Loop: Data From Two Runs" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Shanmuga Sundaram Natarajan (Shan)"},"dateModified":"2026-10-24T14:30:00+05:30","datePublished":"2026-10-24T14:30:00+05:30","description":"Loop engineering now means the system above your agents, not the tool loop inside one. Cost and failure data from two runs of my OpenSpec pipeline.","headline":"Loop Engineering Is Not the Agent Loop: Data From Two Runs","mainEntityOfPage":{"@type":"WebPage","@id":"https://shanmuga-sundaram-n.github.io/blog/2026/10/24/loop-engineering-is-not-the-agent-loop/"},"url":"https://shanmuga-sundaram-n.github.io/blog/2026/10/24/loop-engineering-is-not-the-agent-loop/"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="site-header" id="header">
+    <nav class="site-nav container">
+      <a href="/" class="site-logo">
+        <img src="/assets/images/projects/website-logo-matched.png" alt="Shanmuga Sundaram Natarajan (Shan)"
+          class="logo-img" width="40" height="40">
+        <span class="logo-text">Shan's Digital Space</span>
+      </a>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+
+
+      <!-- Theme toggle rendered inline — avoids JS-injection flicker -->
+      <div id="modeToggleContainer">
+        <button class="site-search-btn" id="site-search-btn" aria-label="Search site (Ctrl+K)" title="Search (⌘K)">
+          <i class="fas fa-search"></i>
+        </button>
+        <label class="mode-switch" aria-label="Toggle dark/light mode">
+          <input type="checkbox" id="modeToggle">
+          <span class="mode-slider">
+            <i class="fas fa-sun mode-icon-sun"></i>
+            <i class="fas fa-moon mode-icon-moon"></i>
+          </span>
+        </label>
+      </div>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="/" class="nav-link ">Home</a></li>
+        <li><a href="/about/"
+            class="nav-link ">About</a></li>
+        <li><a href="/projects/"
+            class="nav-link ">Projects</a></li>
+        <li><a href="/blog/"
+            class="nav-link active">Blog</a></li>
+        <li><a href="/contact/"
+            class="nav-link ">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <article class="section post-article">
+    <div class="container">
+        <div class="card post-card-full">
+
+            <div class="post-meta" style="margin-bottom: var(--space-md);">
+                <span><i class="far fa-calendar"></i> October 24, 2026</span>
+                
+                <span><i class="fas fa-folder"></i> ai, engineering, agents</span>
+                
+            </div>
+
+            <h1 class="post-title-main">Loop Engineering Is Not the Agent Loop: Data From Two Runs</h1>
+
+            <div class="post-content">
+                <p>In one change on my agentic delivery pipeline, at least six consecutive implementer sessions reported the same three tasks as still open. Every guard I had configured worked: the retry counters capped the passes, the budget cap held, and the run ended. Yet nothing in the system noticed it was going in circles, and a human revision restarted the same cycle.</p>
+
+<p>That run changed how I use the word <em>loop</em>. In my <a href="/blog/2026/08/11/harness-engineering-and-loop-engineering/">August post</a> I used it for the turn-by-turn cycle inside one agent: call the model, run a tool, feed the result back. That meaning is still valid. But the industry has since taken the same word for something one level up, and my pipeline lives almost entirely in that upper level. Below I correct my own terminology, then use two real runs, with their costs and failures, to show what the upper level looks like when it breaks.</p>
+
+<p>I’ll say up front what this is. The evidence is two changes on one small todo app, run on my laptop through a pipeline I wrote. It is a small sample from one system, not a benchmark. The mechanisms are what generalize, so those are what I’ll focus on.</p>
+
+<h2 id="two-things-people-call-a-loop">Two things people call a loop</h2>
+
+<p><strong>Loop engineering, in the 2026 sense, is the system that decides what an agent works on next, checks the result and decides what happens after that.</strong> Addy Osmani <a href="https://addyosmani.com/blog/loop-engineering/">named and defined it in an essay on 7 June 2026</a>. His description is a system that finds work, assigns it, checks it, records progress and decides what comes next, so that the system prompts the agents and you don’t. He places it relative to the harness in one line: loop engineering “sits one floor above the harness.”</p>
+
+<p>What I wrote about in August is the inner loop. The model is called, it asks for a tool, the harness checks permission, the tool runs, the result goes back, and the cycle repeats until the model stops or a cap is hit. Call that the <strong>agent loop</strong>. It runs inside a single session.</p>
+
+<p>The two operate at different scales and fail differently:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>Agent loop (inner)</th>
+      <th>Loop engineering (outer)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Unit of work</td>
+      <td>One model turn</td>
+      <td>One task, change or ticket</td>
+    </tr>
+    <tr>
+      <td>Lives in</td>
+      <td>A single session</td>
+      <td>The system that starts and ends sessions</td>
+    </tr>
+    <tr>
+      <td>Decides</td>
+      <td>Which tool to call next</td>
+      <td>What to work on, when to retry, who verifies, when to stop, when to ask a human</td>
+    </tr>
+    <tr>
+      <td>Typical stop condition</td>
+      <td><code class="language-plaintext highlighter-rouge">end_turn</code>, iteration cap</td>
+      <td>Verified result, retry budget, cost cap, human gate</td>
+    </tr>
+    <tr>
+      <td>Typical failure</td>
+      <td>Runaway tool calls</td>
+      <td>Retrying what cannot succeed, accepting “done” without proof</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Other write-ups describe the same split. <a href="https://www.codecentric.de/en/knowledge-hub/blog/loop-harness-context-engineering-explained">codecentric</a> stacks three layers: context engineering at the bottom, harness engineering in the middle, loop engineering on top. <a href="https://futureagi.com/blog/loop-engineering/loop-engineering-vs-harness-engineering/">Future AGI</a> gives a diagnostic I’ll use later: if a bad run “tried the right thing and could not execute it cleanly,” suspect the harness, and if it “kept repeating itself,” suspect the loop. The sources disagree on some boundaries, and the terms are only a few months old, so treat any single definition, including mine, as provisional.</p>
+
+<pre><code class="language-mermaid">%%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#313244', 'primaryTextColor': '#CDD6F4', 'primaryBorderColor': '#89B4FA', 'lineColor': '#A6ADC8', 'secondaryColor': '#1E1E2E', 'background': '#1E1E2E', 'mainBkg': '#313244', 'clusterBkg': '#24243E', 'clusterBorder': '#45475A', 'titleColor': '#CDD6F4', 'edgeLabelBackground': '#1E1E2E', 'fontFamily': 'JetBrains Mono, monospace', 'fontSize': '13px'}}}%%
+flowchart TB
+    classDef ctx   fill:#1A2A3A,stroke:#89B4FA,color:#89B4FA
+    classDef har   fill:#3A2A1A,stroke:#FAB387,color:#FAB387
+    classDef inner fill:#2A1A3A,stroke:#CBA6F7,color:#CBA6F7
+    classDef outer fill:#1A3A2A,stroke:#A6E3A1,color:#A6E3A1
+
+    subgraph OUT["Loop engineering: what runs next, who verifies, when to stop"]
+        Q["Work queue · state · gates · budgets"]:::outer
+    end
+    subgraph HAR["Harness: what one run may touch"]
+        T["Tools · allow-lists · sandbox · hooks"]:::har
+    end
+    subgraph CTX["Context: what one run sees"]
+        C["Role prompt · specs · project rules"]:::ctx
+    end
+    AL["Agent loop: model call, tool call, result, repeat"]:::inner
+
+    OUT --&gt;|"starts and judges sessions"| AL
+    HAR --&gt;|"bounds"| AL
+    CTX --&gt;|"feeds"| AL
+</code></pre>
+
+<h2 id="the-pipeline-im-describing">The pipeline I’m describing</h2>
+
+<p><strong>My pipeline is an outer loop with ten agent roles and four human gates.</strong> The kit is a Node runner with no dependencies (<a href="https://github.com/shanmuga-sundaram-n/openspec-agentic-kit/blob/main/bin/agentic.mjs"><code class="language-plaintext highlighter-rouge">bin/agentic.mjs</code></a>). It takes a one-line idea and drives it through research, proposal, specs, design, threat model, test plan, tasks, build, verification, code review and a retrospective. Each role runs as its own headless Claude Code session, and the roles hand work to each other only through the files in an <a href="https://github.com/Fission-AI/OpenSpec">OpenSpec</a> change folder. The kit is open source as <a href="https://github.com/shanmuga-sundaram-n/openspec-agentic-kit">openspec-agentic-kit</a>, and I quote only small pieces of it below. Its run logs and state files are git-ignored, so the cost and failure figures in this post come from my local runs, not from files you will find in the repository.</p>
+
+<p>It is a second implementation of the idea in my <a href="/blog/2026/06/06/sdlc-factory-autonomous-multi-agent-pipeline/">SDLC Factory post</a>. The factory passed validated JSON artifacts between agents inside one application. The kit leans on Claude Code for the agent loop and on markdown files in a git worktree for the contract, so the code I wrote is almost entirely the outer loop.</p>
+
+<pre><code class="language-mermaid">%%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#313244', 'primaryTextColor': '#CDD6F4', 'primaryBorderColor': '#89B4FA', 'lineColor': '#A6ADC8', 'secondaryColor': '#1E1E2E', 'background': '#1E1E2E', 'mainBkg': '#313244', 'clusterBkg': '#24243E', 'clusterBorder': '#45475A', 'titleColor': '#CDD6F4', 'edgeLabelBackground': '#1E1E2E', 'fontFamily': 'JetBrains Mono, monospace', 'fontSize': '16px'}}}%%
+flowchart TB
+    classDef agent fill:#2A1A3A,stroke:#CBA6F7,color:#CBA6F7
+    classDef check fill:#3A2A1A,stroke:#FAB387,color:#FAB387
+    classDef gate  fill:#3A1A2A,stroke:#F38BA8,color:#F38BA8
+    classDef done  fill:#1A3A2A,stroke:#A6E3A1,color:#A6E3A1
+
+    I(["Idea"]):::done --&gt; A["Research · proposal"]:::agent
+    A --&gt; G1{"G1 intent"}:::gate
+    G1 --&gt; B["Specs · design&lt;br/&gt;threat model · test plan"]:::agent
+    B --&gt; G2{"G2 design"}:::gate
+    G2 --&gt; C["Tasks · build"]:::agent
+    C --&gt; K["Deterministic checks&lt;br/&gt;validate · tasks ticked&lt;br/&gt;tests · spec-to-test trace"]:::check
+    K --&gt;|"fail: up to 2 fix passes"| C
+    K --&gt;|"pass"| V["Verifier"]:::agent
+    V --&gt; R["Code reviewer"]:::agent
+    R --&gt;|"blocking: one fix pass"| C
+    R --&gt;|"clear"| G3{"G3 merge"}:::gate
+    G3 --&gt; RE["Retrospective"]:::agent
+    RE --&gt; G4{"G4 release"}:::gate
+    G4 --&gt; M(["Archive and merge"]):::done
+</code></pre>
+
+<p>Four properties of that design carry the rest of the post:</p>
+
+<ul>
+  <li><strong>State lives outside the model.</strong> Each session starts with a clean context. What persists is the change folder, a <code class="language-plaintext highlighter-rouge">state/*.json</code> file per change, and a SQLite store that feeds a dashboard. This corresponds to the state layer in Osmani’s list, which keeps progress outside the conversation.</li>
+  <li><strong>The runner picks the next step from <code class="language-plaintext highlighter-rouge">openspec status</code></strong>, not from anything an agent says. An artifact counts as done when the file exists and validates, not when the agent claims it wrote it.</li>
+  <li><strong>Checks between agents are plain code</strong> (see <a href="https://github.com/shanmuga-sundaram-n/openspec-agentic-kit/blob/main/lib/checks.mjs"><code class="language-plaintext highlighter-rouge">lib/checks.mjs</code></a>). <code class="language-plaintext highlighter-rouge">openspec validate --strict</code>, whether every task is ticked, the project’s test command, and a trace that every requirement ID has at least as many test references as it has scenarios. No model is involved.</li>
+  <li><strong>Gates scale with risk.</strong> The product analyst sets a risk tier in the proposal. For low-risk changes G2 and G4 approve themselves when nothing blocks. For medium and high risk, a human approves all four.</li>
+</ul>
+
+<p>The relevant limits from <a href="https://github.com/shanmuga-sundaram-n/openspec-agentic-kit/blob/main/config.base.json"><code class="language-plaintext highlighter-rouge">config.base.json</code></a> are small enough to quote:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"maxApplyPasses"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"maxFixAttempts"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"autoFixReviewBlocking"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"agent"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"maxBudgetUsdPerRun"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="nl">"timeoutMinutes"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="osmanis-building-blocks-mapped-to-the-kit">Osmani’s building blocks, mapped to the kit</h2>
+
+<p><strong>Osmani’s list of loop primitives maps onto the kit almost one to one, which is how I knew I was building the same thing under a different name.</strong> The mapping below is mine, not his, and where the kit has no equivalent I’ve said so.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Osmani’s primitive</th>
+      <th>What it is in the kit</th>
+      <th>Gap</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Automations (scheduled discovery and triage)</td>
+      <td>The runner’s <code class="language-plaintext highlighter-rouge">drive</code> loop, started by me from the CLI or dashboard</td>
+      <td>Nothing triggers a change on its own; I start every one</td>
+    </tr>
+    <tr>
+      <td>Worktrees</td>
+      <td>One git worktree per change, on branch <code class="language-plaintext highlighter-rouge">change/&lt;id&gt;</code></td>
+      <td>One implementer at a time; no parallel lanes</td>
+    </tr>
+    <tr>
+      <td>Skills</td>
+      <td>Ten role prompts plus OpenSpec’s per-artifact instructions and templates</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>Plugins and connectors</td>
+      <td>None</td>
+      <td>No tracker or chat integration</td>
+    </tr>
+    <tr>
+      <td>Sub-agents (write and verify separated)</td>
+      <td>Verifier and code reviewer run as separate sessions from the implementer</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>State</td>
+      <td>Change folder, <code class="language-plaintext highlighter-rouge">state/*.json</code>, SQLite, <code class="language-plaintext highlighter-rouge">approvals.md</code></td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>Memory across runs</td>
+      <td>Retrospective lessons, queued as <code class="language-plaintext highlighter-rouge">pending</code> until I accept them</td>
+      <td>Lessons only add rules; nothing retires old ones</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The two gaps matter. With no automation, I’m the scheduler, and that kept the sample small. With a single implementer lane, two changes can’t build at once.</p>
+
+<h2 id="two-real-runs">Two real runs</h2>
+
+<p><strong>Two changes cost about $6 each and about 25 minutes of agent time, and about a third of that spend went on checking the work.</strong> Both ran against a small todo app. The first added create, edit, complete and delete for todos. The second added a basic password login, which the Product Analyst classified as high risk. The figures below come from the per-run logs the kit writes: every agent run’s prompt, exit code, seconds and cost.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>Todo CRUD</th>
+      <th>Login flow</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Agent runs</td>
+      <td>23</td>
+      <td>22</td>
+    </tr>
+    <tr>
+      <td>Total agent cost</td>
+      <td>$5.75</td>
+      <td>$6.17</td>
+    </tr>
+    <tr>
+      <td>Total agent time</td>
+      <td>1,415 s</td>
+      <td>1,541 s</td>
+    </tr>
+    <tr>
+      <td>Implementer</td>
+      <td>10 runs, $1.68</td>
+      <td>8 runs, $1.89</td>
+    </tr>
+    <tr>
+      <td>Code reviewer</td>
+      <td>2 runs, $1.68</td>
+      <td>2 runs, $1.61</td>
+    </tr>
+    <tr>
+      <td>Verifier</td>
+      <td>2 runs, $0.34</td>
+      <td>2 runs, $0.38</td>
+    </tr>
+    <tr>
+      <td>Reviewer + verifier share of spend</td>
+      <td>35%</td>
+      <td>32%</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Two things stand out. The reviewer, a different session with a different prompt, cost as much as the implementer on the first change and nearly as much on the second. The most expensive single run in the login change was the implementer’s first pass ($1.42, 135 turns). In the todo change it was the first code review ($0.90), just ahead of the first build pass ($0.85, 84 turns). The build pass is the inner agent loop. Everything else is the outer loop deciding what to do around it.</p>
+
+<p>None of this is a general claim about cost. It’s what two small changes cost, with the model settings in my config. The ratios are the useful part: independent checking was not a rounding error in the budget.</p>
+
+<h2 id="what-the-traces-taught-me">What the traces taught me</h2>
+
+<h3 id="retries-aimed-at-work-that-cannot-succeed">Retries aimed at work that cannot succeed</h3>
+
+<p><strong>A retry counter bounds a stuck loop, but it can’t tell you the loop is stuck.</strong> In the todo change, tasks 6.7, 7.2 and 7.3 were manual checks: build the project, start the server and run a smoke flow with <code class="language-plaintext highlighter-rouge">curl</code>. The implementer’s tool allow-list has <code class="language-plaintext highlighter-rouge">npm</code> and <code class="language-plaintext highlighter-rouge">node</code> but no <code class="language-plaintext highlighter-rouge">curl</code>, and the headless session has no way to approve a command it isn’t allowed. Each implementer session said so in its final message:</p>
+
+<blockquote>
+  <p>Tasks 6.7, 7.2 and 7.3 are still unticked. I couldn’t run the server, so none of them has the evidence it needs.</p>
+</blockquote>
+
+<p>The runner’s check, “all tasks ticked,” failed every time, so it kept going: up to three build passes, up to two fix passes, then, after I requested a revision at G3, the same sequence again. Across the two cycles, at least six sessions reported the same three tasks open; all ten implementer runs ended with them unticked. The login change had the same shape with a single task, 6.2.</p>
+
+<p>The money was small. Counting every implementer run after the first build pass, the retries cost $0.83 on the todo change and $0.46 on the login change, roughly 14% and 7% of each total. Those figures are an upper bound: they include the build pass after my G3 revision and the review fix, which were legitimate work, and some other retries ticked tasks too (one ticked 7.4). The cost isn’t the point. The loop ran the same experiment repeatedly and expected a different result, and no component compared one pass with the next.</p>
+
+<p>Here is the detector I would add. It compares the set of open tasks after each pass and stops retrying when the last <code class="language-plaintext highlighter-rouge">window</code> passes left the same ones open. I ran it against the six-pass pattern above:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Stop retrying when the last `window` passes left exactly the same tasks open.</span>
+<span class="k">export</span> <span class="kd">function</span> <span class="nx">stalled</span><span class="p">(</span><span class="nx">history</span><span class="p">,</span> <span class="nb">window</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">history</span><span class="p">.</span><span class="nx">length</span> <span class="o">&lt;</span> <span class="nb">window</span><span class="p">)</span> <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+  <span class="kd">const</span> <span class="nx">key</span> <span class="o">=</span> <span class="nx">open</span> <span class="o">=&gt;</span> <span class="p">[...</span><span class="nx">open</span><span class="p">].</span><span class="nx">sort</span><span class="p">().</span><span class="nx">join</span><span class="p">(</span><span class="dl">'</span><span class="s1">|</span><span class="dl">'</span><span class="p">);</span>
+  <span class="kd">const</span> <span class="nx">recent</span> <span class="o">=</span> <span class="nx">history</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="o">-</span><span class="nb">window</span><span class="p">).</span><span class="nx">map</span><span class="p">(</span><span class="nx">key</span><span class="p">);</span>
+  <span class="k">return</span> <span class="nx">recent</span><span class="p">.</span><span class="nx">every</span><span class="p">(</span><span class="nx">k</span> <span class="o">=&gt;</span> <span class="nx">k</span> <span class="o">===</span> <span class="nx">recent</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+<span class="p">}</span>
+
+<span class="c1">// Illustrative input: the same three tasks reported open on every pass,</span>
+<span class="c1">// as the agents' final messages did in the todo change.</span>
+<span class="kd">const</span> <span class="nx">passes</span> <span class="o">=</span> <span class="nb">Array</span><span class="p">(</span><span class="mi">6</span><span class="p">).</span><span class="nx">fill</span><span class="p">([</span><span class="dl">'</span><span class="s1">6.7</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">7.2</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">7.3</span><span class="dl">'</span><span class="p">]);</span>
+<span class="kd">const</span> <span class="nx">history</span> <span class="o">=</span> <span class="p">[];</span>
+<span class="k">for</span> <span class="p">(</span><span class="kd">const</span> <span class="p">[</span><span class="nx">i</span><span class="p">,</span> <span class="nx">open</span><span class="p">]</span> <span class="k">of</span> <span class="nx">passes</span><span class="p">.</span><span class="nx">entries</span><span class="p">())</span> <span class="p">{</span>
+  <span class="nx">history</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">open</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">`pass </span><span class="p">${</span><span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">}</span><span class="s2">: open=</span><span class="p">${</span><span class="nx">open</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="dl">'</span><span class="s1">,</span><span class="dl">'</span><span class="p">)}</span><span class="s2">  stalled=</span><span class="p">${</span><span class="nx">stalled</span><span class="p">(</span><span class="nx">history</span><span class="p">)}</span><span class="s2">`</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pass 1: open=6.7,7.2,7.3  stalled=false
+pass 2: open=6.7,7.2,7.3  stalled=true
+pass 3: open=6.7,7.2,7.3  stalled=true
+pass 4: open=6.7,7.2,7.3  stalled=true
+pass 5: open=6.7,7.2,7.3  stalled=true
+pass 6: open=6.7,7.2,7.3  stalled=true
+</code></pre></div></div>
+
+<p>With <code class="language-plaintext highlighter-rouge">window = 2</code> it would have saved three of the five implementer sessions in the revision cycle, where every pass reported the same three tasks. In the first cycle the open set varied early on (7.4 was also open after the first pass), so it would have saved about one. The saving is bounded by the caps already in place, and <code class="language-plaintext highlighter-rouge">window</code> is a real trade-off: in the login change the open set was identical on two consecutive passes, and a later pass still closed task 5.3, so <code class="language-plaintext highlighter-rouge">window = 2</code> would have stopped one pass too early. The bigger win is upstream: a task that no agent can complete should not enter the agent queue. A <code class="language-plaintext highlighter-rouge">[manual]</code> marker in <code class="language-plaintext highlighter-rouge">tasks.md</code> that routes the task to the gate summary as a human to-do would remove the whole class. I haven’t built either; both are proposals.</p>
+
+<h3 id="rate-limits-arrive-as-loop-events">Rate limits arrive as loop events</h3>
+
+<p><strong>A quota error is not a failed task, and treating it as one wastes the retry.</strong> On the login change, the spec author and the architect ran in parallel, because the runner starts independent artifacts together. Both sessions ended with <code class="language-plaintext highlighter-rouge">You've hit your session limit</code> and exit code 1. Their partial runs cost $0.29 and $0.50. The runner’s second attempt for each lasted five seconds and cost nothing, and the change stopped there. I resumed it the next morning.</p>
+
+<p>The parts that worked are worth noting. The runner only trusts a file that exists and validates, so on resume it found the specs and design present and moved on to the threat model without redoing them. I haven’t audited whether those artifacts were complete when the limit hit; the next agents consumed them without complaint, and that is the extent of what I can say.</p>
+
+<p>The parts I would change: two parallel sessions share one account quota, so they fail together. And the retry should recognize this error and pause the change instead of burning a second attempt. A harness-level error and a loop-level policy meet right there.</p>
+
+<h3 id="done-is-a-claim-until-something-else-checks-it">“Done” is a claim until something else checks it</h3>
+
+<p><strong>In both changes the checks, not the implementer, were what separated done from claimed.</strong> The implementer’s final message in the login change said 29 of 30 tasks were complete and the tests passed. The deterministic checks agreed with the first part (<code class="language-plaintext highlighter-rouge">tasks complete</code> failed at 29/30) and with the second (159 tests passing).</p>
+
+<p>The independent reviewer found something the green tests hadn’t. After the first build and fix passes the suite passed with 158 tests, and the verifier had not flagged anything in the limiter. The code reviewer, reading the diff against the specs and the threat model, raised one blocking finding: the login rate limiter counted a failed attempt only after the slow password hash finished, so parallel attempts from one address would all pass the check before any failure was recorded. Its estimate was tens of guesses per second against a limit of 5 per 60 seconds. The runner’s one automatic review-fix pass added a test (<code class="language-plaintext highlighter-rouge">AUTH004 concurrent wrong passwords are limited before hashing completes</code>) and fixed the code. The fresh review afterwards found zero blocking issues.</p>
+
+<p>This is Osmani’s sub-agent point in practice: agents tend to grade their own work generously, so the agent that writes should not be the only one that judges. It is also why review took a third of the spend. I’d keep that ratio.</p>
+
+<h3 id="gates-are-only-as-good-as-what-the-human-does-at-them">Gates are only as good as what the human does at them</h3>
+
+<p><strong>The loop correctly surfaced every problem and then let me approve past it, which means the stop condition was me.</strong> Three records from the login change show it:</p>
+
+<ul>
+  <li>The threat-model agent wrote that its output “blocks approval,” with two high-severity gaps: the spec and the design disagreed on routes, error codes and limiter behavior (GAP-01), and no change to the existing <code class="language-plaintext highlighter-rouge">todos</code> spec said that every todo request without a session should get a 401 (GAP-02). G2 for this high-risk change was approved 19 seconds after the test plan finished, with an empty note. Both gaps were still open at the end and appear in the verifier’s blocking list.</li>
+  <li>At G3 the checks showed <code class="language-plaintext highlighter-rouge">tasks complete</code> failing and the verifier’s verdict was still FAIL. Per the <a href="https://github.com/shanmuga-sundaram-n/openspec-agentic-kit/blob/main/README.md#gates">README</a>, approving with a failing check takes an explicit override. I approved with the note “Skip Manual run and update done.”</li>
+  <li>The retrospective agent, which runs after G3, flagged both and proposed rules for the next change: require scenarios for threat-model controls, require a delta spec when an existing capability changes behavior, and record a written waiver for manual tasks.</li>
+</ul>
+
+<p>The gate worked in the sense that it listed the blockers, made override a deliberate act and recorded it in <code class="language-plaintext highlighter-rouge">approvals.md</code>. It did not make me read them. A human gate is a stop condition with exactly the reliability of the human at it, and the pipeline had no mechanism to notice that a rubber stamp had happened.</p>
+
+<h2 id="which-layer-to-fix">Which layer to fix</h2>
+
+<p><strong>For each failure above, the cause and the fix sit at different layers, and diagnosing the layer first saves you from tuning the wrong thing.</strong> I use Future AGI’s rule of thumb: describe the last bad run and see which sentence fits.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Failure</th>
+      <th>What it looked like</th>
+      <th>Layer</th>
+      <th>Fix</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Six sessions, same three tasks open</td>
+      <td>The loop kept repeating itself</td>
+      <td>Loop</td>
+      <td>Compare consecutive passes; stop on no progress</td>
+    </tr>
+    <tr>
+      <td>Agent could not start the server</td>
+      <td>It tried the right thing and could not execute it</td>
+      <td>Harness</td>
+      <td>Add a narrowly scoped <code class="language-plaintext highlighter-rouge">curl</code> to localhost to the implementer’s allow-list, or run smoke checks as a deterministic step</td>
+    </tr>
+    <tr>
+      <td>Manual tasks in the agent queue</td>
+      <td>Work was assigned to something that cannot do it</td>
+      <td>Loop</td>
+      <td><code class="language-plaintext highlighter-rouge">[manual]</code> marker; route to a human at G3</td>
+    </tr>
+    <tr>
+      <td>Session limit</td>
+      <td>A model-provider limit, handled as task failure</td>
+      <td>Both</td>
+      <td>Recognize the error; pause and resume instead of retrying</td>
+    </tr>
+    <tr>
+      <td>Parallel agents died together</td>
+      <td>Shared quota, no backpressure</td>
+      <td>Loop</td>
+      <td>Lower parallelism when a quota error appears</td>
+    </tr>
+    <tr>
+      <td>Approved past blockers</td>
+      <td>The stop condition was a human who didn’t read</td>
+      <td>Loop (gate design)</td>
+      <td>Require a written reason for each open blocker at override</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The harness fix has a cost I should state plainly. Each command I add to a role’s allow-list widens what an unattended session can do. A <code class="language-plaintext highlighter-rouge">curl</code> limited to <code class="language-plaintext highlighter-rouge">127.0.0.1</code> is a small widening, but it is still a widening, and I’d rather see the smoke check run by the runner as a deterministic step than hand the agent more reach.</p>
+
+<p>The overlap between the layers shows up here. The stall detector needs a signal from the harness (which tasks are ticked), and the session-limit fix needs the harness to report a typed error rather than a string in the agent’s final message. Future AGI makes the same point when it notes that stop conditions depend on signals the harness reports. In my kit, the runner is both: it provisions the worktree and allow-lists (harness) and decides what runs next (loop). I’d call that a smell worth watching, because the two layers want to change at different speeds.</p>
+
+<h2 id="where-this-does-not-fit">Where this does not fit</h2>
+
+<ul>
+  <li><strong>Small or exploratory work.</strong> A one-line change doesn’t need research, a threat model and four gates. For work you’d finish in one supervised session, the outer loop is overhead. Osmani himself calls the idea promising but early and says he is skeptical.</li>
+  <li><strong>Review bandwidth.</strong> He names it as the real limit on how many agents a person can run, and my pipeline agrees. The expensive part of each change wasn’t tokens. It was me reading a research doc, a proposal, specs, a design, a threat model, a test plan, a diff, a verification report and a review report at four gates. When I read them thinly, as I did at G2, the structure produced documents and not safety.</li>
+  <li><strong>Comprehension debt.</strong> The kit ships code I did not write line by line. The gate summaries help, but I can’t claim I understand the login implementation the way I’d understand code I wrote. Osmani’s phrase for the temptation is cognitive surrender, and I recognise it from the G2 timestamp.</li>
+  <li><strong>My sample.</strong> Two changes, one app, one operator, one model configuration. The costs and the retry pattern could look different on a larger codebase or with a different test suite.</li>
+  <li><strong>No parallel lanes.</strong> Real loop systems run many tasks at once. This one doesn’t, so I’ve said nothing about contention between worktrees.</li>
+</ul>
+
+<h2 id="decision-rule">Decision rule</h2>
+
+<p>Build an outer loop when the work is repeatable, has a check that doesn’t depend on the agent’s word, and is big enough that supervising each step costs more than reviewing the results. Skip it when you’d supervise every step anyway.</p>
+
+<p>If you already have one, three questions find most of the problems I hit:</p>
+
+<ol>
+  <li><strong>What compares one pass with the next?</strong> If the answer is “a retry counter,” a stuck loop will run to its limit every time.</li>
+  <li><strong>Who checks “done,” and is it a different session from the one that did the work?</strong> If not, the check is a second opinion from the same author.</li>
+  <li><strong>What stops the loop, and does that stop condition read the evidence?</strong> A human gate that approves on a summary is only as strong as the reading behind it.</li>
+</ol>
+
+<p>My next changes to <a href="https://github.com/shanmuga-sundaram-n/openspec-agentic-kit">the kit</a>, in order: the no-progress check, a <code class="language-plaintext highlighter-rouge">[manual]</code> task class, and a written reason required for every override. Then I’ll run another two changes and see whether the numbers above move.</p>
+
+            </div>
+
+            
+            <div class="tags post-tags mt-xl">
+                
+                <span class="tag">loop-engineering</span>
+                
+                <span class="tag">harness-engineering</span>
+                
+                <span class="tag">agentic-sdlc</span>
+                
+                <span class="tag">openspec</span>
+                
+                <span class="tag">claude-code</span>
+                
+                <span class="tag">multi-agent</span>
+                
+                <span class="tag">stop-conditions</span>
+                
+                <span class="tag">agentic-ai</span>
+                
+            </div>
+            
+
+            <div class="mt-xl" style="padding-top: var(--space-xl); border-top: 1px solid var(--color-border);">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--space-md);">
+                    
+                    <a href="/blog/2026/10/20/stop-using-llm-for-everything-jev-ai/" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Previous Post
+                    </a>
+                    
+
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-xl">
+            <a href="/blog/" class="btn btn-outline">
+                <i class="fas fa-arrow-left"></i> Back to Blog
+            </a>
+        </div>
+
+        <section class="subscribe-section">
+  <div class="subscribe-inner">
+    <div class="subscribe-icon">
+      <i class="fas fa-envelope-open-text"></i>
+    </div>
+    <h2 class="subscribe-title">Stay in the loop</h2>
+    <p class="subscribe-description">
+      Get notified when I publish new articles on architecture, AI, and engineering.
+      No spam — just good technical content.
+    </p>
+
+    <form class="subscribe-form" id="subscribe-form" novalidate>
+      <div class="subscribe-input-group">
+        <input
+          type="email"
+          id="subscribe-email"
+          name="email"
+          class="subscribe-input"
+          placeholder="your@email.com"
+          autocomplete="email"
+          required
+        />
+        <button type="submit" class="subscribe-btn" id="subscribe-btn">
+          <span class="btn-text">Subscribe</span>
+          <span class="btn-loading" hidden>
+            <i class="fas fa-spinner fa-spin"></i>
+          </span>
+        </button>
+      </div>
+      <div class="subscribe-feedback" id="subscribe-feedback" hidden></div>
+    </form>
+
+    <p class="subscribe-note">
+      <i class="fas fa-rss"></i>
+      Prefer RSS? <a href="/feed.xml" target="_blank" rel="noopener">Subscribe via feed</a>
+    </p>
+  </div>
+</section>
+
+<script>
+(function () {
+  const form = document.getElementById('subscribe-form');
+  if (!form) return;
+
+  const emailInput = document.getElementById('subscribe-email');
+  const btn = document.getElementById('subscribe-btn');
+  const btnText = btn.querySelector('.btn-text');
+  const btnLoading = btn.querySelector('.btn-loading');
+  const feedback = document.getElementById('subscribe-feedback');
+
+  
+  const BUTTONDOWN_USERNAME = "shanmuga_sundaram";
+  
+
+  function showFeedback(message, isSuccess) {
+    feedback.textContent = message;
+    feedback.className = 'subscribe-feedback ' + (isSuccess ? 'subscribe-feedback--success' : 'subscribe-feedback--error');
+    feedback.hidden = false;
+  }
+
+  function setLoading(loading) {
+    btn.disabled = loading;
+    btnText.hidden = loading;
+    btnLoading.hidden = !loading;
+  }
+
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const email = emailInput.value.trim();
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      showFeedback('Please enter a valid email address.', false);
+      return;
+    }
+
+    if (!BUTTONDOWN_USERNAME) {
+      showFeedback('Subscription is not configured yet. Please try again later.', false);
+      return;
+    }
+
+    setLoading(true);
+    feedback.hidden = true;
+
+    try {
+      const formData = new FormData();
+      formData.append('email', email);
+
+      const response = await fetch(
+        'https://buttondown.email/api/emails/embed-subscribe/' + BUTTONDOWN_USERNAME,
+        { method: 'POST', body: formData }
+      );
+
+      if (response.ok || response.status === 302) {
+        showFeedback('You\'re subscribed! Check your inbox to confirm.', true);
+        emailInput.value = '';
+      } else if (response.status === 400) {
+        const data = await response.json().catch(() => ({}));
+        const msg = data.email ? data.email[0] : 'This email is already subscribed or invalid.';
+        showFeedback(msg, false);
+      } else {
+        showFeedback('Something went wrong. Please try again.', false);
+      }
+    } catch (err) {
+      showFeedback('Network error. Please check your connection and try again.', false);
+    } finally {
+      setLoading(false);
+    }
+  });
+})();
+</script>
+
+    </div>
+</article>
+
+<script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: false, theme: 'dark', securityLevel: 'loose' });
+
+    // Phones: render wide left-to-right diagrams top-down so they fit the screen.
+    const isPhone = window.matchMedia('(max-width: 640px)').matches;
+
+    document.querySelectorAll('pre > code.language-mermaid').forEach(function(code) {
+        if (isPhone) {
+            code.textContent = code.textContent.replace(/^(\s*(?:flowchart|graph))\s+(?:LR|RL)\b/m, '$1 TD');
+        }
+        const wrapper = document.createElement('div');
+        wrapper.className = 'mermaid-wrapper';
+        const div = document.createElement('div');
+        div.className = 'mermaid';
+        div.textContent = code.textContent;
+        wrapper.appendChild(div);
+        code.parentElement.replaceWith(wrapper);
+    });
+
+    // Code blocks without ASCII box-drawing can wrap on phones; diagram blocks keep scrolling.
+    const boxChars = /[─│┌┐└┘├┤┬┴┼═║╔╗╚╝╭╮╯╰▶▼▲]/;
+    document.querySelectorAll('.post-content pre').forEach(function(pre) {
+        if (!boxChars.test(pre.textContent)) pre.classList.add('wrap-code');
+    });
+
+    await mermaid.run();
+
+    document.querySelectorAll('.mermaid-wrapper svg').forEach(function(svg) {
+        const w = svg.getAttribute('width');
+        const h = svg.getAttribute('height');
+        if (w && h && !svg.getAttribute('viewBox')) {
+            svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h);
+        }
+        svg.removeAttribute('width');
+        svg.removeAttribute('height');
+    });
+</script>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <p class="footer-copy">&copy; 2026 Shanmuga Sundaram Natarajan (Shan). All rights reserved.</p>
+        <div class="social-links">
+          
+          <a href="https://github.com/shanmuga-sundaram-n" class="social-link" target="_blank" rel="noopener" aria-label="GitHub">
+            <i class="fab fa-github"></i>
+          </a>
+          
+          <a href="https://www.linkedin.com/in/shan-profile/" class="social-link" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <i class="fab fa-linkedin"></i>
+          </a>
+          
+          <a href="tel:+919790050474" class="social-link" aria-label="Phone">
+            <i class="fas fa-phone-alt"></i>
+          </a>
+          <a href="https://wa.me/919790050474" class="social-link" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+          </a>
+        </div>
+        <div class="footer-counter">
+          <div class="counter-digits">
+            <script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=5eae4d5930301d43fb2dd3648a2cd2c207fb0d34'></script>
+            <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/1529109/t/5"></script>
+          </div>
+          <a href='https://www.free-counters.org/' class="footer-counter-link">Visitors</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // Mobile menu toggle
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+
+    menuToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+
+    // Header scroll effect
+    const header = document.getElementById('header');
+    let lastScroll = 0;
+
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.pageYOffset;
+
+      if (currentScroll > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+
+      lastScroll = currentScroll;
+    });
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+  </script>
+
+  <!-- Site Search Modal -->
+  <div id="site-search-overlay" class="site-search-overlay" role="dialog" aria-modal="true" aria-label="Site search">
+    <div class="site-search-modal">
+      <div class="site-search-header">
+        <i class="fas fa-search site-search-icon"></i>
+        <input
+          type="text"
+          id="site-search-input"
+          class="site-search-input"
+          placeholder="Search pages, posts, projects…"
+          autocomplete="off"
+          spellcheck="false"
+        >
+        <button class="site-search-close" id="site-search-close" aria-label="Close search">
+          <kbd>Esc</kbd>
+        </button>
+      </div>
+      <div id="site-search-results" class="site-search-results">
+        <p class="site-search-hint">Type to search pages, posts &amp; projects…</p>
+      </div>
+      <div class="site-search-footer">
+        <span><kbd>↑</kbd><kbd>↓</kbd> navigate</span>
+        <span><kbd>↵</kbd> open</span>
+        <span><kbd>Esc</kbd> close</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Theme Switcher Script -->
+  <script src="/assets/js/theme-switcher.js"></script>
+
+  <!-- Fuse.js + Site Search -->
+  <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
+  <script src="/assets/js/site-search.js"></script>
+
+</body>
+
+</html>

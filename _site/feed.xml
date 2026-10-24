@@ -1,4 +1,387 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.3">Jekyll</generator><link href="https://shanmuga-sundaram-n.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://shanmuga-sundaram-n.github.io/" rel="alternate" type="text/html" /><updated>2026-10-23T09:34:09+05:30</updated><id>https://shanmuga-sundaram-n.github.io/feed.xml</id><title type="html">Shanmuga Sundaram Natarajan’s Personal Website</title><subtitle>Hands-on Architect &amp; Technical Leader | 19+ Years Experience | AI-First Software Delivery</subtitle><author><name>Shanmuga Sundaram Natarajan (Shan)</name></author><entry><title type="html">Stop Using a Language Model for Everything. Here’s What I Use Instead.</title><link href="https://shanmuga-sundaram-n.github.io/blog/2026/10/20/stop-using-llm-for-everything-jev-ai/" rel="alternate" type="text/html" title="Stop Using a Language Model for Everything. Here’s What I Use Instead." /><published>2026-10-20T14:30:00+05:30</published><updated>2026-10-20T14:30:00+05:30</updated><id>https://shanmuga-sundaram-n.github.io/blog/2026/10/20/stop-using-llm-for-everything-jev-ai</id><content type="html" xml:base="https://shanmuga-sundaram-n.github.io/blog/2026/10/20/stop-using-llm-for-everything-jev-ai/">&lt;p&gt;Most enterprise agent pipelines start from the same assumption: the AI layer is an LLM, every call goes through it, and the only open question is which one. I built a production pipeline on that assumption, and after running it for a while I started to doubt it.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.3">Jekyll</generator><link href="https://shanmuga-sundaram-n.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://shanmuga-sundaram-n.github.io/" rel="alternate" type="text/html" /><updated>2026-10-24T08:50:06+05:30</updated><id>https://shanmuga-sundaram-n.github.io/feed.xml</id><title type="html">Shanmuga Sundaram Natarajan’s Personal Website</title><subtitle>Hands-on Architect &amp; Technical Leader | 19+ Years Experience | AI-First Software Delivery</subtitle><author><name>Shanmuga Sundaram Natarajan (Shan)</name></author><entry><title type="html">Loop Engineering Is Not the Agent Loop: Data From Two Runs</title><link href="https://shanmuga-sundaram-n.github.io/blog/2026/10/24/loop-engineering-is-not-the-agent-loop/" rel="alternate" type="text/html" title="Loop Engineering Is Not the Agent Loop: Data From Two Runs" /><published>2026-10-24T14:30:00+05:30</published><updated>2026-10-24T14:30:00+05:30</updated><id>https://shanmuga-sundaram-n.github.io/blog/2026/10/24/loop-engineering-is-not-the-agent-loop</id><content type="html" xml:base="https://shanmuga-sundaram-n.github.io/blog/2026/10/24/loop-engineering-is-not-the-agent-loop/">&lt;p&gt;In one change on my agentic delivery pipeline, at least six consecutive implementer sessions reported the same three tasks as still open. Every guard I had configured worked: the retry counters capped the passes, the budget cap held, and the run ended. Yet nothing in the system noticed it was going in circles, and a human revision restarted the same cycle.&lt;/p&gt;
+
+&lt;p&gt;That run changed how I use the word &lt;em&gt;loop&lt;/em&gt;. In my &lt;a href=&quot;/blog/2026/08/11/harness-engineering-and-loop-engineering/&quot;&gt;August post&lt;/a&gt; I used it for the turn-by-turn cycle inside one agent: call the model, run a tool, feed the result back. That meaning is still valid. But the industry has since taken the same word for something one level up, and my pipeline lives almost entirely in that upper level. Below I correct my own terminology, then use two real runs, with their costs and failures, to show what the upper level looks like when it breaks.&lt;/p&gt;
+
+&lt;p&gt;I’ll say up front what this is. The evidence is two changes on one small todo app, run on my laptop through a pipeline I wrote. It is a small sample from one system, not a benchmark. The mechanisms are what generalize, so those are what I’ll focus on.&lt;/p&gt;
+
+&lt;h2 id=&quot;two-things-people-call-a-loop&quot;&gt;Two things people call a loop&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Loop engineering, in the 2026 sense, is the system that decides what an agent works on next, checks the result and decides what happens after that.&lt;/strong&gt; Addy Osmani &lt;a href=&quot;https://addyosmani.com/blog/loop-engineering/&quot;&gt;named and defined it in an essay on 7 June 2026&lt;/a&gt;. His description is a system that finds work, assigns it, checks it, records progress and decides what comes next, so that the system prompts the agents and you don’t. He places it relative to the harness in one line: loop engineering “sits one floor above the harness.”&lt;/p&gt;
+
+&lt;p&gt;What I wrote about in August is the inner loop. The model is called, it asks for a tool, the harness checks permission, the tool runs, the result goes back, and the cycle repeats until the model stops or a cap is hit. Call that the &lt;strong&gt;agent loop&lt;/strong&gt;. It runs inside a single session.&lt;/p&gt;
+
+&lt;p&gt;The two operate at different scales and fail differently:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt; &lt;/th&gt;
+      &lt;th&gt;Agent loop (inner)&lt;/th&gt;
+      &lt;th&gt;Loop engineering (outer)&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Unit of work&lt;/td&gt;
+      &lt;td&gt;One model turn&lt;/td&gt;
+      &lt;td&gt;One task, change or ticket&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Lives in&lt;/td&gt;
+      &lt;td&gt;A single session&lt;/td&gt;
+      &lt;td&gt;The system that starts and ends sessions&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Decides&lt;/td&gt;
+      &lt;td&gt;Which tool to call next&lt;/td&gt;
+      &lt;td&gt;What to work on, when to retry, who verifies, when to stop, when to ask a human&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Typical stop condition&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;end_turn&lt;/code&gt;, iteration cap&lt;/td&gt;
+      &lt;td&gt;Verified result, retry budget, cost cap, human gate&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Typical failure&lt;/td&gt;
+      &lt;td&gt;Runaway tool calls&lt;/td&gt;
+      &lt;td&gt;Retrying what cannot succeed, accepting “done” without proof&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Other write-ups describe the same split. &lt;a href=&quot;https://www.codecentric.de/en/knowledge-hub/blog/loop-harness-context-engineering-explained&quot;&gt;codecentric&lt;/a&gt; stacks three layers: context engineering at the bottom, harness engineering in the middle, loop engineering on top. &lt;a href=&quot;https://futureagi.com/blog/loop-engineering/loop-engineering-vs-harness-engineering/&quot;&gt;Future AGI&lt;/a&gt; gives a diagnostic I’ll use later: if a bad run “tried the right thing and could not execute it cleanly,” suspect the harness, and if it “kept repeating itself,” suspect the loop. The sources disagree on some boundaries, and the terms are only a few months old, so treat any single definition, including mine, as provisional.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-mermaid&quot;&gt;%%{init: {&apos;theme&apos;: &apos;dark&apos;, &apos;themeVariables&apos;: {&apos;primaryColor&apos;: &apos;#313244&apos;, &apos;primaryTextColor&apos;: &apos;#CDD6F4&apos;, &apos;primaryBorderColor&apos;: &apos;#89B4FA&apos;, &apos;lineColor&apos;: &apos;#A6ADC8&apos;, &apos;secondaryColor&apos;: &apos;#1E1E2E&apos;, &apos;background&apos;: &apos;#1E1E2E&apos;, &apos;mainBkg&apos;: &apos;#313244&apos;, &apos;clusterBkg&apos;: &apos;#24243E&apos;, &apos;clusterBorder&apos;: &apos;#45475A&apos;, &apos;titleColor&apos;: &apos;#CDD6F4&apos;, &apos;edgeLabelBackground&apos;: &apos;#1E1E2E&apos;, &apos;fontFamily&apos;: &apos;JetBrains Mono, monospace&apos;, &apos;fontSize&apos;: &apos;13px&apos;}}}%%
+flowchart TB
+    classDef ctx   fill:#1A2A3A,stroke:#89B4FA,color:#89B4FA
+    classDef har   fill:#3A2A1A,stroke:#FAB387,color:#FAB387
+    classDef inner fill:#2A1A3A,stroke:#CBA6F7,color:#CBA6F7
+    classDef outer fill:#1A3A2A,stroke:#A6E3A1,color:#A6E3A1
+
+    subgraph OUT[&quot;Loop engineering: what runs next, who verifies, when to stop&quot;]
+        Q[&quot;Work queue · state · gates · budgets&quot;]:::outer
+    end
+    subgraph HAR[&quot;Harness: what one run may touch&quot;]
+        T[&quot;Tools · allow-lists · sandbox · hooks&quot;]:::har
+    end
+    subgraph CTX[&quot;Context: what one run sees&quot;]
+        C[&quot;Role prompt · specs · project rules&quot;]:::ctx
+    end
+    AL[&quot;Agent loop: model call, tool call, result, repeat&quot;]:::inner
+
+    OUT --&amp;gt;|&quot;starts and judges sessions&quot;| AL
+    HAR --&amp;gt;|&quot;bounds&quot;| AL
+    CTX --&amp;gt;|&quot;feeds&quot;| AL
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;the-pipeline-im-describing&quot;&gt;The pipeline I’m describing&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;My pipeline is an outer loop with ten agent roles and four human gates.&lt;/strong&gt; The kit is a Node runner with no dependencies (&lt;a href=&quot;https://github.com/shanmuga-sundaram-n/openspec-agentic-kit/blob/main/bin/agentic.mjs&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bin/agentic.mjs&lt;/code&gt;&lt;/a&gt;). It takes a one-line idea and drives it through research, proposal, specs, design, threat model, test plan, tasks, build, verification, code review and a retrospective. Each role runs as its own headless Claude Code session, and the roles hand work to each other only through the files in an &lt;a href=&quot;https://github.com/Fission-AI/OpenSpec&quot;&gt;OpenSpec&lt;/a&gt; change folder. The kit is open source as &lt;a href=&quot;https://github.com/shanmuga-sundaram-n/openspec-agentic-kit&quot;&gt;openspec-agentic-kit&lt;/a&gt;, and I quote only small pieces of it below. Its run logs and state files are git-ignored, so the cost and failure figures in this post come from my local runs, not from files you will find in the repository.&lt;/p&gt;
+
+&lt;p&gt;It is a second implementation of the idea in my &lt;a href=&quot;/blog/2026/06/06/sdlc-factory-autonomous-multi-agent-pipeline/&quot;&gt;SDLC Factory post&lt;/a&gt;. The factory passed validated JSON artifacts between agents inside one application. The kit leans on Claude Code for the agent loop and on markdown files in a git worktree for the contract, so the code I wrote is almost entirely the outer loop.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-mermaid&quot;&gt;%%{init: {&apos;theme&apos;: &apos;dark&apos;, &apos;themeVariables&apos;: {&apos;primaryColor&apos;: &apos;#313244&apos;, &apos;primaryTextColor&apos;: &apos;#CDD6F4&apos;, &apos;primaryBorderColor&apos;: &apos;#89B4FA&apos;, &apos;lineColor&apos;: &apos;#A6ADC8&apos;, &apos;secondaryColor&apos;: &apos;#1E1E2E&apos;, &apos;background&apos;: &apos;#1E1E2E&apos;, &apos;mainBkg&apos;: &apos;#313244&apos;, &apos;clusterBkg&apos;: &apos;#24243E&apos;, &apos;clusterBorder&apos;: &apos;#45475A&apos;, &apos;titleColor&apos;: &apos;#CDD6F4&apos;, &apos;edgeLabelBackground&apos;: &apos;#1E1E2E&apos;, &apos;fontFamily&apos;: &apos;JetBrains Mono, monospace&apos;, &apos;fontSize&apos;: &apos;16px&apos;}}}%%
+flowchart TB
+    classDef agent fill:#2A1A3A,stroke:#CBA6F7,color:#CBA6F7
+    classDef check fill:#3A2A1A,stroke:#FAB387,color:#FAB387
+    classDef gate  fill:#3A1A2A,stroke:#F38BA8,color:#F38BA8
+    classDef done  fill:#1A3A2A,stroke:#A6E3A1,color:#A6E3A1
+
+    I([&quot;Idea&quot;]):::done --&amp;gt; A[&quot;Research · proposal&quot;]:::agent
+    A --&amp;gt; G1{&quot;G1 intent&quot;}:::gate
+    G1 --&amp;gt; B[&quot;Specs · design&amp;lt;br/&amp;gt;threat model · test plan&quot;]:::agent
+    B --&amp;gt; G2{&quot;G2 design&quot;}:::gate
+    G2 --&amp;gt; C[&quot;Tasks · build&quot;]:::agent
+    C --&amp;gt; K[&quot;Deterministic checks&amp;lt;br/&amp;gt;validate · tasks ticked&amp;lt;br/&amp;gt;tests · spec-to-test trace&quot;]:::check
+    K --&amp;gt;|&quot;fail: up to 2 fix passes&quot;| C
+    K --&amp;gt;|&quot;pass&quot;| V[&quot;Verifier&quot;]:::agent
+    V --&amp;gt; R[&quot;Code reviewer&quot;]:::agent
+    R --&amp;gt;|&quot;blocking: one fix pass&quot;| C
+    R --&amp;gt;|&quot;clear&quot;| G3{&quot;G3 merge&quot;}:::gate
+    G3 --&amp;gt; RE[&quot;Retrospective&quot;]:::agent
+    RE --&amp;gt; G4{&quot;G4 release&quot;}:::gate
+    G4 --&amp;gt; M([&quot;Archive and merge&quot;]):::done
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Four properties of that design carry the rest of the post:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;State lives outside the model.&lt;/strong&gt; Each session starts with a clean context. What persists is the change folder, a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;state/*.json&lt;/code&gt; file per change, and a SQLite store that feeds a dashboard. This corresponds to the state layer in Osmani’s list, which keeps progress outside the conversation.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;The runner picks the next step from &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;openspec status&lt;/code&gt;&lt;/strong&gt;, not from anything an agent says. An artifact counts as done when the file exists and validates, not when the agent claims it wrote it.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Checks between agents are plain code&lt;/strong&gt; (see &lt;a href=&quot;https://github.com/shanmuga-sundaram-n/openspec-agentic-kit/blob/main/lib/checks.mjs&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lib/checks.mjs&lt;/code&gt;&lt;/a&gt;). &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;openspec validate --strict&lt;/code&gt;, whether every task is ticked, the project’s test command, and a trace that every requirement ID has at least as many test references as it has scenarios. No model is involved.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Gates scale with risk.&lt;/strong&gt; The product analyst sets a risk tier in the proposal. For low-risk changes G2 and G4 approve themselves when nothing blocks. For medium and high risk, a human approves all four.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The relevant limits from &lt;a href=&quot;https://github.com/shanmuga-sundaram-n/openspec-agentic-kit/blob/main/config.base.json&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;config.base.json&lt;/code&gt;&lt;/a&gt; are small enough to quote:&lt;/p&gt;
+
+&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;maxApplyPasses&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;maxFixAttempts&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;autoFixReviewBlocking&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;agent&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;maxBudgetUsdPerRun&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;timeoutMinutes&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;45&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;osmanis-building-blocks-mapped-to-the-kit&quot;&gt;Osmani’s building blocks, mapped to the kit&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Osmani’s list of loop primitives maps onto the kit almost one to one, which is how I knew I was building the same thing under a different name.&lt;/strong&gt; The mapping below is mine, not his, and where the kit has no equivalent I’ve said so.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Osmani’s primitive&lt;/th&gt;
+      &lt;th&gt;What it is in the kit&lt;/th&gt;
+      &lt;th&gt;Gap&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Automations (scheduled discovery and triage)&lt;/td&gt;
+      &lt;td&gt;The runner’s &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;drive&lt;/code&gt; loop, started by me from the CLI or dashboard&lt;/td&gt;
+      &lt;td&gt;Nothing triggers a change on its own; I start every one&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Worktrees&lt;/td&gt;
+      &lt;td&gt;One git worktree per change, on branch &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;change/&amp;lt;id&amp;gt;&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;One implementer at a time; no parallel lanes&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Skills&lt;/td&gt;
+      &lt;td&gt;Ten role prompts plus OpenSpec’s per-artifact instructions and templates&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Plugins and connectors&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+      &lt;td&gt;No tracker or chat integration&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Sub-agents (write and verify separated)&lt;/td&gt;
+      &lt;td&gt;Verifier and code reviewer run as separate sessions from the implementer&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;State&lt;/td&gt;
+      &lt;td&gt;Change folder, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;state/*.json&lt;/code&gt;, SQLite, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;approvals.md&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Memory across runs&lt;/td&gt;
+      &lt;td&gt;Retrospective lessons, queued as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pending&lt;/code&gt; until I accept them&lt;/td&gt;
+      &lt;td&gt;Lessons only add rules; nothing retires old ones&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;The two gaps matter. With no automation, I’m the scheduler, and that kept the sample small. With a single implementer lane, two changes can’t build at once.&lt;/p&gt;
+
+&lt;h2 id=&quot;two-real-runs&quot;&gt;Two real runs&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Two changes cost about $6 each and about 25 minutes of agent time, and about a third of that spend went on checking the work.&lt;/strong&gt; Both ran against a small todo app. The first added create, edit, complete and delete for todos. The second added a basic password login, which the Product Analyst classified as high risk. The figures below come from the per-run logs the kit writes: every agent run’s prompt, exit code, seconds and cost.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt; &lt;/th&gt;
+      &lt;th&gt;Todo CRUD&lt;/th&gt;
+      &lt;th&gt;Login flow&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Agent runs&lt;/td&gt;
+      &lt;td&gt;23&lt;/td&gt;
+      &lt;td&gt;22&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Total agent cost&lt;/td&gt;
+      &lt;td&gt;$5.75&lt;/td&gt;
+      &lt;td&gt;$6.17&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Total agent time&lt;/td&gt;
+      &lt;td&gt;1,415 s&lt;/td&gt;
+      &lt;td&gt;1,541 s&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Implementer&lt;/td&gt;
+      &lt;td&gt;10 runs, $1.68&lt;/td&gt;
+      &lt;td&gt;8 runs, $1.89&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Code reviewer&lt;/td&gt;
+      &lt;td&gt;2 runs, $1.68&lt;/td&gt;
+      &lt;td&gt;2 runs, $1.61&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Verifier&lt;/td&gt;
+      &lt;td&gt;2 runs, $0.34&lt;/td&gt;
+      &lt;td&gt;2 runs, $0.38&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Reviewer + verifier share of spend&lt;/td&gt;
+      &lt;td&gt;35%&lt;/td&gt;
+      &lt;td&gt;32%&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Two things stand out. The reviewer, a different session with a different prompt, cost as much as the implementer on the first change and nearly as much on the second. The most expensive single run in the login change was the implementer’s first pass ($1.42, 135 turns). In the todo change it was the first code review ($0.90), just ahead of the first build pass ($0.85, 84 turns). The build pass is the inner agent loop. Everything else is the outer loop deciding what to do around it.&lt;/p&gt;
+
+&lt;p&gt;None of this is a general claim about cost. It’s what two small changes cost, with the model settings in my config. The ratios are the useful part: independent checking was not a rounding error in the budget.&lt;/p&gt;
+
+&lt;h2 id=&quot;what-the-traces-taught-me&quot;&gt;What the traces taught me&lt;/h2&gt;
+
+&lt;h3 id=&quot;retries-aimed-at-work-that-cannot-succeed&quot;&gt;Retries aimed at work that cannot succeed&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;A retry counter bounds a stuck loop, but it can’t tell you the loop is stuck.&lt;/strong&gt; In the todo change, tasks 6.7, 7.2 and 7.3 were manual checks: build the project, start the server and run a smoke flow with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;curl&lt;/code&gt;. The implementer’s tool allow-list has &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;npm&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;node&lt;/code&gt; but no &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;curl&lt;/code&gt;, and the headless session has no way to approve a command it isn’t allowed. Each implementer session said so in its final message:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Tasks 6.7, 7.2 and 7.3 are still unticked. I couldn’t run the server, so none of them has the evidence it needs.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;The runner’s check, “all tasks ticked,” failed every time, so it kept going: up to three build passes, up to two fix passes, then, after I requested a revision at G3, the same sequence again. Across the two cycles, at least six sessions reported the same three tasks open; all ten implementer runs ended with them unticked. The login change had the same shape with a single task, 6.2.&lt;/p&gt;
+
+&lt;p&gt;The money was small. Counting every implementer run after the first build pass, the retries cost $0.83 on the todo change and $0.46 on the login change, roughly 14% and 7% of each total. Those figures are an upper bound: they include the build pass after my G3 revision and the review fix, which were legitimate work, and some other retries ticked tasks too (one ticked 7.4). The cost isn’t the point. The loop ran the same experiment repeatedly and expected a different result, and no component compared one pass with the next.&lt;/p&gt;
+
+&lt;p&gt;Here is the detector I would add. It compares the set of open tasks after each pass and stops retrying when the last &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;window&lt;/code&gt; passes left the same ones open. I ran it against the six-pass pattern above:&lt;/p&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// Stop retrying when the last `window` passes left exactly the same tasks open.&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;stalled&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;history&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;window&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;history&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;key&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;open&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[...&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;sort&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;recent&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;history&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;slice&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;recent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;every&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;k&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;k&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;recent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// Illustrative input: the same three tasks reported open on every pass,&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// as the agents&apos; final messages did in the todo change.&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;passes&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;fill&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;6.7&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;7.2&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;7.3&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]);&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;history&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[];&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;of&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;passes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;entries&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;history&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;push&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;`pass &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;: open=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;  stalled=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;stalled&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;history&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-text highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pass 1: open=6.7,7.2,7.3  stalled=false
+pass 2: open=6.7,7.2,7.3  stalled=true
+pass 3: open=6.7,7.2,7.3  stalled=true
+pass 4: open=6.7,7.2,7.3  stalled=true
+pass 5: open=6.7,7.2,7.3  stalled=true
+pass 6: open=6.7,7.2,7.3  stalled=true
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;With &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;window = 2&lt;/code&gt; it would have saved three of the five implementer sessions in the revision cycle, where every pass reported the same three tasks. In the first cycle the open set varied early on (7.4 was also open after the first pass), so it would have saved about one. The saving is bounded by the caps already in place, and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;window&lt;/code&gt; is a real trade-off: in the login change the open set was identical on two consecutive passes, and a later pass still closed task 5.3, so &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;window = 2&lt;/code&gt; would have stopped one pass too early. The bigger win is upstream: a task that no agent can complete should not enter the agent queue. A &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[manual]&lt;/code&gt; marker in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tasks.md&lt;/code&gt; that routes the task to the gate summary as a human to-do would remove the whole class. I haven’t built either; both are proposals.&lt;/p&gt;
+
+&lt;h3 id=&quot;rate-limits-arrive-as-loop-events&quot;&gt;Rate limits arrive as loop events&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;A quota error is not a failed task, and treating it as one wastes the retry.&lt;/strong&gt; On the login change, the spec author and the architect ran in parallel, because the runner starts independent artifacts together. Both sessions ended with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;You&apos;ve hit your session limit&lt;/code&gt; and exit code 1. Their partial runs cost $0.29 and $0.50. The runner’s second attempt for each lasted five seconds and cost nothing, and the change stopped there. I resumed it the next morning.&lt;/p&gt;
+
+&lt;p&gt;The parts that worked are worth noting. The runner only trusts a file that exists and validates, so on resume it found the specs and design present and moved on to the threat model without redoing them. I haven’t audited whether those artifacts were complete when the limit hit; the next agents consumed them without complaint, and that is the extent of what I can say.&lt;/p&gt;
+
+&lt;p&gt;The parts I would change: two parallel sessions share one account quota, so they fail together. And the retry should recognize this error and pause the change instead of burning a second attempt. A harness-level error and a loop-level policy meet right there.&lt;/p&gt;
+
+&lt;h3 id=&quot;done-is-a-claim-until-something-else-checks-it&quot;&gt;“Done” is a claim until something else checks it&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;In both changes the checks, not the implementer, were what separated done from claimed.&lt;/strong&gt; The implementer’s final message in the login change said 29 of 30 tasks were complete and the tests passed. The deterministic checks agreed with the first part (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tasks complete&lt;/code&gt; failed at 29/30) and with the second (159 tests passing).&lt;/p&gt;
+
+&lt;p&gt;The independent reviewer found something the green tests hadn’t. After the first build and fix passes the suite passed with 158 tests, and the verifier had not flagged anything in the limiter. The code reviewer, reading the diff against the specs and the threat model, raised one blocking finding: the login rate limiter counted a failed attempt only after the slow password hash finished, so parallel attempts from one address would all pass the check before any failure was recorded. Its estimate was tens of guesses per second against a limit of 5 per 60 seconds. The runner’s one automatic review-fix pass added a test (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AUTH004 concurrent wrong passwords are limited before hashing completes&lt;/code&gt;) and fixed the code. The fresh review afterwards found zero blocking issues.&lt;/p&gt;
+
+&lt;p&gt;This is Osmani’s sub-agent point in practice: agents tend to grade their own work generously, so the agent that writes should not be the only one that judges. It is also why review took a third of the spend. I’d keep that ratio.&lt;/p&gt;
+
+&lt;h3 id=&quot;gates-are-only-as-good-as-what-the-human-does-at-them&quot;&gt;Gates are only as good as what the human does at them&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;The loop correctly surfaced every problem and then let me approve past it, which means the stop condition was me.&lt;/strong&gt; Three records from the login change show it:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The threat-model agent wrote that its output “blocks approval,” with two high-severity gaps: the spec and the design disagreed on routes, error codes and limiter behavior (GAP-01), and no change to the existing &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;todos&lt;/code&gt; spec said that every todo request without a session should get a 401 (GAP-02). G2 for this high-risk change was approved 19 seconds after the test plan finished, with an empty note. Both gaps were still open at the end and appear in the verifier’s blocking list.&lt;/li&gt;
+  &lt;li&gt;At G3 the checks showed &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tasks complete&lt;/code&gt; failing and the verifier’s verdict was still FAIL. Per the &lt;a href=&quot;https://github.com/shanmuga-sundaram-n/openspec-agentic-kit/blob/main/README.md#gates&quot;&gt;README&lt;/a&gt;, approving with a failing check takes an explicit override. I approved with the note “Skip Manual run and update done.”&lt;/li&gt;
+  &lt;li&gt;The retrospective agent, which runs after G3, flagged both and proposed rules for the next change: require scenarios for threat-model controls, require a delta spec when an existing capability changes behavior, and record a written waiver for manual tasks.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The gate worked in the sense that it listed the blockers, made override a deliberate act and recorded it in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;approvals.md&lt;/code&gt;. It did not make me read them. A human gate is a stop condition with exactly the reliability of the human at it, and the pipeline had no mechanism to notice that a rubber stamp had happened.&lt;/p&gt;
+
+&lt;h2 id=&quot;which-layer-to-fix&quot;&gt;Which layer to fix&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;For each failure above, the cause and the fix sit at different layers, and diagnosing the layer first saves you from tuning the wrong thing.&lt;/strong&gt; I use Future AGI’s rule of thumb: describe the last bad run and see which sentence fits.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Failure&lt;/th&gt;
+      &lt;th&gt;What it looked like&lt;/th&gt;
+      &lt;th&gt;Layer&lt;/th&gt;
+      &lt;th&gt;Fix&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Six sessions, same three tasks open&lt;/td&gt;
+      &lt;td&gt;The loop kept repeating itself&lt;/td&gt;
+      &lt;td&gt;Loop&lt;/td&gt;
+      &lt;td&gt;Compare consecutive passes; stop on no progress&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Agent could not start the server&lt;/td&gt;
+      &lt;td&gt;It tried the right thing and could not execute it&lt;/td&gt;
+      &lt;td&gt;Harness&lt;/td&gt;
+      &lt;td&gt;Add a narrowly scoped &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;curl&lt;/code&gt; to localhost to the implementer’s allow-list, or run smoke checks as a deterministic step&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Manual tasks in the agent queue&lt;/td&gt;
+      &lt;td&gt;Work was assigned to something that cannot do it&lt;/td&gt;
+      &lt;td&gt;Loop&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[manual]&lt;/code&gt; marker; route to a human at G3&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Session limit&lt;/td&gt;
+      &lt;td&gt;A model-provider limit, handled as task failure&lt;/td&gt;
+      &lt;td&gt;Both&lt;/td&gt;
+      &lt;td&gt;Recognize the error; pause and resume instead of retrying&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Parallel agents died together&lt;/td&gt;
+      &lt;td&gt;Shared quota, no backpressure&lt;/td&gt;
+      &lt;td&gt;Loop&lt;/td&gt;
+      &lt;td&gt;Lower parallelism when a quota error appears&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Approved past blockers&lt;/td&gt;
+      &lt;td&gt;The stop condition was a human who didn’t read&lt;/td&gt;
+      &lt;td&gt;Loop (gate design)&lt;/td&gt;
+      &lt;td&gt;Require a written reason for each open blocker at override&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;The harness fix has a cost I should state plainly. Each command I add to a role’s allow-list widens what an unattended session can do. A &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;curl&lt;/code&gt; limited to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;127.0.0.1&lt;/code&gt; is a small widening, but it is still a widening, and I’d rather see the smoke check run by the runner as a deterministic step than hand the agent more reach.&lt;/p&gt;
+
+&lt;p&gt;The overlap between the layers shows up here. The stall detector needs a signal from the harness (which tasks are ticked), and the session-limit fix needs the harness to report a typed error rather than a string in the agent’s final message. Future AGI makes the same point when it notes that stop conditions depend on signals the harness reports. In my kit, the runner is both: it provisions the worktree and allow-lists (harness) and decides what runs next (loop). I’d call that a smell worth watching, because the two layers want to change at different speeds.&lt;/p&gt;
+
+&lt;h2 id=&quot;where-this-does-not-fit&quot;&gt;Where this does not fit&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Small or exploratory work.&lt;/strong&gt; A one-line change doesn’t need research, a threat model and four gates. For work you’d finish in one supervised session, the outer loop is overhead. Osmani himself calls the idea promising but early and says he is skeptical.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Review bandwidth.&lt;/strong&gt; He names it as the real limit on how many agents a person can run, and my pipeline agrees. The expensive part of each change wasn’t tokens. It was me reading a research doc, a proposal, specs, a design, a threat model, a test plan, a diff, a verification report and a review report at four gates. When I read them thinly, as I did at G2, the structure produced documents and not safety.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Comprehension debt.&lt;/strong&gt; The kit ships code I did not write line by line. The gate summaries help, but I can’t claim I understand the login implementation the way I’d understand code I wrote. Osmani’s phrase for the temptation is cognitive surrender, and I recognise it from the G2 timestamp.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;My sample.&lt;/strong&gt; Two changes, one app, one operator, one model configuration. The costs and the retry pattern could look different on a larger codebase or with a different test suite.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;No parallel lanes.&lt;/strong&gt; Real loop systems run many tasks at once. This one doesn’t, so I’ve said nothing about contention between worktrees.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;decision-rule&quot;&gt;Decision rule&lt;/h2&gt;
+
+&lt;p&gt;Build an outer loop when the work is repeatable, has a check that doesn’t depend on the agent’s word, and is big enough that supervising each step costs more than reviewing the results. Skip it when you’d supervise every step anyway.&lt;/p&gt;
+
+&lt;p&gt;If you already have one, three questions find most of the problems I hit:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;strong&gt;What compares one pass with the next?&lt;/strong&gt; If the answer is “a retry counter,” a stuck loop will run to its limit every time.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Who checks “done,” and is it a different session from the one that did the work?&lt;/strong&gt; If not, the check is a second opinion from the same author.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;What stops the loop, and does that stop condition read the evidence?&lt;/strong&gt; A human gate that approves on a summary is only as strong as the reading behind it.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;My next changes to &lt;a href=&quot;https://github.com/shanmuga-sundaram-n/openspec-agentic-kit&quot;&gt;the kit&lt;/a&gt;, in order: the no-progress check, a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[manual]&lt;/code&gt; task class, and a written reason required for every override. Then I’ll run another two changes and see whether the numbers above move.&lt;/p&gt;</content><author><name>Shanmuga Sundaram Natarajan (Shan)</name></author><category term="ai" /><category term="engineering" /><category term="agents" /><category term="loop-engineering" /><category term="harness-engineering" /><category term="agentic-sdlc" /><category term="openspec" /><category term="claude-code" /><category term="multi-agent" /><category term="stop-conditions" /><category term="agentic-ai" /><summary type="html">In one change on my agentic delivery pipeline, at least six consecutive implementer sessions reported the same three tasks as still open. Every guard I had configured worked: the retry counters capped the passes, the budget cap held, and the run ended. Yet nothing in the system noticed it was going in circles, and a human revision restarted the same cycle.</summary></entry><entry><title type="html">Stop Using a Language Model for Everything. Here’s What I Use Instead.</title><link href="https://shanmuga-sundaram-n.github.io/blog/2026/10/20/stop-using-llm-for-everything-jev-ai/" rel="alternate" type="text/html" title="Stop Using a Language Model for Everything. Here’s What I Use Instead." /><published>2026-10-20T14:30:00+05:30</published><updated>2026-10-20T14:30:00+05:30</updated><id>https://shanmuga-sundaram-n.github.io/blog/2026/10/20/stop-using-llm-for-everything-jev-ai</id><content type="html" xml:base="https://shanmuga-sundaram-n.github.io/blog/2026/10/20/stop-using-llm-for-everything-jev-ai/">&lt;p&gt;Most enterprise agent pipelines start from the same assumption: the AI layer is an LLM, every call goes through it, and the only open question is which one. I built a production pipeline on that assumption, and after running it for a while I started to doubt it.&lt;/p&gt;
 
 &lt;p&gt;I profiled the calls and about 80% of the AI work was structured decision-making: classify this intent, score this document for relevance, pull these fields out of some messy input. No human ever read those outputs. They went straight into the next system. So I was paying frontier prices and waiting on LLM latency for work that didn’t need generation at all. Every so often the model also invented a field that wasn’t in the input, which is what you get when nothing in the architecture stops it.&lt;/p&gt;
 
@@ -3745,35 +4128,4 @@ BUILD SUCCESSFUL &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;3s
 
 &lt;p&gt;There are more ways to build than before, and that’s good. But the fundamentals matter more now, not less. As code gets easier to generate, the valuable part is understanding systems, trade-offs and failure modes well enough to know whether the generated code is any good.&lt;/p&gt;
 
-&lt;p&gt;The skill I’d work on is noticing which mode you’re in, and whether it’s the right one for the task in front of you.&lt;/p&gt;</content><author><name>Shanmuga Sundaram Natarajan (Shan)</name></author><category term="ai" /><category term="engineering" /><category term="ai" /><category term="coding" /><category term="vibe-coding" /><category term="productivity" /><category term="software-engineering" /><category term="claude-code" /><summary type="html"></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://shanmuga-sundaram-n.github.io/assets/images/blog/traditional-vs-ai-vs-vibe-coding.webp" /><media:content medium="image" url="https://shanmuga-sundaram-n.github.io/assets/images/blog/traditional-vs-ai-vs-vibe-coding.webp" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">LlamaCoder: Turn Your Idea into an App in Minutes</title><link href="https://shanmuga-sundaram-n.github.io/blog/2024/11/25/llamacoder-ai-app-builder/" rel="alternate" type="text/html" title="LlamaCoder: Turn Your Idea into an App in Minutes" /><published>2024-11-25T17:30:00+05:30</published><updated>2024-11-25T17:30:00+05:30</updated><id>https://shanmuga-sundaram-n.github.io/blog/2024/11/25/llamacoder-ai-app-builder</id><content type="html" xml:base="https://shanmuga-sundaram-n.github.io/blog/2024/11/25/llamacoder-ai-app-builder/">&lt;p&gt;&lt;img src=&quot;/assets/images/blog/llamacoder.webp&quot; alt=&quot;LlamaCoder&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://llamacoder.together.ai/&quot;&gt;LlamaCoder&lt;/a&gt; is a tool worth knowing about. You describe the app you want in plain English and it generates working code. It’s built by &lt;a href=&quot;https://www.together.ai/&quot;&gt;Together AI&lt;/a&gt; on top of large language models.&lt;/p&gt;
-
-&lt;h2 id=&quot;how-it-works&quot;&gt;How it works&lt;/h2&gt;
-
-&lt;p&gt;You type what you want. The model writes the code, you look at the result, and you ask for changes in plain language until it’s right. The code can be in Python, JavaScript, Swift and others, and the output can target web or mobile.&lt;/p&gt;
-
-&lt;p&gt;The pitch is that it responds to the goal of what you asked for, not just keywords. Ask for a task manager with due dates and you should get something shaped like one.&lt;/p&gt;
-
-&lt;h2 id=&quot;where-it-helps&quot;&gt;Where it helps&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;Prototyping.&lt;/strong&gt; Going from an idea to something you can click takes minutes, which is excellent for testing whether an idea is worth building.&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Non-developers.&lt;/strong&gt; Founders, business owners and designers can get a working demo without waiting on anyone.&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Students.&lt;/strong&gt; Seeing real code appear from your own idea is a good way to learn.&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Developers.&lt;/strong&gt; It’s handy for scaffolding and boilerplate you’d rather not type.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;It handles the usual suspects well: shop front ends, dashboards, to-do apps, simple social feeds, quizzes and small games.&lt;/p&gt;
-
-&lt;h2 id=&quot;where-id-be-careful&quot;&gt;Where I’d be careful&lt;/h2&gt;
-
-&lt;p&gt;Generated code is a starting point. You still need to read it, check edge cases, and think about security and maintenance before it goes anywhere near real users. A demo that works on the happy path can hide a lot of problems.&lt;/p&gt;
-
-&lt;h2 id=&quot;the-bigger-picture&quot;&gt;The bigger picture&lt;/h2&gt;
-
-&lt;p&gt;Tools like this move the hard part. Writing code gets cheaper, and knowing what to build gets more valuable. Understanding the problem, the users and the trade-offs matters more than typing speed.&lt;/p&gt;
-
-&lt;p&gt;I don’t think this removes the need for engineers. It shifts our time towards architecture, quality and the awkward problems these tools still don’t solve reliably. For everyone else, it opens up a lot of ability to build things that used to need a developer.&lt;/p&gt;
-
-&lt;p&gt;You can try it at &lt;a href=&quot;https://llamacoder.together.ai/&quot;&gt;llamacoder.together.ai&lt;/a&gt;.&lt;/p&gt;</content><author><name>Shanmuga Sundaram Natarajan (Shan)</name></author><category term="ai" /><category term="tools" /><category term="ai" /><category term="llm" /><category term="code-generation" /><category term="llamacoder" /><category term="no-code" /><category term="productivity" /><summary type="html"></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://shanmuga-sundaram-n.github.io/assets/images/blog/llamacoder.webp" /><media:content medium="image" url="https://shanmuga-sundaram-n.github.io/assets/images/blog/llamacoder.webp" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
+&lt;p&gt;The skill I’d work on is noticing which mode you’re in, and whether it’s the right one for the task in front of you.&lt;/p&gt;</content><author><name>Shanmuga Sundaram Natarajan (Shan)</name></author><category term="ai" /><category term="engineering" /><category term="ai" /><category term="coding" /><category term="vibe-coding" /><category term="productivity" /><category term="software-engineering" /><category term="claude-code" /><summary type="html"></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://shanmuga-sundaram-n.github.io/assets/images/blog/traditional-vs-ai-vs-vibe-coding.webp" /><media:content medium="image" url="https://shanmuga-sundaram-n.github.io/assets/images/blog/traditional-vs-ai-vs-vibe-coding.webp" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
