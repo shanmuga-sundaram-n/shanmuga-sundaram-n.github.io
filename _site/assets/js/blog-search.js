@@ -133,11 +133,13 @@
       if (excerpt.length > 110) excerpt = excerpt.slice(0, 109).trim() + '\u2026';
 
       return '<article class="writing-item">' +
+        '<div class="writing-item-meta">' +
         '<time datetime="' + escapeHtml(post.isoDate) + '">' + escapeHtml(post.dateShort) + '</time>' +
+        (post.readTime ? '<span class="writing-item-readtime">' + post.readTime + ' min read</span>' : '') +
+        '</div>' +
         '<div>' +
         '<h3 class="writing-item-title"><a href="' + post.url + '">' + escapeHtml(post.title) + '</a></h3>' +
         '<p>' + escapeHtml(excerpt) + '</p>' +
-        (post.readTime ? '<p class="writing-item-read"><i class="far fa-clock"></i> ' + post.readTime + ' min read</p>' : '') +
         '</div>' +
         '</article>';
     }).join('');

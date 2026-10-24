@@ -41,7 +41,7 @@ blog_search: true
     "month": "{{ post.date | date: '%Y-%m' }}",
     "monthLabel": "{{ post.date | date: '%b %Y' }}",
     "isoDate": "{{ post.date | date: '%Y-%m-%d' }}",
-    "dateShort": "{{ post.date | date: '%b %-d, %Y' }}",
+    "dateShort": "{{ post.date | date: '%-d %B %Y' }}",
     "excerpt": {{ post.excerpt | strip_html | truncate: 200 | jsonify }},
     "description": {{ post.description | jsonify }},
     "categories": {{ post.categories | jsonify }},

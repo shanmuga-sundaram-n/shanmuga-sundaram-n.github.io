@@ -82,7 +82,10 @@ layout: default
             <ol class="writing-list">
                 {% for post in site.posts offset: 1 limit: 4 %}
                 <li class="writing-item">
-                    <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %Y" }}</time>
+                    <div class="writing-item-meta">
+                        <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%-d %B %Y" }}</time>
+                        <span class="writing-item-readtime">{{ post.content | strip_html | number_of_words | divided_by: 200.0 | ceil | at_least: 1 }} min read</span>
+                    </div>
                     <div>
                         <h3 class="writing-item-title"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
                         <p>{{ post.description | default: post.excerpt | strip_html | truncate: 110 }}</p>

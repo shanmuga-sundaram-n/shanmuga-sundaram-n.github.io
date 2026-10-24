@@ -2816,7 +2816,7 @@ strong {
 
 .writing-item {
   display: grid;
-  grid-template-columns: 7.5rem minmax(0, 1fr);
+  grid-template-columns: 8.5rem minmax(0, 1fr);
   gap: var(--space-sm);
   padding: var(--space-md) 0;
   border-bottom: 1px solid var(--color-border);
@@ -2860,6 +2860,19 @@ strong {
   font-size: var(--font-size-sm);
   color: var(--color-text-tertiary);
   padding-top: 0.2rem;
+}
+
+/* Date plus read time stacked in the date column */
+.writing-item-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.writing-item-meta .writing-item-readtime {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-tertiary);
+  opacity: 0.8;
 }
 
 .writing-item-title {
