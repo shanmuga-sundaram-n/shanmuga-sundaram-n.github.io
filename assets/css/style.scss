@@ -157,16 +157,6 @@
   color: #1a1a1a;
 }
 
-[data-mode="light"] .pagination-btn {
-  background: #ffffff;
-  border-color: rgba(0, 0, 0, 0.18);
-}
-
-[data-mode="light"] .pagination-btn:hover:not(:disabled) {
-  background: #f1f3f5;
-  border-color: rgba(0, 0, 0, 0.28);
-}
-
 /* ============================================
    HEADER: ALWAYS DARK (ignores light mode)
    ============================================ */
@@ -699,7 +689,7 @@ strong {
 }
 
 .page-hero .hero-title {
-  font-size: var(--font-size-5xl);
+  font-size: var(--font-size-3xl);
   color: var(--color-accent-primary);
 }
 
@@ -709,6 +699,7 @@ strong {
 }
 
 .page-hero .hero-description {
+  font-size: var(--font-size-base);
   margin-bottom: 0;
 }
 
@@ -901,6 +892,28 @@ strong {
 
 .card li strong {
   color: var(--color-text-primary);
+}
+
+/* Tick-mark list: replaces bullets (same glyph as the certifications icons) */
+.card ul.check-list {
+  list-style: none;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.card ul.check-list li {
+  position: relative;
+  padding-left: 1.75rem;
+}
+
+.card ul.check-list li::before {
+  content: "\f058";
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  position: absolute;
+  left: 0;
+  top: 0.1em;
+  color: var(--color-accent-primary);
 }
 
 .card small {
@@ -1183,6 +1196,22 @@ strong {
   border-radius: var(--radius-full);
   background: var(--color-accent-primary);
   color: #fff;
+  letter-spacing: 0.03em;
+  margin-bottom: var(--space-sm);
+}
+
+/* Compact outlined variant for cards outside the Open Source section */
+.oss-chip {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 0.3rem;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  padding: 0.1rem 0.6rem;
+  border: 1px solid var(--color-accent-primary);
+  border-radius: var(--radius-full);
+  color: var(--color-accent-primary);
   letter-spacing: 0.03em;
   margin-bottom: var(--space-sm);
 }
@@ -1481,8 +1510,16 @@ strong {
 .site-footer {
   background: var(--color-bg-primary);
   border-top: 1px solid var(--color-border);
-  padding: var(--space-lg) 0;
+  /* Same height as the header: 56px plus its 1px border */
+  min-height: 57px;
+  display: flex;
+  align-items: center;
+  padding: var(--space-sm) 0;
   margin-top: var(--space-sm);
+}
+
+.site-footer .container {
+  width: 100%;
 }
 
 .footer-bottom {
@@ -1578,7 +1615,7 @@ strong {
 }
 
 .section-subtitle {
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-base);
   color: var(--color-text-secondary);
   max-width: 600px;
   margin: 0 auto;
@@ -1610,7 +1647,11 @@ strong {
 .lead {
   font-size: var(--font-size-base);
   color: var(--color-text-secondary);
-  margin-bottom: var(--space-xl);
+  margin-bottom: var(--space-sm);
+}
+
+.lead + .grid {
+  margin-top: var(--space-xl);
 }
 
 /* ============================================
@@ -1673,6 +1714,118 @@ strong {
 
 .blog-main {
   min-width: 0;
+}
+
+/* Section anchors clear the fixed header */
+.about-layout [id] {
+  scroll-margin-top: 90px;
+}
+
+/* About page: sidebar sits on the right on wide screens (source order stays sidebar-first for the stacked layout) */
+.about-layout {
+  grid-template-columns: minmax(0, 1fr) 260px;
+}
+
+.about-layout .blog-main {
+  order: 1;
+}
+
+.about-layout .blog-sidebar {
+  order: 2;
+}
+
+/* In-page navigation: open sidebar with a vertical rail, no card */
+.about-layout .blog-sidebar {
+  background: none;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+}
+
+.about-layout .blog-sidebar-title {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-tertiary);
+  margin-bottom: var(--space-sm);
+
+  i {
+    display: none;
+  }
+}
+
+.about-nav {
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid var(--color-border);
+}
+
+.about-nav a {
+  margin-left: -1px;
+  padding: 0.4rem 0 0.4rem var(--space-md);
+  border-left: 2px solid transparent;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  text-decoration: none;
+  transition: color var(--transition-base), border-color var(--transition-base);
+}
+
+.about-nav a:hover,
+.about-nav a:focus-visible,
+.about-nav a.active {
+  color: var(--color-accent-primary);
+}
+
+.about-nav a.active,
+.about-nav a:focus-visible {
+  border-left-color: var(--color-accent-primary);
+}
+
+.about-nav a.active {
+  font-weight: 600;
+}
+
+.about-nav a:focus {
+  outline: none;
+}
+
+/* Compact, stacked subscribe block for the narrow About sidebar */
+.about-layout .subscribe-section {
+  margin: var(--space-lg) 0 0;
+}
+
+.about-layout .subscribe-inner {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    "title"
+    "desc"
+    "form"
+    "note";
+  padding-top: var(--space-md);
+}
+
+.about-layout .subscribe-title {
+  font-size: var(--font-size-lg);
+  color: var(--color-accent-primary);
+}
+
+.about-layout .subscribe-description {
+  max-width: none;
+  margin-bottom: var(--space-sm);
+}
+
+.about-layout .subscribe-input-group {
+  gap: var(--space-xs);
+  padding: 0 var(--space-sm);
+}
+
+.about-layout .subscribe-input {
+  font-size: var(--font-size-sm);
+}
+
+.about-layout .subscribe-note {
+  text-align: left;
 }
 
 .blog-sidebar {
@@ -1760,6 +1913,20 @@ strong {
     position: static;
     max-height: none;
   }
+
+  /* About page: when stacked, the section links stay on top and the subscribe block moves below the content */
+  .about-layout .blog-sidebar {
+    display: contents;
+  }
+
+  .about-layout .blog-main {
+    order: 1;
+  }
+
+  .about-layout .subscribe-section {
+    order: 2;
+    margin-top: 0;
+  }
 }
 
 .category-btn.active .filter-count {
@@ -1796,37 +1963,45 @@ strong {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: var(--space-xs);
+  gap: var(--space-md);
   margin-top: var(--space-xl);
   flex-wrap: wrap;
 }
 
+.blog-pagination--top {
+  margin-top: var(--space-md);
+  margin-bottom: 0;
+}
+
+/* Text-style paginator: plain links, current page in accent with an underline */
 .pagination-btn {
-  min-width: 2.5rem;
-  height: 2.5rem;
-  padding: 0 var(--space-xs);
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  background: var(--color-surface);
+  gap: var(--space-xs);
+  padding: 0.25rem 0.15rem;
+  background: none;
   color: var(--color-text-secondary);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
+  border: 0;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
   font-size: var(--font-size-sm);
+  font-weight: 500;
   font-family: var(--font-body);
   cursor: pointer;
-  transition: all var(--transition-base);
+  transition: color var(--transition-base), border-color var(--transition-base);
 
   &:hover:not(:disabled) {
-    background: var(--color-surface-hover);
-    color: var(--color-text-primary);
-    border-color: var(--color-border-hover);
+    color: var(--color-accent-primary);
   }
 
   &.active {
-    background: var(--color-accent-primary);
-    color: white;
-    border-color: var(--color-accent-primary);
+    color: var(--color-accent-primary);
+    font-weight: 700;
+    border-bottom-color: var(--color-accent-primary);
+  }
+
+  &[data-page="prev"],
+  &[data-page="next"] {
     font-weight: 600;
   }
 
@@ -1905,6 +2080,29 @@ strong {
     display: flex;
   }
 
+  /* Mobile menu: only the current page is highlighted (accent bar + text).
+     Hover or a sticky touch state changes the text color only, so two items never look selected. */
+  .nav-links .nav-link {
+    border-left: 3px solid transparent;
+  }
+
+  .nav-links .nav-link::after {
+    display: none;
+  }
+
+  .nav-links .nav-link:hover {
+    background: transparent;
+    color: var(--color-text-primary);
+  }
+
+  .nav-links .nav-link.active,
+  .nav-links .nav-link.active:hover {
+    background: var(--color-surface);
+    color: var(--color-accent-primary);
+    border-left-color: var(--color-accent-primary);
+    font-weight: 600;
+  }
+
   .menu-toggle {
     display: flex;
   }
@@ -1913,6 +2111,42 @@ strong {
 /* ============================================
    SUBSCRIBE SECTION
    ============================================ */
+/* Previous/next post links: same look as the subscribe link */
+.post-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+}
+
+.post-nav-next {
+  margin-left: auto;
+}
+
+.post-nav-top {
+  margin-bottom: var(--space-lg);
+  padding-bottom: var(--space-md);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.post-nav-top:empty,
+.post-nav-top:not(:has(*)) {
+  display: none;
+}
+
+.post-nav-link {
+  color: var(--color-accent-primary);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  font-family: var(--font-body);
+
+  &:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+}
+
 .subscribe-section {
   margin: 0 0 var(--space-md);
   border-top: 1px solid var(--color-border);
@@ -2582,10 +2816,40 @@ strong {
 
 .writing-item {
   display: grid;
-  grid-template-columns: 5.5rem minmax(0, 1fr);
+  grid-template-columns: 7.5rem minmax(0, 1fr);
   gap: var(--space-sm);
   padding: var(--space-md) 0;
   border-bottom: 1px solid var(--color-border);
+}
+
+/* Content section with a thin divider above it (About, Contact) */
+.section-block {
+  margin-top: var(--space-xl);
+  padding-top: var(--space-xl);
+  border-top: 1px solid var(--color-border);
+}
+
+/* Thin divider between major homepage sections */
+.section-rule {
+  margin: 0;
+  border: 0;
+  border-top: 1px solid var(--color-border);
+}
+
+/* Links under a homepage project row or the featured project */
+.writing-item .project-links,
+.writing-featured .project-links {
+  margin-top: var(--space-sm);
+}
+
+/* Paginated list rows hide via the hidden attribute */
+.writing-item[hidden] {
+  display: none;
+}
+
+/* List rows without a date column (homepage projects) */
+.writing-list .writing-item--plain {
+  grid-template-columns: minmax(0, 1fr);
 }
 
 .writing-item:first-child {
@@ -2608,6 +2872,54 @@ strong {
   font-size: var(--font-size-sm);
   color: var(--color-text-tertiary);
   margin: 0;
+}
+
+/* Projects page: list rows built on the blog list layout */
+.project-list .writing-item-title {
+  margin-bottom: var(--space-xs);
+}
+
+.project-list .writing-item {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.project-list .project-description {
+  margin: 0 0 var(--space-sm);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+/* Short closing note under the project list */
+.projects-note {
+  max-width: 720px;
+  margin: var(--space-xl) auto 0;
+  text-align: center;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.projects-note p {
+  margin: 0 0 var(--space-xs);
+}
+
+.project-list .tags {
+  margin-bottom: var(--space-sm);
+  padding-top: 0;
+  border-top: 0;
+  font-size: var(--font-size-sm);
+}
+
+.project-list .tags::before {
+  display: none;
+}
+
+.project-list .project-links {
+  margin-top: 0;
+}
+
+.writing-item .writing-item-read {
+  font-size: var(--font-size-xs);
+  margin-top: 0.35rem;
 }
 
 @media (max-width: 860px) {

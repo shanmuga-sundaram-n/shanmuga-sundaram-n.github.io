@@ -4,14 +4,36 @@
 
   const postsContainer = document.getElementById('posts-container');
   const paginationControls = document.getElementById('pagination-controls');
+  const paginationTop = document.getElementById('pagination-controls-top');
   const noResults = document.getElementById('no-results');
   const searchInput = document.getElementById('blog-search');
   const categoryFilters = document.getElementById('category-filters');
   const monthFilters = document.getElementById('month-filters');
 
-  var CATEGORY_DEFS = Array.prototype.map.call(categoryFilters.querySelectorAll('.category-btn'), function (b) {
-    return { key: b.dataset.category, label: b.textContent.trim() };
-  }).filter(function (c) { return c.key !== 'all'; });
+  // Category filters are built from the posts themselves, so a new category appears
+  // as soon as a post uses it. Most-used first; ties are alphabetical.
+  var ACRONYMS = { ai: 'AI', ml: 'ML', rag: 'RAG', ddd: 'DDD', llm: 'LLM', api: 'API', aws: 'AWS', mcp: 'MCP', sdlc: 'SDLC', nlp: 'NLP' };
+  var LABELS = { devops: 'DevOps' };
+
+  function categoryLabel(key) {
+    if (LABELS[key]) return LABELS[key];
+    return key.split('-').map(function (w) {
+      return ACRONYMS[w] || (w.charAt(0).toUpperCase() + w.slice(1));
+    }).join(' ');
+  }
+
+  var CATEGORY_DEFS = (function () {
+    var totals = {};
+    ALL_POSTS.forEach(function (p) {
+      (p.categories || []).forEach(function (c) {
+        var k = c.toLowerCase();
+        totals[k] = (totals[k] || 0) + 1;
+      });
+    });
+    return Object.keys(totals)
+      .sort(function (a, b) { return totals[b] - totals[a] || (a < b ? -1 : 1); })
+      .map(function (k) { return { key: k, label: categoryLabel(k) }; });
+  })();
 
   function renderCategoryFilters() {
     var inMonth = state.month === 'all' ? ALL_POSTS : ALL_POSTS.filter(function (p) { return p.month === state.month; });
@@ -106,22 +128,16 @@
     }
 
     noResults.hidden = true;
-    let lastMonth = null;
     postsContainer.innerHTML = posts.map(function (post) {
       let excerpt = post.description || post.excerpt || '';
       if (excerpt.length > 110) excerpt = excerpt.slice(0, 109).trim() + '\u2026';
 
-      // Show the month only on the first post of each month
-      const showMonth = post.month !== lastMonth;
-      lastMonth = post.month;
-
       return '<article class="writing-item">' +
-        (showMonth
-          ? '<time datetime="' + escapeHtml(post.month) + '">' + escapeHtml(post.monthLabel) + '</time>'
-          : '<span aria-hidden="true"></span>') +
+        '<time datetime="' + escapeHtml(post.isoDate) + '">' + escapeHtml(post.dateShort) + '</time>' +
         '<div>' +
         '<h3 class="writing-item-title"><a href="' + post.url + '">' + escapeHtml(post.title) + '</a></h3>' +
         '<p>' + escapeHtml(excerpt) + '</p>' +
+        (post.readTime ? '<p class="writing-item-read"><i class="far fa-clock"></i> ' + post.readTime + ' min read</p>' : '') +
         '</div>' +
         '</article>';
     }).join('');
@@ -132,19 +148,21 @@
 
     if (totalPages <= 1) {
       paginationControls.innerHTML = '';
+      paginationTop.innerHTML = '';
       return;
     }
 
     let html = '';
-    html += '<button class="pagination-btn" data-page="prev" ' + (state.page === 1 ? 'disabled' : '') + '><i class="fas fa-chevron-left"></i></button>';
+    html += '<button class="pagination-btn" data-page="prev" ' + (state.page === 1 ? 'disabled' : '') + '><i class="fas fa-chevron-left"></i> Previous</button>';
 
     for (let i = 1; i <= totalPages; i++) {
       html += '<button class="pagination-btn' + (i === state.page ? ' active' : '') + '" data-page="' + i + '">' + i + '</button>';
     }
 
-    html += '<button class="pagination-btn" data-page="next" ' + (state.page === totalPages ? 'disabled' : '') + '><i class="fas fa-chevron-right"></i></button>';
+    html += '<button class="pagination-btn" data-page="next" ' + (state.page === totalPages ? 'disabled' : '') + '>Next <i class="fas fa-chevron-right"></i></button>';
 
     paginationControls.innerHTML = html;
+    paginationTop.innerHTML = html;
   }
 
   function render() {
@@ -208,7 +226,7 @@
   });
 
   // Pagination (event delegation)
-  paginationControls.addEventListener('click', function (e) {
+  function onPaginationClick(e) {
     var btn = e.target.closest('.pagination-btn');
     if (!btn || btn.disabled) return;
 
@@ -224,8 +242,10 @@
     }
 
     render();
-    postsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  });
+  }
+
+  paginationControls.addEventListener('click', onPaginationClick);
+  paginationTop.addEventListener('click', onPaginationClick);
 
   // Initial render
   renderMonthFilters();

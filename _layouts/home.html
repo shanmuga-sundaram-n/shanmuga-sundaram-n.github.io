@@ -61,6 +61,8 @@ layout: default
 </div>
 
 
+<div class="container"><hr class="section-rule"></div>
+
 <!-- Latest Blog Posts -->
 {% assign latest = site.posts.first %}
 <section class="section">
@@ -72,10 +74,9 @@ layout: default
 
         <div class="writing">
             <article class="writing-featured">
-                <p class="writing-kicker">Latest{% if latest.categories.first %} · {{ latest.categories.first }}{% endif %}</p>
                 <h3 class="writing-featured-title"><a href="{{ latest.url | relative_url }}">{{ latest.title }}</a></h3>
                 <p class="writing-featured-text">{{ latest.description | default: latest.excerpt | strip_html | truncate: 230 }}</p>
-                <p class="writing-meta">{{ latest.date | date: "%-d %B %Y" }} · {{ latest.content | number_of_words | divided_by: 200 | plus: 1 }} min read</p>
+                <p class="writing-meta">{{ latest.date | date: "%-d %B %Y" }} · {{ latest.content | strip_html | number_of_words | divided_by: 200.0 | ceil | at_least: 1 }} min read</p>
             </article>
 
             <ol class="writing-list">
@@ -93,7 +94,10 @@ layout: default
     </div>
 </section>
 
+<div class="container"><hr class="section-rule"></div>
+
 <!-- Featured Projects -->
+{% assign featured_project = site.data.projects.first %}
 <section class="section">
     <div class="container">
         <div class="writing-head">
@@ -101,39 +105,30 @@ layout: default
             <a href="{{ '/projects/' | relative_url }}" class="writing-all">All projects</a>
         </div>
 
-        <div class="project-grid">
-            {% for project in site.data.projects limit:4 %}
-            <div class="project-card">
-                <div class="project-content">
-                    <h3 class="project-title">{{ project.title }}</h3>
-                    <p class="project-description">{{ project.description }}</p>
-                    <div class="tags">
-                        {% for tech in project.technologies %}
-                        <span class="tag">{{ tech }}</span>
-                        {% endfor %}
-                    </div>
-                    <div class="project-links">
-                        {% if project.github %}
-                        <a href="{{ project.github }}" class="btn btn-secondary btn-sm" target="_blank">
-                            <i class="fab fa-github"></i> View on GitHub
-                        </a>
-                        {% endif %}
-                        {% if project.blog %}
-                        <a href="{{ project.blog | relative_url }}" class="btn btn-primary btn-sm">
-                            <i class="fas fa-book-open"></i> Blog Post
-                        </a>
-                        {% endif %}
-                        {% if project.demo %}
-                        <a href="{{ project.demo }}" class="btn btn-outline btn-sm" target="_blank">
-                            <i class="fas fa-external-link-alt"></i> Demo
-                        </a>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
+        <div class="writing">
+            <article class="writing-featured">
+                {% if featured_project.opensource %}<span class="oss-chip"><i class="fas fa-code-branch"></i> Open Source</span>{% endif %}
+                {% if featured_project.blog %}{% assign featured_url = featured_project.blog | relative_url %}{% else %}{% assign featured_url = featured_project.github | default: '/projects/' %}{% endif %}
+                <h3 class="writing-featured-title"><a href="{{ featured_url }}">{{ featured_project.title }}</a></h3>
+                <p class="writing-featured-text">{{ featured_project.description | strip_html | truncate: 230 }}</p>
+                <p class="writing-meta">{{ featured_project.technologies | slice: 0, 4 | join: ' · ' }}</p>
+                {% include project-links.html project=featured_project %}
+            </article>
 
+            <ol class="writing-list">
+                {% for project in site.data.projects offset: 1 limit: 4 %}
+                {% if project.blog %}{% assign project_url = project.blog | relative_url %}{% else %}{% assign project_url = project.github | default: '/projects/' %}{% endif %}
+                <li class="writing-item writing-item--plain">
+                    <div>
+                        {% if project.opensource %}<span class="oss-chip"><i class="fas fa-code-branch"></i> Open Source</span>{% endif %}
+                        <h3 class="writing-item-title"><a href="{{ project_url }}">{{ project.title }}</a></h3>
+                        <p>{{ project.description | strip_html | truncate: 110 }}</p>
+                        {% include project-links.html project=project %}
+                    </div>
+                </li>
+                {% endfor %}
+            </ol>
+        </div>
     </div>
 </section>
 

@@ -1,0 +1,10 @@
+{% if page.previous.url or page.next.url %}
+<nav class="post-nav" aria-label="Post navigation">
+    {% if page.previous.url %}
+    <a href="{{ page.previous.url | relative_url }}" class="post-nav-link">&larr; Previous Post</a>
+    {% endif %}
+    {% if page.next.url %}
+    <a href="{{ page.next.url | relative_url }}" class="post-nav-link post-nav-next">Next Post &rarr;</a>
+    {% endif %}
+</nav>
+{% endif %}

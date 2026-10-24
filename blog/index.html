@@ -20,20 +20,10 @@ blog_search: true
   </div>
   <div class="blog-category-filters" id="category-filters">
     <button class="category-btn active" data-category="all">All</button>
-    <button class="category-btn" data-category="engineering">Engineering</button>
-    <button class="category-btn" data-category="ai">AI</button>
-    <button class="category-btn" data-category="java">Java</button>
-    <button class="category-btn" data-category="architecture">Architecture</button>
-    <button class="category-btn" data-category="distributed-systems">Distributed Systems</button>
-    <button class="category-btn" data-category="ml">ML</button>
-    <button class="category-btn" data-category="tools">Tools</button>
-    <button class="category-btn" data-category="agents">Agents</button>
-    <button class="category-btn" data-category="rag">RAG</button>
-    <button class="category-btn" data-category="ddd">DDD</button>
-    <button class="category-btn" data-category="claude-code">Claude Code</button>
   </div>
 </div>
 
+<div id="pagination-controls-top" class="blog-pagination blog-pagination--top"></div>
 <div id="posts-container" class="writing-list"></div>
 <div id="pagination-controls" class="blog-pagination"></div>
 <p id="no-results" class="no-results-msg" hidden>No posts found.</p>
@@ -50,11 +40,14 @@ blog_search: true
     "date": "{{ post.date | date: '%B %d, %Y' }}",
     "month": "{{ post.date | date: '%Y-%m' }}",
     "monthLabel": "{{ post.date | date: '%b %Y' }}",
+    "isoDate": "{{ post.date | date: '%Y-%m-%d' }}",
+    "dateShort": "{{ post.date | date: '%b %-d, %Y' }}",
     "excerpt": {{ post.excerpt | strip_html | truncate: 200 | jsonify }},
     "description": {{ post.description | jsonify }},
     "categories": {{ post.categories | jsonify }},
     "tags": {{ post.tags | jsonify }},
-    "image": {{ post.image | jsonify }}
+    "image": {{ post.image | jsonify }},
+    "readTime": {{ post.content | strip_html | number_of_words | divided_by: 200.0 | ceil | at_least: 1 }}
   }{% unless forloop.last %},{% endunless %}
 {% endfor %}]
 </script>

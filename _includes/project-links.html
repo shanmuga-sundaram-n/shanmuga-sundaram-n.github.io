@@ -1,0 +1,17 @@
+<div class="project-links">
+    {% if include.project.github %}
+    <a href="{{ include.project.github }}" class="btn btn-secondary" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i> View on GitHub
+    </a>
+    {% endif %}
+    {% if include.project.blog %}
+    <a href="{{ include.project.blog | relative_url }}" class="btn btn-primary">
+        <i class="fas fa-book-open"></i> Blog Post
+    </a>
+    {% endif %}
+    {% if include.project.demo %}
+    <a href="{{ include.project.demo }}" class="btn btn-outline" target="_blank" rel="noopener">
+        <i class="fas fa-external-link-alt"></i> Demo
+    </a>
+    {% endif %}
+</div>

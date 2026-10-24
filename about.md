@@ -5,7 +5,22 @@ description: Learn more about my background, experience, and expertise
 permalink: /about/
 ---
 
-<div class="lead">
+<div class="blog-layout about-layout">
+<aside class="blog-sidebar" aria-label="About page sections">
+  <h3 class="blog-sidebar-title"><i class="fas fa-list"></i> On this page</h3>
+  <nav class="about-nav" id="about-nav">
+    <a class="active" href="#overview">Overview</a>
+    <a href="#expertise">Technical Expertise</a>
+    <a href="#experience">Professional Experience</a>
+    <a href="#philosophy">My Philosophy</a>
+    <a href="#education">Education &amp; Certifications</a>
+  </nav>
+  {% include subscribe-section.html %}
+</aside>
+
+<div class="blog-main">
+
+<div class="lead" id="overview">
     Technology Architect with 19+ years of experience designing cloud-native platforms, distributed systems, and enterprise modernization initiatives. Proven expertise in architecture strategy, solution design, cloud transformation, and engineering leadership, delivering scalable technology solutions aligned with business outcomes.
 </div>
 <div class="lead">
@@ -17,24 +32,24 @@ permalink: /about/
 
 <div class="grid grid-2">
     <div class="card card-glass">
-        <h3><i class="fas fa-cloud"></i> Cloud-Native Solutions</h3>
+        <h3>Cloud-Native Solutions</h3>
         <p>Expert in AWS, GCP, and Azure environments, focusing on EKS, Serverless, and Event-Driven designs.</p>
     </div>
     <div class="card card-glass">
-        <h3><i class="fas fa-project-diagram"></i> Architectural Leadership</h3>
+        <h3>Architectural Leadership</h3>
         <p>Designing complex distributed systems and microservices architectures that are resilient and future-proof.</p>
     </div>
     <div class="card card-glass">
-        <h3><i class="fas fa-robot"></i> AI-First SDLC</h3>
+        <h3>AI-First SDLC</h3>
         <p>Leveraging tools like CursorAI, GitHub Copilot, and Claude to optimize the software development lifecycle.</p>
     </div>
     <div class="card card-glass">
-        <h3><i class="fas fa-users"></i> Technical Mentorship</h3>
+        <h3>Technical Mentorship</h3>
         <p>Leading and growing high-performing engineering teams through technical strategy and stakeholder management.</p>
     </div>
 </div>
 
-<div class="mt-xl">
+<div class="section-block" id="expertise">
     <div class="section-header">
         <h2 class="section-title">Technical Expertise</h2>
         <p class="section-subtitle">Core stack and architectural expertise</p>
@@ -42,8 +57,8 @@ permalink: /about/
     
     <div class="grid grid-3">
         <div class="card card-glass">
-            <h3><i class="fas fa-code"></i> Development Stack</h3>
-            <ul class="footer-links">
+            <h3>Development Stack</h3>
+            <ul class="footer-links check-list">
                 <li><strong>Languages</strong>: Java, Spring Boot, Node.js, TypeScript, Python, FastAPI, J2EE</li>
                 <li><strong>Concurrency &amp; Reactive</strong>: Reactive Programming, Virtual Threads (Project Loom), Project Reactor, RxJava, Backpressure</li>
                 <li><strong>Frontend</strong>: React, RESTful APIs</li>
@@ -54,8 +69,8 @@ permalink: /about/
             </ul>
         </div>
         <div class="card card-glass">
-            <h3><i class="fas fa-network-wired"></i> Architecture & Cloud</h3>
-            <ul class="footer-links">
+            <h3>Architecture & Cloud</h3>
+            <ul class="footer-links check-list">
                 <li><strong>Patterns</strong>: Microservices, Event-Driven (Kafka), Event Sourcing, DDD, Hexagonal Architecture, Serverless</li>
                 <li><strong>AWS</strong>: EKS, Lambda, S3, DynamoDB, Redshift</li>
                 <li><strong>Azure</strong>: Azure Cloud platform architecture</li>
@@ -68,11 +83,11 @@ permalink: /about/
             </ul>
         </div>
         <div class="card card-glass">
-            <h3><i class="fas fa-brain"></i> Agentic AI, GenAI &amp; ML</h3>
-            <ul class="footer-links">
+            <h3>Agentic AI, GenAI &amp; ML</h3>
+            <ul class="footer-links check-list">
                 <li><strong>Agentic AI</strong>: Multi-Agent Systems, Agent Orchestration, Claude Code (Hooks, Sub-agents, Memory), Agent Harness &amp; Loop Engineering, MCP, Tool Use, Human-in-the-Loop Governance</li>
                 <li><strong>GenAI for SDLC</strong>: CursorAI, GitHub Copilot, Claude, OpenSpec (Spec-Driven Development)</li>
-                <li><strong>RAG Pipelines</strong>: Retrieval-Augmented Generation systems — chunking strategies, embeddings &amp; vector search, re-ranking, evaluation</li>
+                <li><strong>RAG Pipelines</strong>: Retrieval-Augmented Generation systems: chunking strategies, embeddings &amp; vector search, re-ranking, evaluation</li>
                 <li><strong>LLMs &amp; Prompt Engineering</strong>: Transformers, NLP, Tokenization, Prompt Engineering</li>
                 <li><strong>Machine Learning</strong>: Deep Learning, CNN, Computer Vision, XGBoost, Random Forest</li>
             </ul>
@@ -80,7 +95,7 @@ permalink: /about/
     </div>
 </div>
 
-<div class="mt-xl">
+<div class="section-block" id="experience">
     <div class="section-header">
         <h2 class="section-title">Professional Experience</h2>
         <p class="section-subtitle">A journey of technical leadership and architectural excellence</p>
@@ -95,11 +110,11 @@ permalink: /about/
                     <p style="color: var(--color-accent-primary); font-weight: 600; margin-bottom: var(--space-xs);">Thoughtworks</p>
                 </div>
                 <div class="exp-dates">
-                    <small style="display: block; font-weight: 600;">Aug 2023 — Present</small>
+                    <small style="display: block; font-weight: 600;">Aug 2023 – Present</small>
                     <small style="color: var(--color-text-tertiary);">Coimbatore, TN, India</small>
                 </div>
             </div>
-            <ul class="footer-links" style="margin-top: var(--space-md);">
+            <ul class="footer-links check-list" style="margin-top: var(--space-md);">
                 <li>As Technical Partner, architected and led multiple teams to engineer a hybrid crypto-fiat payment orchestration platform in Azure Cloud for a logistics giant. Applied Strategic Domain-Driven Design to define clear Bounded Contexts, isolating core ledger logic from volatile third-party integrations.</li>
                 <li>Led an internal "Software Delivery with AI" initiative. Integrated tools like CursorAI into daily workflows, improving developer efficiency by 30% and accelerating deployment cycles for a greenfield payment project.</li>
                 <li>As Lead Consultant, architected and developed a modernized Marketing Newsletter Platform on GCP using a Serverless, Event-Driven Architecture. This re-architecture reduced campaign turnaround time by 98%, tripling customer engagement for over 15 million users.</li>
@@ -114,11 +129,11 @@ permalink: /about/
                     <p style="color: var(--color-accent-primary); font-weight: 600; margin-bottom: var(--space-xs);">Fidelity Investments</p>
                 </div>
                 <div class="exp-dates">
-                    <small style="display: block; font-weight: 600;">Apr 2020 — Jul 2023</small>
+                    <small style="display: block; font-weight: 600;">Apr 2020 – Jul 2023</small>
                     <small style="color: var(--color-text-tertiary);">Chennai, TN, India</small>
                 </div>
             </div>
-            <ul class="footer-links" style="margin-top: var(--space-md);">
+            <ul class="footer-links check-list" style="margin-top: var(--space-md);">
                 <li>Designed and developed a Event-sourced post-trading ecosystem handling high-velocity, enterprise-scale transaction throughput. Implemented a resilient microservices architecture.</li>
                 <li>Identified bottlenecks in the existing infrastructure and led optimization efforts that improved overall system efficiency by 40%, significantly cutting cloud costs while supporting higher transaction volumes.</li>
             </ul>
@@ -132,11 +147,11 @@ permalink: /about/
                     <p style="color: var(--color-accent-primary); font-weight: 600; margin-bottom: var(--space-xs);">Cognizant Technology Solutions</p>
                 </div>
                 <div class="exp-dates">
-                    <small style="display: block; font-weight: 600;">Jun 2011 — Apr 2020</small>
+                    <small style="display: block; font-weight: 600;">Jun 2011 – Apr 2020</small>
                     <small style="color: var(--color-text-tertiary);">India & USA</small>
                 </div>
             </div>
-            <ul class="footer-links" style="margin-top: var(--space-md);">
+            <ul class="footer-links check-list" style="margin-top: var(--space-md);">
                 <li>Led the cloud modernization for a Global scientific publishing giant. Applied DDD principles to decouple a complex legacy application and migrate it to a scalable AWS architecture managed by Terraform.</li>
                 <li>Developed a standardized "Standard Counter Reporting" widget adopted across multiple internal teams, saving approximately 400 developer hours annually by unifying reporting standards.</li>
                 <li>Served as Technical Lead for an insurance provider, modernizing customer-facing applications and ensuring the backend stability of over 700 daily Maestro batch jobs for critical Tier-1 business flows.</li>
@@ -151,18 +166,18 @@ permalink: /about/
                     <p style="color: var(--color-accent-primary); font-weight: 600; margin-bottom: var(--space-xs);">L-Cube Innovative Solutions</p>
                 </div>
                 <div class="exp-dates">
-                    <small style="display: block; font-weight: 600;">Jun 2007 — Jun 2011</small>
+                    <small style="display: block; font-weight: 600;">Jun 2007 – Jun 2011</small>
                     <small style="color: var(--color-text-tertiary);">Chennai, TN, India</small>
                 </div>
             </div>
-            <ul class="footer-links" style="margin-top: var(--space-md);">
+            <ul class="footer-links check-list" style="margin-top: var(--space-md);">
                 <li>Led an 8-member team in developing core modules for the GlaceEMR system. Successfully navigated the complex audit process to achieve CCHIT and ONC-ATCB healthcare certifications.</li>
             </ul>
         </div>
     </div>
 </div>
 
-<div class="mt-xl">
+<div class="section-block" id="philosophy">
     <div class="section-header">
         <h2 class="section-title">My Philosophy</h2>
         <p class="section-subtitle">Core values and architectural principles</p>
@@ -170,7 +185,7 @@ permalink: /about/
     
     <div class="grid grid-1">
         <div class="card card-glass text-center">
-            <p>I am committed to a culture of <strong>engineering excellence</strong> and <strong>collaborative growth</strong>, rooted in a continuous learning mindset. I believe that staying at the technical forefront—whether by exploring emerging technologies, contributing to open source, or sharing knowledge through technical writing—is essential to building resilient systems and driving the success of my teams.</p>
+            <p>I am committed to a culture of <strong>engineering excellence</strong> and <strong>collaborative growth</strong>, rooted in a continuous learning mindset. I believe that staying at the technical forefront is essential to building resilient systems and driving the success of my teams. I do that by exploring emerging technologies, contributing to open source, and sharing knowledge through technical writing.</p>
             <div class="grid grid-3 mt-md">
                 <div>
                     <strong>Engineering Excellence</strong><br>
@@ -189,7 +204,7 @@ permalink: /about/
     </div>
 </div>
 
-<div class="mt-xl">
+<div class="section-block" id="education">
     <div class="section-header">
         <h2 class="section-title">Education & Certifications</h2>
         <p class="section-subtitle">Academic background and professional credentials</p>
@@ -197,32 +212,65 @@ permalink: /about/
     
     <div class="grid grid-2">
         <div class="card card-glass">
-            <h3><i class="fas fa-graduation-cap"></i> Education</h3>
-            <ul class="footer-links">
+            <h3>Education</h3>
+            <ul class="footer-links check-list">
                 <li>
                     <strong>Post Graduate in AI & ML</strong><br>
-                    <small>McCombs School of Business, USA/India — 2024</small>
+                    <small>McCombs School of Business, USA/India (2024)</small>
                 </li>
                 <li>
                     <strong>Master of Computer Application (MCA)</strong><br>
-                    <small>Kongu Engineering College, Anna University — 2007</small>
+                    <small>Kongu Engineering College, Anna University (2007)</small>
                 </li>
                 <li>
                     <strong>BSc Information Technology</strong><br>
-                    <small>Mahendra Engineering College, Periyar University — 2004</small>
+                    <small>Mahendra Engineering College, Periyar University (2004)</small>
                 </li>
             </ul>
         </div>
         <div class="card card-glass">
-            <h3><i class="fas fa-certificate"></i> Certifications</h3>
-            <ul class="footer-links">
-                <li><i class="fas fa-check-circle"></i> Certified AWS Solutions Architect</li>
-                <li><i class="fas fa-check-circle"></i> Senior Java Developer</li>
-                <li><i class="fas fa-check-circle"></i> API Designer & Security Architect</li>
-                <li><i class="fas fa-check-circle"></i> SAFe 4.0 Practitioner</li>
+            <h3>Certifications</h3>
+            <ul class="footer-links check-list">
+                <li>Certified AWS Solutions Architect</li>
+                <li>Senior Java Developer</li>
+                <li>API Designer & Security Architect</li>
+                <li>SAFe 4.0 Practitioner</li>
             </ul>
         </div>
     </div>
 </div>
 
+</div>
+</div>
 
+<script>
+(function () {
+  var links = document.querySelectorAll('#about-nav a');
+  var items = Array.prototype.map.call(links, function (a) {
+    return { link: a, target: document.querySelector(a.getAttribute('href')) };
+  }).filter(function (i) { return i.target; });
+  if (!items.length) return;
+
+  function setActive(link) {
+    items.forEach(function (i) { i.link.classList.toggle('active', i.link === link); });
+  }
+
+  function onScroll() {
+    var current = items[0].link;
+    items.forEach(function (i) {
+      if (i.target.getBoundingClientRect().top <= 140) current = i.link;
+    });
+    // The last section may never reach the top of the viewport, so the page bottom counts as reaching it.
+    var atBottom = window.innerHeight + window.pageYOffset >= document.documentElement.scrollHeight - 4;
+    if (atBottom) current = items[items.length - 1].link;
+    setActive(current);
+  }
+
+  items.forEach(function (i) {
+    i.link.addEventListener('click', function () { setActive(i.link); });
+  });
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>

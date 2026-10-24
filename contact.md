@@ -43,7 +43,7 @@ permalink: /contact/
   </div>
 </div>
 
-<div class="mt-xl">
+<div class="section-block">
   <div class="section-header">
     <h2 class="section-title">Let's Work Together</h2>
     <p class="section-subtitle">I'm currently available for new opportunities and collaborations</p>

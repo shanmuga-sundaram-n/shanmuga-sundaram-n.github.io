@@ -5,68 +5,23 @@ description: Explore my portfolio of projects and technical work
 permalink: /projects/
 ---
 
-<!-- Open Source Projects -->
-<section class="section-inner">
-  <div class="section-header">
-    <h2 class="section-title"><i class="fab fa-github"></i> Open Source Projects</h2>
-    <p class="section-subtitle">Publicly available projects — contributions welcome</p>
-  </div>
+<div id="project-pagination-top" class="blog-pagination blog-pagination--top"></div>
 
-  {% assign oss_projects = site.data.projects | where: "opensource", true | sort: "date" | reverse %}
-  <div class="project-grid">
-    {% for project in oss_projects %}
-    <div class="project-card">
-      <div class="project-content">
-        <span class="oss-badge"><i class="fas fa-code-branch"></i> Open Source</span>
-        <h3 class="project-title">{{ project.title }}</h3>
-        <p class="project-description">{{ project.description }}</p>
-        <div class="tags">
-          {% for tech in project.technologies %}
-          <span class="tag">{{ tech }}</span>
-          {% endfor %}
-        </div>
-        <div class="project-links">
-          <a href="{{ project.github }}" class="btn btn-secondary" target="_blank" rel="noopener">
-            <i class="fab fa-github"></i> View on GitHub
-          </a>
-          {% if project.blog %}
-          <a href="{{ project.blog | relative_url }}" class="btn btn-primary">
-            <i class="fas fa-book-open"></i> Blog Post
-          </a>
-          {% endif %}
-          {% if project.demo %}
-          <a href="{{ project.demo }}" class="btn btn-outline" target="_blank" rel="noopener">
-            <i class="fas fa-external-link-alt"></i> Demo
-          </a>
-          {% endif %}
-        </div>
-      </div>
-    </div>
-    {% endfor %}
-  </div>
-</section>
-
----
-
-<div class="section-header" style="margin-top: var(--space-2xl);">
-  <h2 class="section-title"><i class="fas fa-folder-open"></i> All Projects</h2>
-  <p class="section-subtitle">A complete collection of my technical work</p>
-</div>
-
-<div class="project-grid">
+<div class="writing-list project-list">
   {% assign sorted_projects = site.data.projects | sort: "date" | reverse %}
   {% for project in sorted_projects %}
-  <div class="project-card">
-    <div class="project-content">
-      <h3 class="project-title">{{ project.title }}</h3>
+  <article class="writing-item">
+    <div>
+      {% if project.opensource %}<span class="oss-chip"><i class="fas fa-code-branch"></i> Open Source</span>{% endif %}
+      <h3 class="writing-item-title">{{ project.title }}</h3>
       <p class="project-description">{{ project.description }}</p>
-      
+
       <div class="tags">
         {% for tech in project.technologies %}
         <span class="tag">{{ tech }}</span>
         {% endfor %}
       </div>
-      
+
       <div class="project-links">
         {% if project.github %}
         <a href="{{ project.github }}" class="btn btn-secondary" target="_blank" rel="noopener">
@@ -85,16 +40,57 @@ permalink: /projects/
         {% endif %}
       </div>
     </div>
-  </div>
+  </article>
   {% endfor %}
 </div>
 
----
+<div id="project-pagination" class="blog-pagination"></div>
 
-<h2 class="section-title">More Projects Coming Soon!</h2>
+<script>
+(function () {
+  var PER_PAGE = 5;
+  var items = Array.prototype.slice.call(document.querySelectorAll('.project-list .writing-item'));
+  var controls = document.getElementById('project-pagination');
+  var controlsTop = document.getElementById('project-pagination-top');
+  if (!items.length || !controls || !controlsTop) return;
 
-I'm constantly working on new projects and experiments. Check back regularly or follow me on [GitHub](https://github.com/shanmuga-sundaram-n) to see what I'm building next.
+  var totalPages = Math.ceil(items.length / PER_PAGE);
+  if (totalPages <= 1) return;
 
-<h3 class="card-title" style="text-align:center;">Want to Collaborate?</h3>
+  var page = 1;
 
-I'm always open to interesting project ideas and collaborations. If you have a project in mind or want to work together, feel free to [get in touch](/contact/)!
+  function render() {
+    items.forEach(function (el, i) {
+      el.hidden = Math.floor(i / PER_PAGE) + 1 !== page;
+    });
+
+    var html = '<button class="pagination-btn" data-page="prev" aria-label="Previous page"' + (page === 1 ? ' disabled' : '') + '><i class="fas fa-chevron-left"></i> Previous</button>';
+    for (var n = 1; n <= totalPages; n++) {
+      html += '<button class="pagination-btn' + (n === page ? ' active' : '') + '" data-page="' + n + '"' + (n === page ? ' aria-current="page"' : '') + '>' + n + '</button>';
+    }
+    html += '<button class="pagination-btn" data-page="next" aria-label="Next page"' + (page === totalPages ? ' disabled' : '') + '>Next <i class="fas fa-chevron-right"></i></button>';
+    controls.innerHTML = html;
+    controlsTop.innerHTML = html;
+  }
+
+  function onClick(e) {
+    var btn = e.target.closest('.pagination-btn');
+    if (!btn || btn.disabled) return;
+    var target = btn.dataset.page;
+    if (target === 'prev') page = Math.max(1, page - 1);
+    else if (target === 'next') page = Math.min(totalPages, page + 1);
+    else page = parseInt(target, 10);
+    render();
+  }
+
+  controls.addEventListener('click', onClick);
+  controlsTop.addEventListener('click', onClick);
+
+  render();
+})();
+</script>
+
+<div class="projects-note">
+  <p>I'm constantly working on new projects and experiments. Check back regularly or follow me on <a href="https://github.com/shanmuga-sundaram-n" target="_blank" rel="noopener">GitHub</a> to see what I'm building next.</p>
+  <p>I'm always open to interesting project ideas and collaborations. If you have a project in mind or want to work together, feel free to <a href="{{ '/contact/' | relative_url }}">get in touch</a>!</p>
+</div>

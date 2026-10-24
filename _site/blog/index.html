@@ -159,20 +159,10 @@
   </div>
   <div class="blog-category-filters" id="category-filters">
     <button class="category-btn active" data-category="all">All</button>
-    <button class="category-btn" data-category="engineering">Engineering</button>
-    <button class="category-btn" data-category="ai">AI</button>
-    <button class="category-btn" data-category="java">Java</button>
-    <button class="category-btn" data-category="architecture">Architecture</button>
-    <button class="category-btn" data-category="distributed-systems">Distributed Systems</button>
-    <button class="category-btn" data-category="ml">ML</button>
-    <button class="category-btn" data-category="tools">Tools</button>
-    <button class="category-btn" data-category="agents">Agents</button>
-    <button class="category-btn" data-category="rag">RAG</button>
-    <button class="category-btn" data-category="ddd">DDD</button>
-    <button class="category-btn" data-category="claude-code">Claude Code</button>
   </div>
 </div>
 
+<div id="pagination-controls-top" class="blog-pagination blog-pagination--top"></div>
 <div id="posts-container" class="writing-list"></div>
 <div id="pagination-controls" class="blog-pagination"></div>
 <p id="no-results" class="no-results-msg" hidden>No posts found.</p>
@@ -187,7 +177,7 @@
     <h2 class="subscribe-title">Stay in the loop</h2>
     <p class="subscribe-description">
       Get notified when I publish new articles on architecture, AI, and engineering.
-      No spam — just good technical content.
+      No spam, just good technical content.
     </p>
 
     <form class="subscribe-form" id="subscribe-form" novalidate>
@@ -299,11 +289,14 @@
     "date": "October 24, 2026",
     "month": "2026-10",
     "monthLabel": "Oct 2026",
+    "isoDate": "2026-10-24",
+    "dateShort": "Oct 24, 2026",
     "excerpt": "Ten AI agents write the research, specs, design, tests and code for one change in my delivery pipeline, and none of them decides what happens next. A plain Node program does. It reads a status comm...",
     "description": "A dependency-free Node runner drives ten Claude Code agents through fresh sessions, a spec-to-test trace and four human gates. How it works, where it breaks.",
     "categories": ["ai","engineering","agents"],
     "tags": ["openspec","claude-code","multi-agent","agentic-sdlc","spec-driven-development","human-in-the-loop","deterministic-checks","nodejs","agentic-ai"],
-    "image": null
+    "image": null,
+    "readTime": 21
   },
 
   {
@@ -312,11 +305,14 @@
     "date": "October 24, 2026",
     "month": "2026-10",
     "monthLabel": "Oct 2026",
+    "isoDate": "2026-10-24",
+    "dateShort": "Oct 24, 2026",
     "excerpt": "In one change on my agentic delivery pipeline, at least six consecutive implementer sessions reported the same three tasks as still open. Every guard I had configured worked: the retry counters cap...",
     "description": "Loop engineering now means the system above your agents, not the tool loop inside one. Cost and failure data from two runs of my OpenSpec pipeline.",
     "categories": ["ai","engineering","agents"],
     "tags": ["loop-engineering","harness-engineering","agentic-sdlc","openspec","claude-code","multi-agent","stop-conditions","agentic-ai"],
-    "image": null
+    "image": null,
+    "readTime": 18
   },
 
   {
@@ -325,11 +321,14 @@
     "date": "October 20, 2026",
     "month": "2026-10",
     "monthLabel": "Oct 2026",
+    "isoDate": "2026-10-20",
+    "dateShort": "Oct 20, 2026",
     "excerpt": "Most enterprise agent pipelines start from the same assumption: the AI layer is an LLM, every call goes through it, and the only open question is which one. I built a production pipeline on that as...",
     "description": "Most enterprise agent pipelines route every AI call through an LLM. After profiling a production pipeline, I found 80% of those calls were structured decision work that didn't need generative capability at all. Here's what I use instead, and when.",
     "categories": ["ai","architecture","engineering"],
     "tags": ["jev-ai","system-one-model","llm","enterprise-architecture","agent-pipeline","typesafe-ai","rlcd","rlhf","rag","agentic-ai"],
-    "image": null
+    "image": null,
+    "readTime": 11
   },
 
   {
@@ -338,11 +337,14 @@
     "date": "August 11, 2026",
     "month": "2026-08",
     "monthLabel": "Aug 2026",
+    "isoDate": "2026-08-11",
+    "dateShort": "Aug 11, 2026",
     "excerpt": "First, what is an AI agent? The term gets thrown around loosely. It’s a language model (an LLM, the kind of AI behind ChatGPT or Claude) that does more than answer a question once. It can take acti...",
     "description": "Prompt engineering gets a language model to say the right thing once. Harness engineering and loop engineering get it to do the right thing repeatedly, safely, and to completion, explained from first principles, with a worked example, using Claude Code's observable behavior as the reference.",
     "categories": ["ai","engineering","agents"],
     "tags": ["agent-harness","agentic-loop","claude-code","llm","tool-use","context-engineering","mcp","agentic-ai"],
-    "image": null
+    "image": null,
+    "readTime": 20
   },
 
   {
@@ -351,11 +353,14 @@
     "date": "June 06, 2026",
     "month": "2026-06",
     "monthLabel": "Jun 2026",
+    "isoDate": "2026-06-06",
+    "dateShort": "Jun 6, 2026",
     "excerpt": "Software delivery loses information at every handoff. An idea starts out clear in someone’s head, goes through six meetings, three Confluence pages and a Jira backlog nobody reads, and ends up as c...",
     "description": "A deep technical walkthrough of SDLC Factory, an autonomous AI pipeline that transforms plain-English product ideas into production-ready software through 10 specialized agents, structured artifact contracts, and human-in-the-loop governance gates.",
     "categories": ["ai","engineering","agents"],
     "tags": ["multi-agent","llm","sdlc","claude","openai","python","fastapi","sqlite","devops","agentic-ai"],
-    "image": null
+    "image": null,
+    "readTime": 20
   },
 
   {
@@ -364,11 +369,14 @@
     "date": "April 01, 2026",
     "month": "2026-04",
     "monthLabel": "Apr 2026",
+    "isoDate": "2026-04-01",
+    "dateShort": "Apr 1, 2026",
     "excerpt": "Here’s a bug that took three weeks to track down.\n\n",
     "description": "Three teams. One database column. Three different mental models, until it all broke at 2am. Here's how Domain-Driven Design gives you the structures that make collaboration actually work at scale.",
     "categories": ["engineering","architecture","ddd"],
     "tags": ["domain-driven-design","software-architecture","team-collaboration","engineering-culture","microservices","bounded-context"],
-    "image": null
+    "image": null,
+    "readTime": 15
   },
 
   {
@@ -377,11 +385,14 @@
     "date": "March 21, 2026",
     "month": "2026-03",
     "monthLabel": "Mar 2026",
+    "isoDate": "2026-03-21",
+    "dateShort": "Mar 21, 2026",
     "excerpt": "I’ve read probably a dozen RAG tutorials. They all do the same thing: show you how to embed a handful of PDFs into a vector store, run a similarity search, stuff the results into a prompt, and call...",
     "description": "A practitioner's guide to building production-grade RAG pipelines, covering chunking strategy, retrieval tuning, re-ranking, and evaluation. Lessons from real failures, not sanitized tutorials.",
     "categories": ["ai","engineering","rag"],
     "tags": ["rag","langchain","chromadb","openai","vector-search","llm"],
-    "image": null
+    "image": null,
+    "readTime": 23
   },
 
   {
@@ -390,11 +401,14 @@
     "date": "March 20, 2026",
     "month": "2026-03",
     "monthLabel": "Mar 2026",
+    "isoDate": "2026-03-20",
+    "dateShort": "Mar 20, 2026",
     "excerpt": "Most talk about AI-assisted coding ends up at “vibe coding”: throw a vague prompt at an LLM, plug in a UI tool, and hope the architecture holds together.\n\n",
     "description": "How I built a production-ready Personal Finance Tracker entirely from the terminal using Claude Code CLI with a 9-agent, 5-track spec-driven pipeline, no UI MCP tools, no vibe coding.",
     "categories": ["ai","engineering","claude-code"],
     "tags": ["claude-code","multi-agent","hexagonal-architecture","spring-boot","react"],
-    "image": null
+    "image": null,
+    "readTime": 20
   },
 
   {
@@ -403,11 +417,14 @@
     "date": "March 08, 2025",
     "month": "2025-03",
     "monthLabel": "Mar 2025",
+    "isoDate": "2025-03-08",
+    "dateShort": "Mar 8, 2025",
     "excerpt": "\n\n",
     "description": "Tokenizers are the invisible foundation of every large language model, shaping context limits, API costs, cross-lingual fairness, and model reasoning. Here's how they work and why they matter.",
     "categories": ["ai","ml"],
     "tags": ["llm","tokenization","nlp","ai","machine-learning","transformers"],
-    "image": "/assets/images/blog/llm-tokenizers.webp"
+    "image": "/assets/images/blog/llm-tokenizers.webp",
+    "readTime": 3
   },
 
   {
@@ -416,11 +433,14 @@
     "date": "December 28, 2024",
     "month": "2024-12",
     "monthLabel": "Dec 2024",
+    "isoDate": "2024-12-28",
+    "dateShort": "Dec 28, 2024",
     "excerpt": "\n\n",
     "description": "Backpressure is the fundamental mechanism that keeps reactive systems from collapsing under load. This deep dive covers what it is, why it matters, and how to implement it correctly across Project Reactor, RxJava, and Akka Streams.",
     "categories": ["engineering","java"],
     "tags": ["reactive-programming","backpressure","project-reactor","rxjava","akka","java","streaming"],
-    "image": "/assets/images/blog/backpressure-reactive.webp"
+    "image": "/assets/images/blog/backpressure-reactive.webp",
+    "readTime": 3
   },
 
   {
@@ -429,11 +449,14 @@
     "date": "December 01, 2024",
     "month": "2024-12",
     "monthLabel": "Dec 2024",
+    "isoDate": "2024-12-01",
+    "dateShort": "Dec 1, 2024",
     "excerpt": "\n\n",
     "description": "Modern software development has evolved into three distinct modes, traditional, AI-assisted, and vibe coding. Understanding when to use each is becoming a core engineering skill.",
     "categories": ["ai","engineering"],
     "tags": ["ai","coding","vibe-coding","productivity","software-engineering","claude-code"],
-    "image": "/assets/images/blog/traditional-vs-ai-vs-vibe-coding.webp"
+    "image": "/assets/images/blog/traditional-vs-ai-vs-vibe-coding.webp",
+    "readTime": 3
   },
 
   {
@@ -442,11 +465,14 @@
     "date": "November 25, 2024",
     "month": "2024-11",
     "monthLabel": "Nov 2024",
+    "isoDate": "2024-11-25",
+    "dateShort": "Nov 25, 2024",
     "excerpt": "\n\n",
     "description": "An introduction to LlamaCoder, the AI-powered platform that converts plain language descriptions into functional application code, democratising app development for everyone.",
     "categories": ["ai","tools"],
     "tags": ["ai","llm","code-generation","llamacoder","no-code","productivity"],
-    "image": "/assets/images/blog/llamacoder.webp"
+    "image": "/assets/images/blog/llamacoder.webp",
+    "readTime": 2
   },
 
   {
@@ -455,11 +481,14 @@
     "date": "November 17, 2024",
     "month": "2024-11",
     "monthLabel": "Nov 2024",
+    "isoDate": "2024-11-17",
+    "dateShort": "Nov 17, 2024",
     "excerpt": "\n\n",
     "description": "A structured comparison of serverless and Kubernetes as API deployment paradigms, trade-offs across operational overhead, scalability, cost, control, and vendor lock-in to help you choose the right architecture for your context.",
     "categories": ["engineering","architecture"],
     "tags": ["serverless","kubernetes","cloud","architecture","devops","apis"],
-    "image": "/assets/images/blog/serverless-vs-kubernetes.webp"
+    "image": "/assets/images/blog/serverless-vs-kubernetes.webp",
+    "readTime": 3
   },
 
   {
@@ -468,11 +497,14 @@
     "date": "November 13, 2024",
     "month": "2024-11",
     "monthLabel": "Nov 2024",
+    "isoDate": "2024-11-13",
+    "dateShort": "Nov 13, 2024",
     "excerpt": "\n\n",
     "description": "A deep dive into traditional Java threads vs virtual threads (Project Loom), how they work internally, when to use each, and why virtual threads are a game changer for I/O-bound applications.",
     "categories": ["engineering","java"],
     "tags": ["java","concurrency","virtual-threads","project-loom","performance"],
-    "image": "/assets/images/blog/java-virtual-threads.webp"
+    "image": "/assets/images/blog/java-virtual-threads.webp",
+    "readTime": 3
   },
 
   {
@@ -481,11 +513,14 @@
     "date": "October 17, 2024",
     "month": "2024-10",
     "monthLabel": "Oct 2024",
+    "isoDate": "2024-10-17",
+    "dateShort": "Oct 17, 2024",
     "excerpt": "\n\n",
     "description": "A deep dive into the engineering decisions that make Apache Kafka one of the fastest messaging systems, sequential I/O, zero-copy, batching, compression, and intelligent caching.",
     "categories": ["engineering","distributed-systems"],
     "tags": ["kafka","performance","distributed-systems","streaming","backend"],
-    "image": "/assets/images/blog/kafka-speed.webp"
+    "image": "/assets/images/blog/kafka-speed.webp",
+    "readTime": 3
   }
 ]
 </script>

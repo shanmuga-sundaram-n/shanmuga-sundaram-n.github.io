@@ -6,11 +6,17 @@ layout: default
     <div class="container">
         <div class="card post-card-full">
 
+            <div class="post-nav-top">
+                {% include post-nav.html %}
+            </div>
+
             <div class="post-meta" style="margin-bottom: var(--space-md);">
                 <span><i class="far fa-calendar"></i> {{ page.date | date: "%B %d, %Y" }}</span>
                 {% if page.categories %}
                 <span><i class="fas fa-folder"></i> {{ page.categories | join: ', ' }}</span>
                 {% endif %}
+                {% assign read_time = content | strip_html | number_of_words | divided_by: 200.0 | ceil | at_least: 1 %}
+                <span><i class="far fa-clock"></i> {{ read_time }} min read</span>
             </div>
 
             <h1 class="post-title-main">{{ page.title }}</h1>
@@ -28,26 +34,8 @@ layout: default
             {% endif %}
 
             <div class="mt-xl" style="padding-top: var(--space-xl); border-top: 1px solid var(--color-border);">
-                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--space-md);">
-                    {% if page.previous.url %}
-                    <a href="{{ page.previous.url | relative_url }}" class="btn btn-secondary">
-                        <i class="fas fa-arrow-left"></i> Previous Post
-                    </a>
-                    {% endif %}
-
-                    {% if page.next.url %}
-                    <a href="{{ page.next.url | relative_url }}" class="btn btn-secondary">
-                        Next Post <i class="fas fa-arrow-right"></i>
-                    </a>
-                    {% endif %}
-                </div>
+                {% include post-nav.html %}
             </div>
-        </div>
-
-        <div class="text-center mt-xl">
-            <a href="{{ '/blog/' | relative_url }}" class="btn btn-outline">
-                <i class="fas fa-arrow-left"></i> Back to Blog
-            </a>
         </div>
 
         {% include subscribe-section.html %}
