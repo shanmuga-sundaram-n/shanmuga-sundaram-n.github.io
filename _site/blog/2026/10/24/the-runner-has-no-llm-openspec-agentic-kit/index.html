@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="dark" data-theme="orange-red">
+
+<head>
+  <meta charset="UTF-8">
+
+  <!-- ⚡ Anti-FOUC: read theme from localStorage and apply BEFORE any render -->
+  <script>
+    (function () {
+      var mode = localStorage.getItem('site-mode') || 'dark';
+      var html = document.documentElement;
+      html.setAttribute('data-mode', mode);
+      html.setAttribute('data-theme', 'orange-red');
+      // Suppress transition animations on first paint
+      html.classList.add('no-transitions');
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Open+Sans:wght@300;400;600;700&family=Raleway:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <title>The Runner Has No LLM: A Deterministic Pipeline for Claude Code | Shanmuga Sundaram Natarajan's Personal Website</title>
+
+  <!-- SEO Meta Tags -->
+  <meta name="description"
+    content="A dependency-free Node runner drives ten Claude Code agents through fresh sessions, a spec-to-test trace and four human gates. How it works, where it breaks.">
+  <meta name="author" content="Shanmuga Sundaram Natarajan (Shan)">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="The Runner Has No LLM: A Deterministic Pipeline for Claude Code">
+  <meta property="og:description"
+    content="A dependency-free Node runner drives ten Claude Code agents through fresh sessions, a spec-to-test trace and four human gates. How it works, where it breaks.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://shanmuga-sundaram-n.github.io/blog/2026/10/24/the-runner-has-no-llm-openspec-agentic-kit/">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The Runner Has No LLM: A Deterministic Pipeline for Claude Code">
+  <meta name="twitter:description"
+    content="A dependency-free Node runner drives ten Claude Code agents through fresh sessions, a spec-to-test trace and four human gates. How it works, where it breaks.">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/assets/images/projects/website-logo-matched.png">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="stylesheet" href="/assets/css/theme-switcher.css">
+
+  <!-- Remove no-transitions class after first paint so user interactions animate normally -->
+  <script>
+    window.addEventListener('load', function () {
+      document.documentElement.classList.remove('no-transitions');
+    });
+  </script>
+
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>The Runner Has No LLM: A Deterministic Pipeline for Claude Code | Shanmuga Sundaram Natarajan’s Personal Website</title>
+<meta name="generator" content="Jekyll v3.9.3" />
+<meta property="og:title" content="The Runner Has No LLM: A Deterministic Pipeline for Claude Code" />
+<meta name="author" content="Shanmuga Sundaram Natarajan (Shan)" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A dependency-free Node runner drives ten Claude Code agents through fresh sessions, a spec-to-test trace and four human gates. How it works, where it breaks." />
+<meta property="og:description" content="A dependency-free Node runner drives ten Claude Code agents through fresh sessions, a spec-to-test trace and four human gates. How it works, where it breaks." />
+<link rel="canonical" href="https://shanmuga-sundaram-n.github.io/blog/2026/10/24/the-runner-has-no-llm-openspec-agentic-kit/" />
+<meta property="og:url" content="https://shanmuga-sundaram-n.github.io/blog/2026/10/24/the-runner-has-no-llm-openspec-agentic-kit/" />
+<meta property="og:site_name" content="Shanmuga Sundaram Natarajan’s Personal Website" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2026-10-24T14:30:00+05:30" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="The Runner Has No LLM: A Deterministic Pipeline for Claude Code" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Shanmuga Sundaram Natarajan (Shan)"},"dateModified":"2026-10-24T14:30:00+05:30","datePublished":"2026-10-24T14:30:00+05:30","description":"A dependency-free Node runner drives ten Claude Code agents through fresh sessions, a spec-to-test trace and four human gates. How it works, where it breaks.","headline":"The Runner Has No LLM: A Deterministic Pipeline for Claude Code","mainEntityOfPage":{"@type":"WebPage","@id":"https://shanmuga-sundaram-n.github.io/blog/2026/10/24/the-runner-has-no-llm-openspec-agentic-kit/"},"url":"https://shanmuga-sundaram-n.github.io/blog/2026/10/24/the-runner-has-no-llm-openspec-agentic-kit/"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="site-header" id="header">
+    <nav class="site-nav container">
+      <a href="/" class="site-logo">
+        <img src="/assets/images/projects/website-logo-matched.png" alt="Shanmuga Sundaram Natarajan (Shan)"
+          class="logo-img" width="40" height="40">
+        <span class="logo-text">Shan's Digital Space</span>
+      </a>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+
+
+      <!-- Theme toggle rendered inline — avoids JS-injection flicker -->
+      <div id="modeToggleContainer">
+        <button class="site-search-btn" id="site-search-btn" aria-label="Search site (Ctrl+K)" title="Search (⌘K)">
+          <i class="fas fa-search"></i>
+        </button>
+        <label class="mode-switch" aria-label="Toggle dark/light mode">
+          <input type="checkbox" id="modeToggle">
+          <span class="mode-slider">
+            <i class="fas fa-sun mode-icon-sun"></i>
+            <i class="fas fa-moon mode-icon-moon"></i>
+          </span>
+        </label>
+      </div>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="/" class="nav-link ">Home</a></li>
+        <li><a href="/about/"
+            class="nav-link ">About</a></li>
+        <li><a href="/projects/"
+            class="nav-link ">Projects</a></li>
+        <li><a href="/blog/"
+            class="nav-link active">Blog</a></li>
+        <li><a href="/contact/"
+            class="nav-link ">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <article class="section post-article">
+    <div class="container">
+        <div class="card post-card-full">
+
+            <div class="post-meta" style="margin-bottom: var(--space-md);">
+                <span><i class="far fa-calendar"></i> October 24, 2026</span>
+                
+                <span><i class="fas fa-folder"></i> ai, engineering, agents</span>
+                
+            </div>
+
+            <h1 class="post-title-main">The Runner Has No LLM: A Deterministic Pipeline for Claude Code</h1>
+
+            <div class="post-content">
+                <p>Ten AI agents write the research, specs, design, tests and code for one change in my delivery pipeline, and none of them decides what happens next. A plain Node program does. It reads a status command, starts the next agent, runs checks that involve no model, and stops at four points where a human has to say yes. The model still produces the inputs to those decisions, and I mark where that matters.</p>
+
+<p>This post opens that program up. It is about 2,150 lines of JavaScript with no npm dependencies, and it is <a href="https://github.com/shanmuga-sundaram-n/openspec-agentic-kit">open source</a>. I wrote about what happened when I ran it in <a href="/blog/2026/10/24/loop-engineering-is-not-the-agent-loop/">a separate post</a>, including a stuck loop and an override I regret. Here I stay with the code and the design reasons, because they are the part you can reuse.</p>
+
+<p><strong>How to read this.</strong> If agents and specs are new to you, start at the next section and read through “One idea, start to finish”. If you write code, jump to “A session is a function call”. If you design systems, the sections on gates, the trace check and “Where this does not fit” carry the trade-offs. Terms are defined where they first appear.</p>
+
+<h2 id="the-runner-decides-the-agents-write">The runner decides, the agents write</h2>
+
+<p><strong>The reliable parts of a multi-agent pipeline are the parts where the model gets no vote.</strong> In this kit, an agent never chooses the next step and never directly approves a gate. The model writes files, and code decides what happens around those files. The model does still supply some inputs to those decisions: it ticks its own task checkboxes, it proposes the risk tier, and it writes the review that can block a merge. Those are the weak points, and a later section lists them.</p>
+
+<p>That split gives four properties:</p>
+
+<ul>
+  <li><strong>Control flow is ordinary code.</strong> The loop that moves a change through stages is a <code class="language-plaintext highlighter-rouge">while</code> loop in <a href="https://github.com/shanmuga-sundaram-n/openspec-agentic-kit/blob/main/bin/agentic.mjs"><code class="language-plaintext highlighter-rouge">bin/agentic.mjs</code></a>. You can read it, test it and step through it in a debugger.</li>
+  <li><strong>A document is “done” when the file exists and validates.</strong> The runner asks the OpenSpec CLI whether an artifact is finished. It does not take the agent’s word for it.</li>
+  <li><strong>Checks are deterministic.</strong> Validation, task completion, the project’s test command and a spec-to-test trace all run as code.</li>
+  <li><strong>Humans approve at fixed points.</strong> Four gates, with a policy that depends on a risk level.</li>
+</ul>
+
+<p>Each agent is a <em>fresh headless session</em>: a new <code class="language-plaintext highlighter-rouge">claude -p</code> process with an empty context that runs one job and exits. Agents never talk to each other. They read and write one shared folder. If you are a beginner, think of it as a relay race where the baton is a directory of Markdown files and the referee is a script.</p>
+
+<h2 id="openspec-in-five-minutes">OpenSpec in five minutes</h2>
+
+<p><strong>OpenSpec is a spec-driven development framework: you and the AI agree on what to build, in writing, before any code is written.</strong> It is MIT-licensed, installs from npm as <code class="language-plaintext highlighter-rouge">@fission-ai/openspec</code> (Node 20.19 or later) and, per its <a href="https://github.com/Fission-AI/OpenSpec">README</a>, works with 30-plus AI coding assistants through slash commands. I used version 1.15.0 in October 2026.</p>
+
+<p>It adds a plain-Markdown layer to a repository, with four ideas:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Concept</th>
+      <th>What it is</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Spec</strong></td>
+      <td>A Markdown file of requirements, each with scenarios written as WHEN/THEN. Specs live in <code class="language-plaintext highlighter-rouge">openspec/specs/</code> and describe what the system does today.</td>
+    </tr>
+    <tr>
+      <td><strong>Change</strong></td>
+      <td>One folder per feature or fix under <code class="language-plaintext highlighter-rouge">openspec/changes/&lt;id&gt;/</code>. Proposed work stays separate from the current truth.</td>
+    </tr>
+    <tr>
+      <td><strong>Delta spec</strong></td>
+      <td>Inside a change, a spec file that lists only what is <code class="language-plaintext highlighter-rouge">ADDED</code>, <code class="language-plaintext highlighter-rouge">MODIFIED</code>, <code class="language-plaintext highlighter-rouge">REMOVED</code> or <code class="language-plaintext highlighter-rouge">RENAMED</code>, instead of rewriting a whole spec.</td>
+    </tr>
+    <tr>
+      <td><strong>Archive</strong></td>
+      <td>When a change is done, it moves to <code class="language-plaintext highlighter-rouge">openspec/changes/archive/</code> and its deltas merge into the main specs, so the specs keep up with the code.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>A change holds <code class="language-plaintext highlighter-rouge">proposal.md</code> (why and what), <code class="language-plaintext highlighter-rouge">specs/</code> (the deltas), <code class="language-plaintext highlighter-rouge">design.md</code> (how) and <code class="language-plaintext highlighter-rouge">tasks.md</code> (a checklist). Here is a small delta spec, in the format the CLI validates:</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gu">## ADDED Requirements</span>
+
+<span class="gu">### Requirement: PAY-012 Refund window</span>
+The system SHALL allow a partner to refund a settled payout within 30 days of settlement.
+
+<span class="gu">#### Scenario: Refund inside the window</span>
+<span class="p">-</span> <span class="gs">**WHEN**</span> a partner requests a refund 10 days after settlement
+<span class="p">-</span> <span class="gs">**THEN**</span> the refund is created and the payout balance is reduced
+
+<span class="gu">#### Scenario: Refund outside the window</span>
+<span class="p">-</span> <span class="gs">**WHEN**</span> a partner requests a refund 31 days after settlement
+<span class="p">-</span> <span class="gs">**THEN**</span> the request is rejected with the error code REFUND_WINDOW_CLOSED
+</code></pre></div></div>
+
+<p>The core flow uses <code class="language-plaintext highlighter-rouge">/opsx:explore</code>, <code class="language-plaintext highlighter-rouge">/opsx:propose</code>, <code class="language-plaintext highlighter-rouge">/opsx:apply</code> and <code class="language-plaintext highlighter-rouge">/opsx:archive</code>, and an expanded profile adds <code class="language-plaintext highlighter-rouge">/opsx:verify</code>, <code class="language-plaintext highlighter-rouge">/opsx:ff</code> and others. The README compares itself with GitHub Spec Kit (more phases, more setup) and Kiro (tied to one IDE). That is the project’s own positioning, so weigh it as such.</p>
+
+<p>What OpenSpec does not give you is an orchestrator. It has no loop that runs the next step, no cost cap, no approval gates and no tests that tie requirements to code. That gap is what the kit fills, and it does so with three pieces of OpenSpec’s own machinery:</p>
+
+<ol>
+  <li><strong>A custom schema.</strong> OpenSpec lets you define the artifact list. The kit’s <code class="language-plaintext highlighter-rouge">agentic-sdlc</code> schema adds <code class="language-plaintext highlighter-rouge">research</code>, <code class="language-plaintext highlighter-rouge">threat-model</code>, <code class="language-plaintext highlighter-rouge">test-plan</code>, <code class="language-plaintext highlighter-rouge">verification</code> and <code class="language-plaintext highlighter-rouge">retrospective</code> around the default four.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">openspec status</code> as the scheduler.</strong> The runner asks which artifacts are ready.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">openspec validate --strict</code> as a check.</strong> It is one of the deterministic gates between agents.</li>
+</ol>
+
+<h2 id="one-idea-start-to-finish">One idea, start to finish</h2>
+
+<p><strong>A change moves through four stages, and each stage ends at a human gate.</strong> Say you type this:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>node bin/agentic.mjs start <span class="s2">"Partners can refund settled payouts within 30 days"</span> <span class="nt">--repo</span> payments-api
+</code></pre></div></div>
+
+<p>The runner creates a git worktree (a second checkout of your repo on its own branch, <code class="language-plaintext highlighter-rouge">change/&lt;id&gt;</code>) and works there, so your main checkout stays untouched. Then it walks the stages:</p>
+
+<pre><code class="language-mermaid">flowchart TB
+    classDef agent fill:#2A1A3A,stroke:#CBA6F7,color:#CBA6F7
+    classDef check fill:#3A2A1A,stroke:#FAB387,color:#FAB387
+    classDef gate  fill:#3A1A2A,stroke:#F38BA8,color:#F38BA8
+    classDef done  fill:#1A3A2A,stroke:#A6E3A1,color:#A6E3A1
+
+    I(["Idea"]):::done --&gt; S1["Intent&lt;br/&gt;research · proposal"]:::agent
+    S1 --&gt; G1{"Proposal approval"}:::gate
+    G1 --&gt; S2["Design&lt;br/&gt;specs · design · threat model · test plan"]:::agent
+    S2 --&gt; G2{"Design review"}:::gate
+    G2 --&gt; S3["Build&lt;br/&gt;tasks · code"]:::agent
+    S3 --&gt; K["Runner checks&lt;br/&gt;no model involved"]:::check
+    K --&gt;|"fail: fix pass"| S3
+    K --&gt;|"pass"| V["Verifier · code reviewer"]:::agent
+    V --&gt; G3{"Merge approval"}:::gate
+    G3 --&gt; S4["Release&lt;br/&gt;retrospective"]:::agent
+    S4 --&gt; G4{"Release approval"}:::gate
+    G4 --&gt; M(["Archive specs and merge"]):::done
+</code></pre>
+
+<p>In words: each of the four stages ends at a human gate, and the build stage loops through the runner’s checks until they pass or the retry budget runs out. Here is what lands in the change folder along the way:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>After stage</th>
+      <th>New files in <code class="language-plaintext highlighter-rouge">openspec/changes/&lt;id&gt;/</code></th>
+      <th>Written by</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Intent</td>
+      <td><code class="language-plaintext highlighter-rouge">research.md</code>, <code class="language-plaintext highlighter-rouge">proposal.md</code></td>
+      <td>Product Analyst</td>
+    </tr>
+    <tr>
+      <td>Design</td>
+      <td><code class="language-plaintext highlighter-rouge">specs/…/spec.md</code>, <code class="language-plaintext highlighter-rouge">design.md</code>, <code class="language-plaintext highlighter-rouge">threat-model.md</code>, <code class="language-plaintext highlighter-rouge">test-plan.md</code></td>
+      <td>Spec Author, Architect, Security Reviewer, Test Strategist</td>
+    </tr>
+    <tr>
+      <td>Build</td>
+      <td><code class="language-plaintext highlighter-rouge">tasks.md</code>, the code, <code class="language-plaintext highlighter-rouge">verification.md</code>, <code class="language-plaintext highlighter-rouge">review.md</code></td>
+      <td>Planner, Implementer, Verifier, Code Reviewer</td>
+    </tr>
+    <tr>
+      <td>Release</td>
+      <td><code class="language-plaintext highlighter-rouge">retrospective.md</code>, and <code class="language-plaintext highlighter-rouge">approvals.md</code> throughout</td>
+      <td>Retrospective analyst, and the runner</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>At each gate the runner prints what to review, and you approve or ask for changes. When you approve with a note, that note is stored and handed to every later agent as a binding decision. When you ask for changes, you pick the stage that should absorb them. Your feedback goes to the agents of that stage, later stages get an “upstream was revised” note, and the gate of that stage and every gate after it reset.</p>
+
+<h2 id="a-session-is-a-function-call">A session is a function call</h2>
+
+<p><strong>Every agent run is one function, <code class="language-plaintext highlighter-rouge">runAgent</code>, that spawns <code class="language-plaintext highlighter-rouge">claude</code> with explicit limits and returns text, cost and seconds.</strong> This is the whole contract between the runner and a model, abridged (<a href="https://github.com/shanmuga-sundaram-n/openspec-agentic-kit/blob/main/lib/agent.mjs"><code class="language-plaintext highlighter-rouge">lib/agent.mjs</code></a>):</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">args</span> <span class="o">=</span> <span class="p">[</span><span class="dl">'</span><span class="s1">-p</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">--output-format</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">json</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">--agent</span><span class="dl">'</span><span class="p">,</span> <span class="nx">role</span><span class="p">,</span>
+              <span class="dl">'</span><span class="s1">--permission-mode</span><span class="dl">'</span><span class="p">,</span> <span class="nx">a</span><span class="p">.</span><span class="nx">permissionMode</span> <span class="o">||</span> <span class="dl">'</span><span class="s1">acceptEdits</span><span class="dl">'</span><span class="p">];</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">a</span><span class="p">.</span><span class="nx">permissionPrompts</span><span class="p">)</span> <span class="nx">args</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="dl">'</span><span class="s1">--permission-prompts</span><span class="dl">'</span><span class="p">,</span> <span class="nx">a</span><span class="p">.</span><span class="nx">permissionPrompts</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">a</span><span class="p">.</span><span class="nx">maxBudgetUsdPerRun</span><span class="p">)</span> <span class="nx">args</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="dl">'</span><span class="s1">--max-budget-usd</span><span class="dl">'</span><span class="p">,</span> <span class="nb">String</span><span class="p">(</span><span class="nx">a</span><span class="p">.</span><span class="nx">maxBudgetUsdPerRun</span><span class="p">));</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">r</span><span class="p">.</span><span class="nx">model</span><span class="p">)</span> <span class="nx">args</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="dl">'</span><span class="s1">--model</span><span class="dl">'</span><span class="p">,</span> <span class="nx">r</span><span class="p">.</span><span class="nx">model</span><span class="p">);</span>
+<span class="c1">// --allowedTools is variadic, so it goes last; the prompt is sent on stdin.</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">r</span><span class="p">.</span><span class="nx">allowedTools</span><span class="p">?.</span><span class="nx">length</span><span class="p">)</span> <span class="nx">args</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="dl">'</span><span class="s1">--allowedTools</span><span class="dl">'</span><span class="p">,</span> <span class="p">...</span><span class="nx">r</span><span class="p">.</span><span class="nx">allowedTools</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>For beginners, each flag does one thing:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">-p</code> runs Claude Code non-interactively and prints the result, with no chat window.</li>
+  <li><code class="language-plaintext highlighter-rouge">--agent &lt;role&gt;</code> loads a role prompt from <code class="language-plaintext highlighter-rouge">.claude/agents/&lt;role&gt;.md</code>, such as the Architect or the Code Reviewer.</li>
+  <li><code class="language-plaintext highlighter-rouge">--model</code> picks the model for that role. The shipped config gives the creative roles (analyst, spec author, architect, security reviewer, code reviewer) <code class="language-plaintext highlighter-rouge">opus</code> and the mechanical ones (test strategist, planner, implementer, verifier, retrospective) <code class="language-plaintext highlighter-rouge">sonnet</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">--allowedTools</code> is an allow-list. The Code Reviewer gets <code class="language-plaintext highlighter-rouge">Read</code>, <code class="language-plaintext highlighter-rouge">Write</code>, <code class="language-plaintext highlighter-rouge">Glob</code>, <code class="language-plaintext highlighter-rouge">Grep</code> and read-only git commands. It has <code class="language-plaintext highlighter-rouge">Write</code> because it must write <code class="language-plaintext highlighter-rouge">review.md</code>, but no <code class="language-plaintext highlighter-rouge">Edit</code> and no <code class="language-plaintext highlighter-rouge">npm</code>. That is not a hard read-only guarantee: <code class="language-plaintext highlighter-rouge">Write</code> can overwrite any file in the worktree, so “the reviewer does not change code” rests on its prompt, plus the diff the runner commits afterwards. Only the Implementer and the Verifier get <code class="language-plaintext highlighter-rouge">npm</code>, <code class="language-plaintext highlighter-rouge">npx</code> and <code class="language-plaintext highlighter-rouge">node</code>, because both run the tests.</li>
+  <li><code class="language-plaintext highlighter-rouge">--permission-prompts none</code> means that nobody answers permission prompts, so anything outside the allow-list is denied. I checked these flags against the installed Claude Code 2.1.310 with <code class="language-plaintext highlighter-rouge">claude --help</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">--max-budget-usd</code> caps spend for one run, which is $5 by default here, and the process also has a 45-minute timeout.</li>
+</ul>
+
+<p>For developers, two details matter. The prompt goes in on stdin, and the output is JSON, so the runner reads <code class="language-plaintext highlighter-rouge">total_cost_usd</code> and an error flag instead of scraping text. And every run writes a log file with the prompt, arguments, output, seconds and cost, which is how I got the numbers later in this post.</p>
+
+<p>For architects, the design choice is that the <em>runner</em> owns the commit. No allow-list names a git command that writes, and the runner calls <code class="language-plaintext highlighter-rouge">git.commitAll</code> between steps, so the history is a record of pipeline events. Treat that as direct protection only: <code class="language-plaintext highlighter-rouge">Bash(node *)</code> and <code class="language-plaintext highlighter-rouge">Bash(npm *)</code> can run arbitrary scripts, so an agent that wanted to could still reach git that way. The permission model is a bet, and I come back to it at the end.</p>
+
+<p>Every prompt also carries one headless rule: nobody will answer questions, so make the most reasonable assumption and list anything a human must decide under “Open questions”. Those lists show up at the gates, and they are one of the more useful things the agents produce.</p>
+
+<h2 id="the-openspec-cli-picks-the-next-step">The OpenSpec CLI picks the next step</h2>
+
+<p><strong>The runner never asks an agent what to do next. It asks <code class="language-plaintext highlighter-rouge">openspec status</code>.</strong> For each artifact the CLI reports <code class="language-plaintext highlighter-rouge">done</code>, <code class="language-plaintext highlighter-rouge">ready</code> or blocked by missing dependencies. The runner starts every <code class="language-plaintext highlighter-rouge">ready</code> artifact in the current stage, and <code class="language-plaintext highlighter-rouge">Promise.allSettled</code> runs them in parallel when there is more than one (abridged):</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">ready</span> <span class="o">=</span> <span class="nx">pending</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nx">a</span> <span class="o">=&gt;</span> <span class="nx">os</span><span class="p">.</span><span class="nx">artifactState</span><span class="p">(</span><span class="nx">st</span><span class="p">,</span> <span class="nx">a</span><span class="p">)?.</span><span class="nx">status</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">ready</span><span class="dl">'</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">config</span><span class="p">.</span><span class="nx">parallelArtifacts</span> <span class="o">&amp;&amp;</span> <span class="nx">ready</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">results</span> <span class="o">=</span> <span class="k">await</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">allSettled</span><span class="p">(</span><span class="nx">ready</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">a</span> <span class="o">=&gt;</span> <span class="nx">runArtifact</span><span class="p">(</span><span class="nx">state</span><span class="p">,</span> <span class="nx">a</span><span class="p">,</span> <span class="kc">null</span><span class="p">)));</span>
+  <span class="kd">const</span> <span class="nx">err</span> <span class="o">=</span> <span class="nx">results</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">r</span> <span class="o">=&gt;</span> <span class="nx">r</span><span class="p">.</span><span class="nx">status</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">rejected</span><span class="dl">'</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="k">throw</span> <span class="nx">err</span><span class="p">.</span><span class="nx">reason</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>After each run, <code class="language-plaintext highlighter-rouge">runArtifact</code> checks status again. If the agent said it was finished but the file is missing or invalid, that counts as a failed attempt, and the artifact gets one retry with an extra line saying what was missing. After the second miss the change stops with a <code class="language-plaintext highlighter-rouge">resume</code> command in the message. Running artifacts in parallel against one worktree is safe only because each artifact writes its own files; if two roles ever wrote the same path, this design would need locking.</p>
+
+<p>The trade-off is a dependency on the OpenSpec CLI’s JSON output. If its status format changes, the runner breaks. I accept that because the alternative, tracking artifact state myself, would duplicate what the CLI already knows.</p>
+
+<h2 id="stages-and-gates-are-data">Stages and gates are data</h2>
+
+<p><strong>Stages, roles and gate policies live in <code class="language-plaintext highlighter-rouge">config.base.json</code>, not in code.</strong> The loop does not know that there are four stages. It reads a list (abridged, with names, titles and approvers left out):</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"stages"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w"> </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"intent"</span><span class="p">,</span><span class="w"> </span><span class="nl">"artifacts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"research"</span><span class="p">,</span><span class="w"> </span><span class="s2">"proposal"</span><span class="p">],</span><span class="w"> </span><span class="nl">"gate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"G1"</span><span class="w"> </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w"> </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"design"</span><span class="p">,</span><span class="w"> </span><span class="nl">"artifacts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"specs"</span><span class="p">,</span><span class="w"> </span><span class="s2">"design"</span><span class="p">,</span><span class="w"> </span><span class="s2">"threat-model"</span><span class="p">,</span><span class="w"> </span><span class="s2">"test-plan"</span><span class="p">],</span><span class="w"> </span><span class="nl">"gate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"G2"</span><span class="w"> </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w"> </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"build"</span><span class="p">,</span><span class="w">  </span><span class="nl">"artifacts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"tasks"</span><span class="p">],</span><span class="w"> </span><span class="nl">"apply"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nl">"checks"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"after"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"verification"</span><span class="p">],</span><span class="w"> </span><span class="nl">"review"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nl">"gate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"G3"</span><span class="w"> </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w"> </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"release"</span><span class="p">,</span><span class="w"> </span><span class="nl">"artifacts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"retrospective"</span><span class="p">],</span><span class="w"> </span><span class="nl">"gate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"G4"</span><span class="p">,</span><span class="w"> </span><span class="nl">"archive"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nl">"gates"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"G2"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Design review"</span><span class="p">,</span><span class="w"> </span><span class="nl">"policy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"low"</span><span class="p">:</span><span class="w"> </span><span class="s2">"auto"</span><span class="p">,</span><span class="w"> </span><span class="nl">"medium"</span><span class="p">:</span><span class="w"> </span><span class="s2">"human"</span><span class="p">,</span><span class="w"> </span><span class="nl">"high"</span><span class="p">:</span><span class="w"> </span><span class="s2">"human"</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>The policy is a matrix of gate by risk level. The Product Analyst writes a <code class="language-plaintext highlighter-rouge">Risk tier: low|medium|high</code> line in the proposal, with a rule that money movement, auth, personal data or irreversible migrations are high. A human can change the tier at the first gate.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Gate</th>
+      <th>Low risk</th>
+      <th>Medium</th>
+      <th>High</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Proposal approval</td>
+      <td>human</td>
+      <td>human</td>
+      <td>human</td>
+    </tr>
+    <tr>
+      <td>Design review</td>
+      <td>auto</td>
+      <td>human</td>
+      <td>human</td>
+    </tr>
+    <tr>
+      <td>Merge approval</td>
+      <td>human</td>
+      <td>human</td>
+      <td>human</td>
+    </tr>
+    <tr>
+      <td>Release approval</td>
+      <td>auto</td>
+      <td>human</td>
+      <td>human</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Two rules govern <code class="language-plaintext highlighter-rouge">auto</code>:</p>
+
+<ul>
+  <li><strong>Auto-approval only fires when nothing blocks.</strong> If a check failed or the reviewer flagged a blocking issue, the gate waits for a human, whatever the policy says. Be careful with what that buys you. Checks and review only run in the build stage, which ends at Merge approval, and that gate is human at every risk level. So with the shipped config, “nothing blocks” is trivially true at Design review and Release approval, and the <code class="language-plaintext highlighter-rouge">auto</code> setting depends entirely on an honest risk tier.</li>
+  <li><strong>Blocked gates need an explicit override.</strong> The prompt says “type override to approve anyway”, and the decision is recorded in <code class="language-plaintext highlighter-rouge">approvals.md</code> as an override, with who and when.</li>
+</ul>
+
+<p>Config is layered: <code class="language-plaintext highlighter-rouge">config.base.json</code>, then <code class="language-plaintext highlighter-rouge">repos/&lt;name&gt;/repo.json</code>, then <code class="language-plaintext highlighter-rouge">repos/&lt;name&gt;/overrides.json</code>. Objects merge key by key and arrays are replaced. A payments repo can tighten its gates or restrict approvers by git email without touching the base.</p>
+
+<p>For architects, the point is that governance is a data change. Making design review mandatory for every risk level is a one-word edit, and it is auditable in git. The limit is that the risk tier is itself an agent’s judgement, read by a regex from <code class="language-plaintext highlighter-rouge">proposal.md</code>. A wrong “low” lets the Design and Release gates approve themselves, so the human at the first gate is the real control, which is why that gate is human at every level in the shipped config.</p>
+
+<p>The kit also keeps your repository clean. On every start and resume it copies the agents, the schema and a rendered <code class="language-plaintext highlighter-rouge">openspec/config.yaml</code> into the worktree, then hides them with <code class="language-plaintext highlighter-rouge">.git/info/exclude</code>. If your repo already tracks one of those files, the runner leaves it alone, and it prints a warning for the config file.</p>
+
+<h2 id="the-spec-to-test-trace">The spec-to-test trace</h2>
+
+<p><strong>The trace is a cheap check that every requirement has tests pointing at it, and it is strong evidence of structure and weak evidence of correctness.</strong> It lives in <a href="https://github.com/shanmuga-sundaram-n/openspec-agentic-kit/blob/main/lib/checks.mjs"><code class="language-plaintext highlighter-rouge">lib/checks.mjs</code></a> and runs with no model.</p>
+
+<p>The convention has two parts. Every requirement name starts with an ID, like <code class="language-plaintext highlighter-rouge">PAY-012</code>. Test names embed the same ID without the hyphen, like <code class="language-plaintext highlighter-rouge">PAY012</code>. The check parses the delta specs, then scans test files:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">token</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">RegExp</span><span class="p">(</span><span class="s2">`</span><span class="p">${</span><span class="nx">r</span><span class="p">.</span><span class="nx">area</span><span class="p">}</span><span class="s2">[-_ ]?</span><span class="p">${</span><span class="nx">r</span><span class="p">.</span><span class="nx">num</span><span class="p">}</span><span class="s2">`</span><span class="p">,</span> <span class="dl">'</span><span class="s1">i</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">let</span> <span class="nx">refs</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">for</span> <span class="p">(</span><span class="kd">const</span> <span class="nx">c</span> <span class="k">of</span> <span class="nx">contents</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="kd">const</span> <span class="nx">line</span> <span class="k">of</span> <span class="nx">c</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="dl">'</span><span class="se">\n</span><span class="dl">'</span><span class="p">))</span> <span class="k">if</span> <span class="p">(</span><span class="nx">token</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="nx">line</span><span class="p">))</span> <span class="nx">refs</span><span class="o">++</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">need</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nx">r</span><span class="p">.</span><span class="nx">scenarios</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+<span class="c1">// ok when refs &gt;= need and every scenario name appears in test-plan.md</span>
+</code></pre></div></div>
+
+<p>So a requirement with two scenarios needs at least two matching lines in test files, and each scenario’s name must appear in <code class="language-plaintext highlighter-rouge">test-plan.md</code>. A requirement with no ID is reported as a problem. The three other checks are <code class="language-plaintext highlighter-rouge">openspec validate --strict</code>, “every task in <code class="language-plaintext highlighter-rouge">tasks.md</code> is ticked” and your own test command.</p>
+
+<p>What it proves is that no requirement was silently dropped between the spec, the plan and the tests. That matters because an agent can leave a requirement out of its tests and still report success.</p>
+
+<p>What it does not prove is that a test asserts anything. The match is a regex over lines, so a comment containing <code class="language-plaintext highlighter-rouge">PAY012</code> counts as a reference. An agent under pressure could satisfy it without a real assertion. The Implementer prompt forbids weakening tests, and the Code Reviewer is asked whether tests assert real behaviour, but those are model judgements layered on a string match.</p>
+
+<p>My two real runs show the other limit. Both passed the trace (12 requirements across 11 test files, and 9 across 24). Both also finished with tasks still open: three on the first change and one on the second. All four open tasks needed a running server, and the Implementer’s session could not start one. A regex over test files cannot see a task that no test expresses.</p>
+
+<h2 id="the-build-loop">The build loop</h2>
+
+<p><strong>The build stage is two nested loops with hard caps, so an agent that cannot succeed runs out of attempts instead of money.</strong> The outer loop is passes, from <code class="language-plaintext highlighter-rouge">buildUntilTasksDone</code>:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// abridged</span>
+<span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">pass</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">pass</span> <span class="o">&lt;=</span> <span class="p">(</span><span class="nx">config</span><span class="p">.</span><span class="nx">maxApplyPasses</span> <span class="o">||</span> <span class="mi">3</span><span class="p">);</span> <span class="nx">pass</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">t</span> <span class="o">=</span> <span class="nx">checks</span><span class="p">.</span><span class="nx">tasksComplete</span><span class="p">(</span><span class="nx">state</span><span class="p">.</span><span class="nx">workdir</span><span class="p">,</span> <span class="nx">state</span><span class="p">.</span><span class="nx">id</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">t</span><span class="p">.</span><span class="nx">ok</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="p">(</span><span class="nx">revision</span> <span class="o">&amp;&amp;</span> <span class="nx">pass</span> <span class="o">===</span> <span class="mi">1</span><span class="p">))</span> <span class="k">return</span><span class="p">;</span>
+  <span class="k">await</span> <span class="nx">runImplementer</span><span class="p">(</span><span class="nx">state</span><span class="p">,</span> <span class="p">{</span> <span class="na">revision</span><span class="p">:</span> <span class="nx">pass</span> <span class="o">===</span> <span class="mi">1</span> <span class="p">?</span> <span class="nx">revision</span> <span class="p">:</span> <span class="kc">null</span><span class="p">,</span> <span class="na">label</span><span class="p">:</span> <span class="s2">`apply-</span><span class="p">${</span><span class="nx">pass</span><span class="p">}</span><span class="s2">`</span> <span class="p">});</span>
+  <span class="nx">git</span><span class="p">.</span><span class="nx">commitAll</span><span class="p">(</span><span class="nx">state</span><span class="p">.</span><span class="nx">workdir</span><span class="p">,</span> <span class="s2">`wip(</span><span class="p">${</span><span class="nx">state</span><span class="p">.</span><span class="nx">id</span><span class="p">}</span><span class="s2">): implementation pass </span><span class="p">${</span><span class="nx">pass</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Then <code class="language-plaintext highlighter-rouge">checkAndFix</code> runs all four checks. If any fail, the Implementer gets the failure text and tries again, up to <code class="language-plaintext highlighter-rouge">maxFixAttempts</code> (2). Then the Verifier writes <code class="language-plaintext highlighter-rouge">verification.md</code> from real test runs, and the Code Reviewer writes <code class="language-plaintext highlighter-rouge">review.md</code>. If the review has blocking findings, the Implementer gets exactly one automatic fix pass, followed by fresh checks, a rewritten verification and a second review.</p>
+
+<p>The reviewer’s verdict is read by code. The prompt requires four exact headings, and <code class="language-plaintext highlighter-rouge">reviewBlocking</code> pulls the bullets under <code class="language-plaintext highlighter-rouge">## Blocking</code>, ignoring “None”. Note the failure mode: if <code class="language-plaintext highlighter-rouge">review.md</code> is missing, the runner records “review.md was not written” as a blocker. But if the file exists and the <code class="language-plaintext highlighter-rouge">## Blocking</code> heading is absent or misspelled, the function returns an empty list, which reads as no blockers. That is a fail-open edge I have not fixed. A stricter parser would treat a missing section as a blocker.</p>
+
+<h3 id="what-a-change-costs">What a change costs</h3>
+
+<p>The runner records cost and seconds for every session. I analysed those numbers per phase in <a href="/blog/2026/10/24/loop-engineering-is-not-the-agent-loop/">the companion post</a>, so here is only the shape, from two changes on one small app (not a benchmark):</p>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>Add/edit/delete todos</th>
+      <th>Login flow</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Agent sessions</td>
+      <td>23</td>
+      <td>22</td>
+    </tr>
+    <tr>
+      <td>Total agent cost</td>
+      <td>$5.75</td>
+      <td>$6.17</td>
+    </tr>
+    <tr>
+      <td>Share spent on build and fix passes</td>
+      <td>$1.68</td>
+      <td>$1.89</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Two design points follow for developers and architects. The caps are what make this affordable to leave unattended: three apply passes, two fix attempts, one review-fix pass and $5 per session give you a ceiling you can estimate in advance. And review spend is a real lever, at about as much as the build and fix passes combined, but cutting it removes the only check that reads the diff.</p>
+
+<h2 id="lessons-learning-with-a-human-in-the-queue">Lessons: learning with a human in the queue</h2>
+
+<p><strong>The retrospective agent can propose rules for next time, but nothing takes effect until a human accepts it.</strong> The design is in <a href="https://github.com/shanmuga-sundaram-n/openspec-agentic-kit/blob/main/lib/lessons.mjs"><code class="language-plaintext highlighter-rouge">lib/lessons.mjs</code></a>. The retrospective template ends with a fenced block tagged <code class="language-plaintext highlighter-rouge">json lessons</code>:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w"> </span><span class="nl">"rules"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"specs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"Name the error code in every negative scenario."</span><span class="p">]</span><span class="w"> </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"context"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"Tests run with an injected clock; never sleep in tests."</span><span class="p">]</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>At release, the runner parses that block and queues each item in <code class="language-plaintext highlighter-rouge">repos/&lt;name&gt;/lessons.json</code> as <code class="language-plaintext highlighter-rouge">pending</code>, skipping duplicates. You review them with <code class="language-plaintext highlighter-rouge">lessons list</code>, then <code class="language-plaintext highlighter-rouge">lessons accept &lt;id|all&gt;</code> or <code class="language-plaintext highlighter-rouge">lessons reject</code>. Accepted rules are written into that repo’s <code class="language-plaintext highlighter-rouge">openspec/config.yaml</code>, under the matching artifact, every time a change starts or resumes. The next change’s agents then see them in their instructions.</p>
+
+<p>I need to be straight about the evidence. My two real runs never exercised this. Their archived retrospectives use an older heading, “Proposed rule changes”, and contain no <code class="language-plaintext highlighter-rouge">json lessons</code> block, so no lessons were queued.</p>
+
+<p>There is also a bug I found while writing this. The <code class="language-plaintext highlighter-rouge">agentic-sdlc</code> schema’s own instruction for the retrospective still says to write “Proposed rule changes … as YAML ready to paste”, while the template and the agent prompt ask for the <code class="language-plaintext highlighter-rouge">json lessons</code> block. The agent receives both, and the old instruction probably explains the missing block. I have not fixed it yet. So I am describing a mechanism that is wired up but has never produced a lesson, and I have no data on whether accepted lessons improve later changes.</p>
+
+<p>Its limits are known and written down. Lessons only add; nothing is retired automatically, so a repo’s rules grow without bound and stale ones keep steering agents. One of the kit’s own open change proposals, <code class="language-plaintext highlighter-rouge">lesson-retirement</code>, exists to add retirement, staleness flags and conflict detection. Lessons also never edit the agent prompts themselves.</p>
+
+<h2 id="cross-repo-initiatives-and-the-dashboard">Cross-repo initiatives and the dashboard</h2>
+
+<p><strong>An initiative is one idea that touches several repos, run as one child change per repo with gates approved together.</strong> You start it with <code class="language-plaintext highlighter-rouge">initiative start "&lt;idea&gt;" --repos payments-api,partner-web</code>. Each child runs the full pipeline in its own worktree. <code class="language-plaintext highlighter-rouge">initiative approve</code> refuses unless every active child waits at the same gate, so no repo is approved to merge ahead of the others.</p>
+
+<p>Two limits matter for architects. The children draft their cross-repo contracts independently and do not read each other’s artifacts, so you must compare the contract sections yourself at the first two gates. And merges happen per repo as each child finishes, not as one atomic release, so the rollout order has to be planned in the contracts. An <code class="language-plaintext highlighter-rouge">ordered-initiative-release</code> proposal for that is written but not built.</p>
+
+<p>The dashboard (<code class="language-plaintext highlighter-rouge">node bin/agentic.mjs dashboard</code>) is a local page on <code class="language-plaintext highlighter-rouge">127.0.0.1</code> over a SQLite database, using Node’s built-in <code class="language-plaintext highlighter-rouge">node:sqlite</code>, so it needs Node 22.13 or later. The JSON files in <code class="language-plaintext highlighter-rouge">state/</code> stay the source of truth, and the database is a cache you can delete and rebuild. It follows the same rule as the rest of the kit: the pipeline works without the dashboard, and the dashboard cannot corrupt the pipeline.</p>
+
+<h2 id="where-the-model-still-votes">Where the model still votes</h2>
+
+<p><strong>The runner owns control flow, but four inputs to it come from a model, and each is a place to harden.</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Input</th>
+      <th>Who produces it</th>
+      <th>What depends on it</th>
+      <th>Hardening I would add</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Task ticks in <code class="language-plaintext highlighter-rouge">tasks.md</code></td>
+      <td>The Implementer</td>
+      <td>The “tasks complete” check</td>
+      <td>A <code class="language-plaintext highlighter-rouge">[manual]</code> task class that a human, not the agent, ticks</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Risk tier:</code> line</td>
+      <td>The Product Analyst</td>
+      <td>Which gates auto-approve</td>
+      <td>Keep the first gate human, as shipped</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">review.md</code></td>
+      <td>The Code Reviewer</td>
+      <td>The blocking list at Merge approval</td>
+      <td>Treat a missing <code class="language-plaintext highlighter-rouge">## Blocking</code> heading as a blocker</td>
+    </tr>
+    <tr>
+      <td>Test names with IDs</td>
+      <td>The Implementer and Test Strategist</td>
+      <td>The spec-to-test trace</td>
+      <td>Add mutation or coverage checks in <code class="language-plaintext highlighter-rouge">extraChecks</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>None of these lets a model approve a gate directly. All of them let a model make a check pass or fail by what it writes, and the risk tier can make a gate approve itself, which is why the first and third gates stay human.</p>
+
+<h2 id="where-this-does-not-fit">Where this does not fit</h2>
+
+<p><strong>This is a lot of machinery, and for many tasks it is the wrong tool.</strong></p>
+
+<ul>
+  <li><strong>If you are learning, or the change is small</strong>, a single interactive Claude Code session with an OpenSpec <code class="language-plaintext highlighter-rouge">/opsx:propose</code> and <code class="language-plaintext highlighter-rouge">/opsx:apply</code> gives you most of the benefit with none of the setup. The runner pays off when a change is big enough that an unattended hour matters.</li>
+  <li><strong>If you are a developer on Windows</strong>, the README says it was tested end to end on Linux, that macOS should behave the same, and that Windows has not been tested. One of the kit’s open proposals is an audit of paths, shell commands and process termination. It also runs one Implementer at a time. A proposal for parallel implementation lanes is written but not built.</li>
+  <li><strong>If you are an architect needing atomic release across repos</strong>, the initiative model gives you linked gates but not a transaction. A failure between two repos’ merges leaves you with a partial release.</li>
+  <li><strong>If you cannot trust a regex-level trace</strong>, you need real mutation testing or coverage gates in <code class="language-plaintext highlighter-rouge">extraChecks</code>. The trace is a floor.</li>
+  <li><strong>The permission model is a bet.</strong> Agents run with <code class="language-plaintext highlighter-rouge">acceptEdits</code> and a per-role allow-list, with prompts denied. That is safe against surprises in the tool list, not against a prompt-injected agent that has <code class="language-plaintext highlighter-rouge">Write</code> access to the worktree.</li>
+</ul>
+
+<h2 id="decision-rule">Decision rule</h2>
+
+<p><strong>Put a deterministic runner around your agents when the cost of an unreviewed mistake is higher than the cost of the setup, and keep every decision about “done” and “approved” in code or in a human.</strong></p>
+
+<ul>
+  <li><strong>Beginner:</strong> try it in three steps. Install Node 20.19+, Claude Code and <code class="language-plaintext highlighter-rouge">@fission-ai/openspec</code>. Register a small throwaway repo with <code class="language-plaintext highlighter-rouge">repo add</code>. Run one change with a one-line idea, and read the files at each gate. You will learn more from the first <code class="language-plaintext highlighter-rouge">proposal.md</code> than from any summary.</li>
+  <li><strong>Developer:</strong> copy the shape, not the code. One function per agent run, explicit allow-lists, a cost cap and a log per session. Put every “is it done” test in a script.</li>
+  <li><strong>Architect:</strong> decide which gates must be human at every risk level, and write that policy as data. Then name the places where your checks are strings and not proofs, as I did for the trace and the review parser.</li>
+</ul>
+
+<p>The same ideas appear one level up in my <a href="/blog/2026/08/11/harness-engineering-and-loop-engineering/">harness engineering post</a>, which covers allow-lists and permissions in the single-agent case. My next changes to the kit, in order: make a missing <code class="language-plaintext highlighter-rouge">## Blocking</code> section a blocker, add a <code class="language-plaintext highlighter-rouge">[manual]</code> task class so a human-only check is not counted as an incomplete task, fix the retrospective instruction conflict, and run the lessons loop on real changes so I can report what it does.</p>
+
+            </div>
+
+            
+            <div class="tags post-tags mt-xl">
+                
+                <span class="tag">openspec</span>
+                
+                <span class="tag">claude-code</span>
+                
+                <span class="tag">multi-agent</span>
+                
+                <span class="tag">agentic-sdlc</span>
+                
+                <span class="tag">spec-driven-development</span>
+                
+                <span class="tag">human-in-the-loop</span>
+                
+                <span class="tag">deterministic-checks</span>
+                
+                <span class="tag">nodejs</span>
+                
+                <span class="tag">agentic-ai</span>
+                
+            </div>
+            
+
+            <div class="mt-xl" style="padding-top: var(--space-xl); border-top: 1px solid var(--color-border);">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--space-md);">
+                    
+                    <a href="/blog/2026/10/24/loop-engineering-is-not-the-agent-loop/" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Previous Post
+                    </a>
+                    
+
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-xl">
+            <a href="/blog/" class="btn btn-outline">
+                <i class="fas fa-arrow-left"></i> Back to Blog
+            </a>
+        </div>
+
+        <section class="subscribe-section">
+  <div class="subscribe-inner">
+    <div class="subscribe-icon">
+      <i class="fas fa-envelope-open-text"></i>
+    </div>
+    <h2 class="subscribe-title">Stay in the loop</h2>
+    <p class="subscribe-description">
+      Get notified when I publish new articles on architecture, AI, and engineering.
+      No spam — just good technical content.
+    </p>
+
+    <form class="subscribe-form" id="subscribe-form" novalidate>
+      <div class="subscribe-input-group">
+        <input
+          type="email"
+          id="subscribe-email"
+          name="email"
+          class="subscribe-input"
+          placeholder="your@email.com"
+          autocomplete="email"
+          required
+        />
+        <button type="submit" class="subscribe-btn" id="subscribe-btn">
+          <span class="btn-text">Subscribe</span>
+          <span class="btn-loading" hidden>
+            <i class="fas fa-spinner fa-spin"></i>
+          </span>
+        </button>
+      </div>
+      <div class="subscribe-feedback" id="subscribe-feedback" hidden></div>
+    </form>
+
+    <p class="subscribe-note">
+      <i class="fas fa-rss"></i>
+      Prefer RSS? <a href="/feed.xml" target="_blank" rel="noopener">Subscribe via feed</a>
+    </p>
+  </div>
+</section>
+
+<script>
+(function () {
+  const form = document.getElementById('subscribe-form');
+  if (!form) return;
+
+  const emailInput = document.getElementById('subscribe-email');
+  const btn = document.getElementById('subscribe-btn');
+  const btnText = btn.querySelector('.btn-text');
+  const btnLoading = btn.querySelector('.btn-loading');
+  const feedback = document.getElementById('subscribe-feedback');
+
+  
+  const BUTTONDOWN_USERNAME = "shanmuga_sundaram";
+  
+
+  function showFeedback(message, isSuccess) {
+    feedback.textContent = message;
+    feedback.className = 'subscribe-feedback ' + (isSuccess ? 'subscribe-feedback--success' : 'subscribe-feedback--error');
+    feedback.hidden = false;
+  }
+
+  function setLoading(loading) {
+    btn.disabled = loading;
+    btnText.hidden = loading;
+    btnLoading.hidden = !loading;
+  }
+
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const email = emailInput.value.trim();
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      showFeedback('Please enter a valid email address.', false);
+      return;
+    }
+
+    if (!BUTTONDOWN_USERNAME) {
+      showFeedback('Subscription is not configured yet. Please try again later.', false);
+      return;
+    }
+
+    setLoading(true);
+    feedback.hidden = true;
+
+    try {
+      const formData = new FormData();
+      formData.append('email', email);
+
+      const response = await fetch(
+        'https://buttondown.email/api/emails/embed-subscribe/' + BUTTONDOWN_USERNAME,
+        { method: 'POST', body: formData }
+      );
+
+      if (response.ok || response.status === 302) {
+        showFeedback('You\'re subscribed! Check your inbox to confirm.', true);
+        emailInput.value = '';
+      } else if (response.status === 400) {
+        const data = await response.json().catch(() => ({}));
+        const msg = data.email ? data.email[0] : 'This email is already subscribed or invalid.';
+        showFeedback(msg, false);
+      } else {
+        showFeedback('Something went wrong. Please try again.', false);
+      }
+    } catch (err) {
+      showFeedback('Network error. Please check your connection and try again.', false);
+    } finally {
+      setLoading(false);
+    }
+  });
+})();
+</script>
+
+    </div>
+</article>
+
+<script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: false, theme: 'dark', securityLevel: 'loose' });
+
+    // Phones: render wide left-to-right diagrams top-down so they fit the screen.
+    const isPhone = window.matchMedia('(max-width: 640px)').matches;
+
+    document.querySelectorAll('pre > code.language-mermaid').forEach(function(code) {
+        if (isPhone) {
+            code.textContent = code.textContent.replace(/^(\s*(?:flowchart|graph))\s+(?:LR|RL)\b/m, '$1 TD');
+        }
+        const wrapper = document.createElement('div');
+        wrapper.className = 'mermaid-wrapper';
+        const div = document.createElement('div');
+        div.className = 'mermaid';
+        div.textContent = code.textContent;
+        wrapper.appendChild(div);
+        code.parentElement.replaceWith(wrapper);
+    });
+
+    // Code blocks without ASCII box-drawing can wrap on phones; diagram blocks keep scrolling.
+    const boxChars = /[─│┌┐└┘├┤┬┴┼═║╔╗╚╝╭╮╯╰▶▼▲]/;
+    document.querySelectorAll('.post-content pre').forEach(function(pre) {
+        if (!boxChars.test(pre.textContent)) pre.classList.add('wrap-code');
+    });
+
+    await mermaid.run();
+
+    document.querySelectorAll('.mermaid-wrapper svg').forEach(function(svg) {
+        const w = svg.getAttribute('width');
+        const h = svg.getAttribute('height');
+        if (w && h && !svg.getAttribute('viewBox')) {
+            svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h);
+        }
+        svg.removeAttribute('width');
+        svg.removeAttribute('height');
+    });
+</script>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <p class="footer-copy">&copy; 2026 Shanmuga Sundaram Natarajan (Shan). All rights reserved.</p>
+        <div class="social-links">
+          
+          <a href="https://github.com/shanmuga-sundaram-n" class="social-link" target="_blank" rel="noopener" aria-label="GitHub">
+            <i class="fab fa-github"></i>
+          </a>
+          
+          <a href="https://www.linkedin.com/in/shan-profile/" class="social-link" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <i class="fab fa-linkedin"></i>
+          </a>
+          
+          <a href="tel:+919790050474" class="social-link" aria-label="Phone">
+            <i class="fas fa-phone-alt"></i>
+          </a>
+          <a href="https://wa.me/919790050474" class="social-link" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+          </a>
+        </div>
+        <div class="footer-counter">
+          <div class="counter-digits">
+            <script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=5eae4d5930301d43fb2dd3648a2cd2c207fb0d34'></script>
+            <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/1529109/t/5"></script>
+          </div>
+          <a href='https://www.free-counters.org/' class="footer-counter-link">Visitors</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // Mobile menu toggle
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+
+    menuToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+
+    // Header scroll effect
+    const header = document.getElementById('header');
+    let lastScroll = 0;
+
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.pageYOffset;
+
+      if (currentScroll > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+
+      lastScroll = currentScroll;
+    });
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+  </script>
+
+  <!-- Site Search Modal -->
+  <div id="site-search-overlay" class="site-search-overlay" role="dialog" aria-modal="true" aria-label="Site search">
+    <div class="site-search-modal">
+      <div class="site-search-header">
+        <i class="fas fa-search site-search-icon"></i>
+        <input
+          type="text"
+          id="site-search-input"
+          class="site-search-input"
+          placeholder="Search pages, posts, projects…"
+          autocomplete="off"
+          spellcheck="false"
+        >
+        <button class="site-search-close" id="site-search-close" aria-label="Close search">
+          <kbd>Esc</kbd>
+        </button>
+      </div>
+      <div id="site-search-results" class="site-search-results">
+        <p class="site-search-hint">Type to search pages, posts &amp; projects…</p>
+      </div>
+      <div class="site-search-footer">
+        <span><kbd>↑</kbd><kbd>↓</kbd> navigate</span>
+        <span><kbd>↵</kbd> open</span>
+        <span><kbd>Esc</kbd> close</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Theme Switcher Script -->
+  <script src="/assets/js/theme-switcher.js"></script>
+
+  <!-- Fuse.js + Site Search -->
+  <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
+  <script src="/assets/js/site-search.js"></script>
+
+</body>
+
+</html>

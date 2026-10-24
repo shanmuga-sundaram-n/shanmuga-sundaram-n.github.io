@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.3">Jekyll</generator><link href="https://shanmuga-sundaram-n.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://shanmuga-sundaram-n.github.io/" rel="alternate" type="text/html" /><updated>2026-10-24T08:50:06+05:30</updated><id>https://shanmuga-sundaram-n.github.io/feed.xml</id><title type="html">Shanmuga Sundaram Natarajan’s Personal Website</title><subtitle>Hands-on Architect &amp; Technical Leader | 19+ Years Experience | AI-First Software Delivery</subtitle><author><name>Shanmuga Sundaram Natarajan (Shan)</name></author><entry><title type="html">Loop Engineering Is Not the Agent Loop: Data From Two Runs</title><link href="https://shanmuga-sundaram-n.github.io/blog/2026/10/24/loop-engineering-is-not-the-agent-loop/" rel="alternate" type="text/html" title="Loop Engineering Is Not the Agent Loop: Data From Two Runs" /><published>2026-10-24T14:30:00+05:30</published><updated>2026-10-24T14:30:00+05:30</updated><id>https://shanmuga-sundaram-n.github.io/blog/2026/10/24/loop-engineering-is-not-the-agent-loop</id><content type="html" xml:base="https://shanmuga-sundaram-n.github.io/blog/2026/10/24/loop-engineering-is-not-the-agent-loop/">&lt;p&gt;In one change on my agentic delivery pipeline, at least six consecutive implementer sessions reported the same three tasks as still open. Every guard I had configured worked: the retry counters capped the passes, the budget cap held, and the run ended. Yet nothing in the system noticed it was going in circles, and a human revision restarted the same cycle.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.3">Jekyll</generator><link href="https://shanmuga-sundaram-n.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://shanmuga-sundaram-n.github.io/" rel="alternate" type="text/html" /><updated>2026-10-24T09:03:37+05:30</updated><id>https://shanmuga-sundaram-n.github.io/feed.xml</id><title type="html">Shanmuga Sundaram Natarajan’s Personal Website</title><subtitle>Hands-on Architect &amp; Technical Leader | 19+ Years Experience | AI-First Software Delivery</subtitle><author><name>Shanmuga Sundaram Natarajan (Shan)</name></author><entry><title type="html">Loop Engineering Is Not the Agent Loop: Data From Two Runs</title><link href="https://shanmuga-sundaram-n.github.io/blog/2026/10/24/loop-engineering-is-not-the-agent-loop/" rel="alternate" type="text/html" title="Loop Engineering Is Not the Agent Loop: Data From Two Runs" /><published>2026-10-24T14:30:00+05:30</published><updated>2026-10-24T14:30:00+05:30</updated><id>https://shanmuga-sundaram-n.github.io/blog/2026/10/24/loop-engineering-is-not-the-agent-loop</id><content type="html" xml:base="https://shanmuga-sundaram-n.github.io/blog/2026/10/24/loop-engineering-is-not-the-agent-loop/">&lt;p&gt;In one change on my agentic delivery pipeline, at least six consecutive implementer sessions reported the same three tasks as still open. Every guard I had configured worked: the retry counters capped the passes, the budget cap held, and the run ended. Yet nothing in the system noticed it was going in circles, and a human revision restarted the same cycle.&lt;/p&gt;
 
 &lt;p&gt;That run changed how I use the word &lt;em&gt;loop&lt;/em&gt;. In my &lt;a href=&quot;/blog/2026/08/11/harness-engineering-and-loop-engineering/&quot;&gt;August post&lt;/a&gt; I used it for the turn-by-turn cycle inside one agent: call the model, run a tool, feed the result back. That meaning is still valid. But the industry has since taken the same word for something one level up, and my pipeline lives almost entirely in that upper level. Below I correct my own terminology, then use two real runs, with their costs and failures, to show what the upper level looks like when it breaks.&lt;/p&gt;
 
@@ -381,7 +381,428 @@ pass 6: open=6.7,7.2,7.3  stalled=true
   &lt;li&gt;&lt;strong&gt;What stops the loop, and does that stop condition read the evidence?&lt;/strong&gt; A human gate that approves on a summary is only as strong as the reading behind it.&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;My next changes to &lt;a href=&quot;https://github.com/shanmuga-sundaram-n/openspec-agentic-kit&quot;&gt;the kit&lt;/a&gt;, in order: the no-progress check, a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[manual]&lt;/code&gt; task class, and a written reason required for every override. Then I’ll run another two changes and see whether the numbers above move.&lt;/p&gt;</content><author><name>Shanmuga Sundaram Natarajan (Shan)</name></author><category term="ai" /><category term="engineering" /><category term="agents" /><category term="loop-engineering" /><category term="harness-engineering" /><category term="agentic-sdlc" /><category term="openspec" /><category term="claude-code" /><category term="multi-agent" /><category term="stop-conditions" /><category term="agentic-ai" /><summary type="html">In one change on my agentic delivery pipeline, at least six consecutive implementer sessions reported the same three tasks as still open. Every guard I had configured worked: the retry counters capped the passes, the budget cap held, and the run ended. Yet nothing in the system noticed it was going in circles, and a human revision restarted the same cycle.</summary></entry><entry><title type="html">Stop Using a Language Model for Everything. Here’s What I Use Instead.</title><link href="https://shanmuga-sundaram-n.github.io/blog/2026/10/20/stop-using-llm-for-everything-jev-ai/" rel="alternate" type="text/html" title="Stop Using a Language Model for Everything. Here’s What I Use Instead." /><published>2026-10-20T14:30:00+05:30</published><updated>2026-10-20T14:30:00+05:30</updated><id>https://shanmuga-sundaram-n.github.io/blog/2026/10/20/stop-using-llm-for-everything-jev-ai</id><content type="html" xml:base="https://shanmuga-sundaram-n.github.io/blog/2026/10/20/stop-using-llm-for-everything-jev-ai/">&lt;p&gt;Most enterprise agent pipelines start from the same assumption: the AI layer is an LLM, every call goes through it, and the only open question is which one. I built a production pipeline on that assumption, and after running it for a while I started to doubt it.&lt;/p&gt;
+&lt;p&gt;My next changes to &lt;a href=&quot;https://github.com/shanmuga-sundaram-n/openspec-agentic-kit&quot;&gt;the kit&lt;/a&gt;, in order: the no-progress check, a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[manual]&lt;/code&gt; task class, and a written reason required for every override. Then I’ll run another two changes and see whether the numbers above move.&lt;/p&gt;</content><author><name>Shanmuga Sundaram Natarajan (Shan)</name></author><category term="ai" /><category term="engineering" /><category term="agents" /><category term="loop-engineering" /><category term="harness-engineering" /><category term="agentic-sdlc" /><category term="openspec" /><category term="claude-code" /><category term="multi-agent" /><category term="stop-conditions" /><category term="agentic-ai" /><summary type="html">In one change on my agentic delivery pipeline, at least six consecutive implementer sessions reported the same three tasks as still open. Every guard I had configured worked: the retry counters capped the passes, the budget cap held, and the run ended. Yet nothing in the system noticed it was going in circles, and a human revision restarted the same cycle.</summary></entry><entry><title type="html">The Runner Has No LLM: A Deterministic Pipeline for Claude Code</title><link href="https://shanmuga-sundaram-n.github.io/blog/2026/10/24/the-runner-has-no-llm-openspec-agentic-kit/" rel="alternate" type="text/html" title="The Runner Has No LLM: A Deterministic Pipeline for Claude Code" /><published>2026-10-24T14:30:00+05:30</published><updated>2026-10-24T14:30:00+05:30</updated><id>https://shanmuga-sundaram-n.github.io/blog/2026/10/24/the-runner-has-no-llm-openspec-agentic-kit</id><content type="html" xml:base="https://shanmuga-sundaram-n.github.io/blog/2026/10/24/the-runner-has-no-llm-openspec-agentic-kit/">&lt;p&gt;Ten AI agents write the research, specs, design, tests and code for one change in my delivery pipeline, and none of them decides what happens next. A plain Node program does. It reads a status command, starts the next agent, runs checks that involve no model, and stops at four points where a human has to say yes. The model still produces the inputs to those decisions, and I mark where that matters.&lt;/p&gt;
+
+&lt;p&gt;This post opens that program up. It is about 2,150 lines of JavaScript with no npm dependencies, and it is &lt;a href=&quot;https://github.com/shanmuga-sundaram-n/openspec-agentic-kit&quot;&gt;open source&lt;/a&gt;. I wrote about what happened when I ran it in &lt;a href=&quot;/blog/2026/10/24/loop-engineering-is-not-the-agent-loop/&quot;&gt;a separate post&lt;/a&gt;, including a stuck loop and an override I regret. Here I stay with the code and the design reasons, because they are the part you can reuse.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;How to read this.&lt;/strong&gt; If agents and specs are new to you, start at the next section and read through “One idea, start to finish”. If you write code, jump to “A session is a function call”. If you design systems, the sections on gates, the trace check and “Where this does not fit” carry the trade-offs. Terms are defined where they first appear.&lt;/p&gt;
+
+&lt;h2 id=&quot;the-runner-decides-the-agents-write&quot;&gt;The runner decides, the agents write&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;The reliable parts of a multi-agent pipeline are the parts where the model gets no vote.&lt;/strong&gt; In this kit, an agent never chooses the next step and never directly approves a gate. The model writes files, and code decides what happens around those files. The model does still supply some inputs to those decisions: it ticks its own task checkboxes, it proposes the risk tier, and it writes the review that can block a merge. Those are the weak points, and a later section lists them.&lt;/p&gt;
+
+&lt;p&gt;That split gives four properties:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Control flow is ordinary code.&lt;/strong&gt; The loop that moves a change through stages is a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;while&lt;/code&gt; loop in &lt;a href=&quot;https://github.com/shanmuga-sundaram-n/openspec-agentic-kit/blob/main/bin/agentic.mjs&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bin/agentic.mjs&lt;/code&gt;&lt;/a&gt;. You can read it, test it and step through it in a debugger.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;A document is “done” when the file exists and validates.&lt;/strong&gt; The runner asks the OpenSpec CLI whether an artifact is finished. It does not take the agent’s word for it.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Checks are deterministic.&lt;/strong&gt; Validation, task completion, the project’s test command and a spec-to-test trace all run as code.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Humans approve at fixed points.&lt;/strong&gt; Four gates, with a policy that depends on a risk level.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Each agent is a &lt;em&gt;fresh headless session&lt;/em&gt;: a new &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;claude -p&lt;/code&gt; process with an empty context that runs one job and exits. Agents never talk to each other. They read and write one shared folder. If you are a beginner, think of it as a relay race where the baton is a directory of Markdown files and the referee is a script.&lt;/p&gt;
+
+&lt;h2 id=&quot;openspec-in-five-minutes&quot;&gt;OpenSpec in five minutes&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;OpenSpec is a spec-driven development framework: you and the AI agree on what to build, in writing, before any code is written.&lt;/strong&gt; It is MIT-licensed, installs from npm as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;@fission-ai/openspec&lt;/code&gt; (Node 20.19 or later) and, per its &lt;a href=&quot;https://github.com/Fission-AI/OpenSpec&quot;&gt;README&lt;/a&gt;, works with 30-plus AI coding assistants through slash commands. I used version 1.15.0 in October 2026.&lt;/p&gt;
+
+&lt;p&gt;It adds a plain-Markdown layer to a repository, with four ideas:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Concept&lt;/th&gt;
+      &lt;th&gt;What it is&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;strong&gt;Spec&lt;/strong&gt;&lt;/td&gt;
+      &lt;td&gt;A Markdown file of requirements, each with scenarios written as WHEN/THEN. Specs live in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;openspec/specs/&lt;/code&gt; and describe what the system does today.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;strong&gt;Change&lt;/strong&gt;&lt;/td&gt;
+      &lt;td&gt;One folder per feature or fix under &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;openspec/changes/&amp;lt;id&amp;gt;/&lt;/code&gt;. Proposed work stays separate from the current truth.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;strong&gt;Delta spec&lt;/strong&gt;&lt;/td&gt;
+      &lt;td&gt;Inside a change, a spec file that lists only what is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ADDED&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MODIFIED&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;REMOVED&lt;/code&gt; or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;RENAMED&lt;/code&gt;, instead of rewriting a whole spec.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;strong&gt;Archive&lt;/strong&gt;&lt;/td&gt;
+      &lt;td&gt;When a change is done, it moves to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;openspec/changes/archive/&lt;/code&gt; and its deltas merge into the main specs, so the specs keep up with the code.&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;A change holds &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;proposal.md&lt;/code&gt; (why and what), &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;specs/&lt;/code&gt; (the deltas), &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;design.md&lt;/code&gt; (how) and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tasks.md&lt;/code&gt; (a checklist). Here is a small delta spec, in the format the CLI validates:&lt;/p&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gu&quot;&gt;## ADDED Requirements&lt;/span&gt;
+
+&lt;span class=&quot;gu&quot;&gt;### Requirement: PAY-012 Refund window&lt;/span&gt;
+The system SHALL allow a partner to refund a settled payout within 30 days of settlement.
+
+&lt;span class=&quot;gu&quot;&gt;#### Scenario: Refund inside the window&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;gs&quot;&gt;**WHEN**&lt;/span&gt; a partner requests a refund 10 days after settlement
+&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;gs&quot;&gt;**THEN**&lt;/span&gt; the refund is created and the payout balance is reduced
+
+&lt;span class=&quot;gu&quot;&gt;#### Scenario: Refund outside the window&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;gs&quot;&gt;**WHEN**&lt;/span&gt; a partner requests a refund 31 days after settlement
+&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;gs&quot;&gt;**THEN**&lt;/span&gt; the request is rejected with the error code REFUND_WINDOW_CLOSED
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The core flow uses &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/opsx:explore&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/opsx:propose&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/opsx:apply&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/opsx:archive&lt;/code&gt;, and an expanded profile adds &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/opsx:verify&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/opsx:ff&lt;/code&gt; and others. The README compares itself with GitHub Spec Kit (more phases, more setup) and Kiro (tied to one IDE). That is the project’s own positioning, so weigh it as such.&lt;/p&gt;
+
+&lt;p&gt;What OpenSpec does not give you is an orchestrator. It has no loop that runs the next step, no cost cap, no approval gates and no tests that tie requirements to code. That gap is what the kit fills, and it does so with three pieces of OpenSpec’s own machinery:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;strong&gt;A custom schema.&lt;/strong&gt; OpenSpec lets you define the artifact list. The kit’s &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;agentic-sdlc&lt;/code&gt; schema adds &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;research&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;threat-model&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;test-plan&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;verification&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;retrospective&lt;/code&gt; around the default four.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;openspec status&lt;/code&gt; as the scheduler.&lt;/strong&gt; The runner asks which artifacts are ready.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;openspec validate --strict&lt;/code&gt; as a check.&lt;/strong&gt; It is one of the deterministic gates between agents.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;one-idea-start-to-finish&quot;&gt;One idea, start to finish&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;A change moves through four stages, and each stage ends at a human gate.&lt;/strong&gt; Say you type this:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;node bin/agentic.mjs start &lt;span class=&quot;s2&quot;&gt;&quot;Partners can refund settled payouts within 30 days&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--repo&lt;/span&gt; payments-api
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The runner creates a git worktree (a second checkout of your repo on its own branch, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;change/&amp;lt;id&amp;gt;&lt;/code&gt;) and works there, so your main checkout stays untouched. Then it walks the stages:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-mermaid&quot;&gt;flowchart TB
+    classDef agent fill:#2A1A3A,stroke:#CBA6F7,color:#CBA6F7
+    classDef check fill:#3A2A1A,stroke:#FAB387,color:#FAB387
+    classDef gate  fill:#3A1A2A,stroke:#F38BA8,color:#F38BA8
+    classDef done  fill:#1A3A2A,stroke:#A6E3A1,color:#A6E3A1
+
+    I([&quot;Idea&quot;]):::done --&amp;gt; S1[&quot;Intent&amp;lt;br/&amp;gt;research · proposal&quot;]:::agent
+    S1 --&amp;gt; G1{&quot;Proposal approval&quot;}:::gate
+    G1 --&amp;gt; S2[&quot;Design&amp;lt;br/&amp;gt;specs · design · threat model · test plan&quot;]:::agent
+    S2 --&amp;gt; G2{&quot;Design review&quot;}:::gate
+    G2 --&amp;gt; S3[&quot;Build&amp;lt;br/&amp;gt;tasks · code&quot;]:::agent
+    S3 --&amp;gt; K[&quot;Runner checks&amp;lt;br/&amp;gt;no model involved&quot;]:::check
+    K --&amp;gt;|&quot;fail: fix pass&quot;| S3
+    K --&amp;gt;|&quot;pass&quot;| V[&quot;Verifier · code reviewer&quot;]:::agent
+    V --&amp;gt; G3{&quot;Merge approval&quot;}:::gate
+    G3 --&amp;gt; S4[&quot;Release&amp;lt;br/&amp;gt;retrospective&quot;]:::agent
+    S4 --&amp;gt; G4{&quot;Release approval&quot;}:::gate
+    G4 --&amp;gt; M([&quot;Archive specs and merge&quot;]):::done
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;In words: each of the four stages ends at a human gate, and the build stage loops through the runner’s checks until they pass or the retry budget runs out. Here is what lands in the change folder along the way:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;After stage&lt;/th&gt;
+      &lt;th&gt;New files in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;openspec/changes/&amp;lt;id&amp;gt;/&lt;/code&gt;&lt;/th&gt;
+      &lt;th&gt;Written by&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Intent&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;research.md&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;proposal.md&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;Product Analyst&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Design&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;specs/…/spec.md&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;design.md&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;threat-model.md&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;test-plan.md&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;Spec Author, Architect, Security Reviewer, Test Strategist&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Build&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tasks.md&lt;/code&gt;, the code, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;verification.md&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;review.md&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;Planner, Implementer, Verifier, Code Reviewer&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Release&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;retrospective.md&lt;/code&gt;, and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;approvals.md&lt;/code&gt; throughout&lt;/td&gt;
+      &lt;td&gt;Retrospective analyst, and the runner&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;At each gate the runner prints what to review, and you approve or ask for changes. When you approve with a note, that note is stored and handed to every later agent as a binding decision. When you ask for changes, you pick the stage that should absorb them. Your feedback goes to the agents of that stage, later stages get an “upstream was revised” note, and the gate of that stage and every gate after it reset.&lt;/p&gt;
+
+&lt;h2 id=&quot;a-session-is-a-function-call&quot;&gt;A session is a function call&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Every agent run is one function, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;runAgent&lt;/code&gt;, that spawns &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;claude&lt;/code&gt; with explicit limits and returns text, cost and seconds.&lt;/strong&gt; This is the whole contract between the runner and a model, abridged (&lt;a href=&quot;https://github.com/shanmuga-sundaram-n/openspec-agentic-kit/blob/main/lib/agent.mjs&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lib/agent.mjs&lt;/code&gt;&lt;/a&gt;):&lt;/p&gt;
+
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;args&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;-p&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;--output-format&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;json&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;--agent&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;role&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+              &lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;--permission-mode&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;permissionMode&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;acceptEdits&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;permissionPrompts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;push&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;--permission-prompts&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;permissionPrompts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;maxBudgetUsdPerRun&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;push&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;--max-budget-usd&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;maxBudgetUsdPerRun&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;push&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;--model&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// --allowedTools is variadic, so it goes last; the prompt is sent on stdin.&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;allowedTools&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;?.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;push&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;--allowedTools&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;allowedTools&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;For beginners, each flag does one thing:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-p&lt;/code&gt; runs Claude Code non-interactively and prints the result, with no chat window.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--agent &amp;lt;role&amp;gt;&lt;/code&gt; loads a role prompt from &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.claude/agents/&amp;lt;role&amp;gt;.md&lt;/code&gt;, such as the Architect or the Code Reviewer.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--model&lt;/code&gt; picks the model for that role. The shipped config gives the creative roles (analyst, spec author, architect, security reviewer, code reviewer) &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;opus&lt;/code&gt; and the mechanical ones (test strategist, planner, implementer, verifier, retrospective) &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sonnet&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--allowedTools&lt;/code&gt; is an allow-list. The Code Reviewer gets &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Read&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Write&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Glob&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Grep&lt;/code&gt; and read-only git commands. It has &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Write&lt;/code&gt; because it must write &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;review.md&lt;/code&gt;, but no &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Edit&lt;/code&gt; and no &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;npm&lt;/code&gt;. That is not a hard read-only guarantee: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Write&lt;/code&gt; can overwrite any file in the worktree, so “the reviewer does not change code” rests on its prompt, plus the diff the runner commits afterwards. Only the Implementer and the Verifier get &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;npm&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;npx&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;node&lt;/code&gt;, because both run the tests.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--permission-prompts none&lt;/code&gt; means that nobody answers permission prompts, so anything outside the allow-list is denied. I checked these flags against the installed Claude Code 2.1.310 with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;claude --help&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--max-budget-usd&lt;/code&gt; caps spend for one run, which is $5 by default here, and the process also has a 45-minute timeout.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;For developers, two details matter. The prompt goes in on stdin, and the output is JSON, so the runner reads &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;total_cost_usd&lt;/code&gt; and an error flag instead of scraping text. And every run writes a log file with the prompt, arguments, output, seconds and cost, which is how I got the numbers later in this post.&lt;/p&gt;
+
+&lt;p&gt;For architects, the design choice is that the &lt;em&gt;runner&lt;/em&gt; owns the commit. No allow-list names a git command that writes, and the runner calls &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git.commitAll&lt;/code&gt; between steps, so the history is a record of pipeline events. Treat that as direct protection only: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Bash(node *)&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Bash(npm *)&lt;/code&gt; can run arbitrary scripts, so an agent that wanted to could still reach git that way. The permission model is a bet, and I come back to it at the end.&lt;/p&gt;
+
+&lt;p&gt;Every prompt also carries one headless rule: nobody will answer questions, so make the most reasonable assumption and list anything a human must decide under “Open questions”. Those lists show up at the gates, and they are one of the more useful things the agents produce.&lt;/p&gt;
+
+&lt;h2 id=&quot;the-openspec-cli-picks-the-next-step&quot;&gt;The OpenSpec CLI picks the next step&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;The runner never asks an agent what to do next. It asks &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;openspec status&lt;/code&gt;.&lt;/strong&gt; For each artifact the CLI reports &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;done&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ready&lt;/code&gt; or blocked by missing dependencies. The runner starts every &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ready&lt;/code&gt; artifact in the current stage, and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Promise.allSettled&lt;/code&gt; runs them in parallel when there is more than one (abridged):&lt;/p&gt;
+
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;ready&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;pending&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;filter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;artifactState&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;st&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)?.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;status&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;ready&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;parallelArtifacts&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;ready&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;results&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Promise&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;allSettled&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;ready&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;runArtifact&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;state&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)));&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;find&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;status&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;rejected&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;throw&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;reason&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;After each run, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;runArtifact&lt;/code&gt; checks status again. If the agent said it was finished but the file is missing or invalid, that counts as a failed attempt, and the artifact gets one retry with an extra line saying what was missing. After the second miss the change stops with a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;resume&lt;/code&gt; command in the message. Running artifacts in parallel against one worktree is safe only because each artifact writes its own files; if two roles ever wrote the same path, this design would need locking.&lt;/p&gt;
+
+&lt;p&gt;The trade-off is a dependency on the OpenSpec CLI’s JSON output. If its status format changes, the runner breaks. I accept that because the alternative, tracking artifact state myself, would duplicate what the CLI already knows.&lt;/p&gt;
+
+&lt;h2 id=&quot;stages-and-gates-are-data&quot;&gt;Stages and gates are data&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Stages, roles and gate policies live in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;config.base.json&lt;/code&gt;, not in code.&lt;/strong&gt; The loop does not know that there are four stages. It reads a list (abridged, with names, titles and approvers left out):&lt;/p&gt;
+
+&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;stages&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;id&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;intent&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;artifacts&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;research&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;proposal&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;gate&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;G1&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;id&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;design&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;artifacts&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;specs&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;design&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;threat-model&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;test-plan&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;gate&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;G2&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;id&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;build&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;artifacts&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;tasks&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;apply&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;checks&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;after&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;verification&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;review&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;gate&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;G3&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;id&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;release&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;artifacts&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;retrospective&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;gate&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;G4&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;archive&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;gates&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;G2&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;label&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Design review&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;policy&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;low&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;auto&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;medium&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;human&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;high&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;human&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The policy is a matrix of gate by risk level. The Product Analyst writes a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Risk tier: low|medium|high&lt;/code&gt; line in the proposal, with a rule that money movement, auth, personal data or irreversible migrations are high. A human can change the tier at the first gate.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Gate&lt;/th&gt;
+      &lt;th&gt;Low risk&lt;/th&gt;
+      &lt;th&gt;Medium&lt;/th&gt;
+      &lt;th&gt;High&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Proposal approval&lt;/td&gt;
+      &lt;td&gt;human&lt;/td&gt;
+      &lt;td&gt;human&lt;/td&gt;
+      &lt;td&gt;human&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Design review&lt;/td&gt;
+      &lt;td&gt;auto&lt;/td&gt;
+      &lt;td&gt;human&lt;/td&gt;
+      &lt;td&gt;human&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Merge approval&lt;/td&gt;
+      &lt;td&gt;human&lt;/td&gt;
+      &lt;td&gt;human&lt;/td&gt;
+      &lt;td&gt;human&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Release approval&lt;/td&gt;
+      &lt;td&gt;auto&lt;/td&gt;
+      &lt;td&gt;human&lt;/td&gt;
+      &lt;td&gt;human&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Two rules govern &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;auto&lt;/code&gt;:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Auto-approval only fires when nothing blocks.&lt;/strong&gt; If a check failed or the reviewer flagged a blocking issue, the gate waits for a human, whatever the policy says. Be careful with what that buys you. Checks and review only run in the build stage, which ends at Merge approval, and that gate is human at every risk level. So with the shipped config, “nothing blocks” is trivially true at Design review and Release approval, and the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;auto&lt;/code&gt; setting depends entirely on an honest risk tier.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Blocked gates need an explicit override.&lt;/strong&gt; The prompt says “type override to approve anyway”, and the decision is recorded in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;approvals.md&lt;/code&gt; as an override, with who and when.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Config is layered: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;config.base.json&lt;/code&gt;, then &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;repos/&amp;lt;name&amp;gt;/repo.json&lt;/code&gt;, then &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;repos/&amp;lt;name&amp;gt;/overrides.json&lt;/code&gt;. Objects merge key by key and arrays are replaced. A payments repo can tighten its gates or restrict approvers by git email without touching the base.&lt;/p&gt;
+
+&lt;p&gt;For architects, the point is that governance is a data change. Making design review mandatory for every risk level is a one-word edit, and it is auditable in git. The limit is that the risk tier is itself an agent’s judgement, read by a regex from &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;proposal.md&lt;/code&gt;. A wrong “low” lets the Design and Release gates approve themselves, so the human at the first gate is the real control, which is why that gate is human at every level in the shipped config.&lt;/p&gt;
+
+&lt;p&gt;The kit also keeps your repository clean. On every start and resume it copies the agents, the schema and a rendered &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;openspec/config.yaml&lt;/code&gt; into the worktree, then hides them with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.git/info/exclude&lt;/code&gt;. If your repo already tracks one of those files, the runner leaves it alone, and it prints a warning for the config file.&lt;/p&gt;
+
+&lt;h2 id=&quot;the-spec-to-test-trace&quot;&gt;The spec-to-test trace&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;The trace is a cheap check that every requirement has tests pointing at it, and it is strong evidence of structure and weak evidence of correctness.&lt;/strong&gt; It lives in &lt;a href=&quot;https://github.com/shanmuga-sundaram-n/openspec-agentic-kit/blob/main/lib/checks.mjs&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lib/checks.mjs&lt;/code&gt;&lt;/a&gt; and runs with no model.&lt;/p&gt;
+
+&lt;p&gt;The convention has two parts. Every requirement name starts with an ID, like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;PAY-012&lt;/code&gt;. Test names embed the same ID without the hyphen, like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;PAY012&lt;/code&gt;. The check parses the delta specs, then scans test files:&lt;/p&gt;
+
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;token&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;RegExp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;area&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;[-_ ]?&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;num&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;refs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;of&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;contents&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;line&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;of&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;token&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;line&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;refs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;need&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;scenarios&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// ok when refs &amp;gt;= need and every scenario name appears in test-plan.md&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;So a requirement with two scenarios needs at least two matching lines in test files, and each scenario’s name must appear in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;test-plan.md&lt;/code&gt;. A requirement with no ID is reported as a problem. The three other checks are &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;openspec validate --strict&lt;/code&gt;, “every task in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tasks.md&lt;/code&gt; is ticked” and your own test command.&lt;/p&gt;
+
+&lt;p&gt;What it proves is that no requirement was silently dropped between the spec, the plan and the tests. That matters because an agent can leave a requirement out of its tests and still report success.&lt;/p&gt;
+
+&lt;p&gt;What it does not prove is that a test asserts anything. The match is a regex over lines, so a comment containing &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;PAY012&lt;/code&gt; counts as a reference. An agent under pressure could satisfy it without a real assertion. The Implementer prompt forbids weakening tests, and the Code Reviewer is asked whether tests assert real behaviour, but those are model judgements layered on a string match.&lt;/p&gt;
+
+&lt;p&gt;My two real runs show the other limit. Both passed the trace (12 requirements across 11 test files, and 9 across 24). Both also finished with tasks still open: three on the first change and one on the second. All four open tasks needed a running server, and the Implementer’s session could not start one. A regex over test files cannot see a task that no test expresses.&lt;/p&gt;
+
+&lt;h2 id=&quot;the-build-loop&quot;&gt;The build loop&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;The build stage is two nested loops with hard caps, so an agent that cannot succeed runs out of attempts instead of money.&lt;/strong&gt; The outer loop is passes, from &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;buildUntilTasksDone&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// abridged&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;pass&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;pass&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;maxApplyPasses&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;pass&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;checks&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;tasksComplete&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;state&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;workdir&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;state&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;ok&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;revision&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;pass&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;runImplementer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;state&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;revision&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;pass&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;revision&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;label&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;`apply-&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pass&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;`&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;git&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;commitAll&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;state&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;workdir&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;`wip(&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;state&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;): implementation pass &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pass&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Then &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;checkAndFix&lt;/code&gt; runs all four checks. If any fail, the Implementer gets the failure text and tries again, up to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;maxFixAttempts&lt;/code&gt; (2). Then the Verifier writes &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;verification.md&lt;/code&gt; from real test runs, and the Code Reviewer writes &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;review.md&lt;/code&gt;. If the review has blocking findings, the Implementer gets exactly one automatic fix pass, followed by fresh checks, a rewritten verification and a second review.&lt;/p&gt;
+
+&lt;p&gt;The reviewer’s verdict is read by code. The prompt requires four exact headings, and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;reviewBlocking&lt;/code&gt; pulls the bullets under &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;## Blocking&lt;/code&gt;, ignoring “None”. Note the failure mode: if &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;review.md&lt;/code&gt; is missing, the runner records “review.md was not written” as a blocker. But if the file exists and the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;## Blocking&lt;/code&gt; heading is absent or misspelled, the function returns an empty list, which reads as no blockers. That is a fail-open edge I have not fixed. A stricter parser would treat a missing section as a blocker.&lt;/p&gt;
+
+&lt;h3 id=&quot;what-a-change-costs&quot;&gt;What a change costs&lt;/h3&gt;
+
+&lt;p&gt;The runner records cost and seconds for every session. I analysed those numbers per phase in &lt;a href=&quot;/blog/2026/10/24/loop-engineering-is-not-the-agent-loop/&quot;&gt;the companion post&lt;/a&gt;, so here is only the shape, from two changes on one small app (not a benchmark):&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt; &lt;/th&gt;
+      &lt;th&gt;Add/edit/delete todos&lt;/th&gt;
+      &lt;th&gt;Login flow&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Agent sessions&lt;/td&gt;
+      &lt;td&gt;23&lt;/td&gt;
+      &lt;td&gt;22&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Total agent cost&lt;/td&gt;
+      &lt;td&gt;$5.75&lt;/td&gt;
+      &lt;td&gt;$6.17&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Share spent on build and fix passes&lt;/td&gt;
+      &lt;td&gt;$1.68&lt;/td&gt;
+      &lt;td&gt;$1.89&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Two design points follow for developers and architects. The caps are what make this affordable to leave unattended: three apply passes, two fix attempts, one review-fix pass and $5 per session give you a ceiling you can estimate in advance. And review spend is a real lever, at about as much as the build and fix passes combined, but cutting it removes the only check that reads the diff.&lt;/p&gt;
+
+&lt;h2 id=&quot;lessons-learning-with-a-human-in-the-queue&quot;&gt;Lessons: learning with a human in the queue&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;The retrospective agent can propose rules for next time, but nothing takes effect until a human accepts it.&lt;/strong&gt; The design is in &lt;a href=&quot;https://github.com/shanmuga-sundaram-n/openspec-agentic-kit/blob/main/lib/lessons.mjs&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lib/lessons.mjs&lt;/code&gt;&lt;/a&gt;. The retrospective template ends with a fenced block tagged &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;json lessons&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;rules&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;specs&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Name the error code in every negative scenario.&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;context&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Tests run with an injected clock; never sleep in tests.&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;At release, the runner parses that block and queues each item in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;repos/&amp;lt;name&amp;gt;/lessons.json&lt;/code&gt; as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pending&lt;/code&gt;, skipping duplicates. You review them with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lessons list&lt;/code&gt;, then &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lessons accept &amp;lt;id|all&amp;gt;&lt;/code&gt; or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lessons reject&lt;/code&gt;. Accepted rules are written into that repo’s &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;openspec/config.yaml&lt;/code&gt;, under the matching artifact, every time a change starts or resumes. The next change’s agents then see them in their instructions.&lt;/p&gt;
+
+&lt;p&gt;I need to be straight about the evidence. My two real runs never exercised this. Their archived retrospectives use an older heading, “Proposed rule changes”, and contain no &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;json lessons&lt;/code&gt; block, so no lessons were queued.&lt;/p&gt;
+
+&lt;p&gt;There is also a bug I found while writing this. The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;agentic-sdlc&lt;/code&gt; schema’s own instruction for the retrospective still says to write “Proposed rule changes … as YAML ready to paste”, while the template and the agent prompt ask for the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;json lessons&lt;/code&gt; block. The agent receives both, and the old instruction probably explains the missing block. I have not fixed it yet. So I am describing a mechanism that is wired up but has never produced a lesson, and I have no data on whether accepted lessons improve later changes.&lt;/p&gt;
+
+&lt;p&gt;Its limits are known and written down. Lessons only add; nothing is retired automatically, so a repo’s rules grow without bound and stale ones keep steering agents. One of the kit’s own open change proposals, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lesson-retirement&lt;/code&gt;, exists to add retirement, staleness flags and conflict detection. Lessons also never edit the agent prompts themselves.&lt;/p&gt;
+
+&lt;h2 id=&quot;cross-repo-initiatives-and-the-dashboard&quot;&gt;Cross-repo initiatives and the dashboard&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;An initiative is one idea that touches several repos, run as one child change per repo with gates approved together.&lt;/strong&gt; You start it with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;initiative start &quot;&amp;lt;idea&amp;gt;&quot; --repos payments-api,partner-web&lt;/code&gt;. Each child runs the full pipeline in its own worktree. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;initiative approve&lt;/code&gt; refuses unless every active child waits at the same gate, so no repo is approved to merge ahead of the others.&lt;/p&gt;
+
+&lt;p&gt;Two limits matter for architects. The children draft their cross-repo contracts independently and do not read each other’s artifacts, so you must compare the contract sections yourself at the first two gates. And merges happen per repo as each child finishes, not as one atomic release, so the rollout order has to be planned in the contracts. An &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ordered-initiative-release&lt;/code&gt; proposal for that is written but not built.&lt;/p&gt;
+
+&lt;p&gt;The dashboard (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;node bin/agentic.mjs dashboard&lt;/code&gt;) is a local page on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;127.0.0.1&lt;/code&gt; over a SQLite database, using Node’s built-in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;node:sqlite&lt;/code&gt;, so it needs Node 22.13 or later. The JSON files in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;state/&lt;/code&gt; stay the source of truth, and the database is a cache you can delete and rebuild. It follows the same rule as the rest of the kit: the pipeline works without the dashboard, and the dashboard cannot corrupt the pipeline.&lt;/p&gt;
+
+&lt;h2 id=&quot;where-the-model-still-votes&quot;&gt;Where the model still votes&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;The runner owns control flow, but four inputs to it come from a model, and each is a place to harden.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Input&lt;/th&gt;
+      &lt;th&gt;Who produces it&lt;/th&gt;
+      &lt;th&gt;What depends on it&lt;/th&gt;
+      &lt;th&gt;Hardening I would add&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Task ticks in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tasks.md&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;The Implementer&lt;/td&gt;
+      &lt;td&gt;The “tasks complete” check&lt;/td&gt;
+      &lt;td&gt;A &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[manual]&lt;/code&gt; task class that a human, not the agent, ticks&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Risk tier:&lt;/code&gt; line&lt;/td&gt;
+      &lt;td&gt;The Product Analyst&lt;/td&gt;
+      &lt;td&gt;Which gates auto-approve&lt;/td&gt;
+      &lt;td&gt;Keep the first gate human, as shipped&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;review.md&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;The Code Reviewer&lt;/td&gt;
+      &lt;td&gt;The blocking list at Merge approval&lt;/td&gt;
+      &lt;td&gt;Treat a missing &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;## Blocking&lt;/code&gt; heading as a blocker&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Test names with IDs&lt;/td&gt;
+      &lt;td&gt;The Implementer and Test Strategist&lt;/td&gt;
+      &lt;td&gt;The spec-to-test trace&lt;/td&gt;
+      &lt;td&gt;Add mutation or coverage checks in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;extraChecks&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;None of these lets a model approve a gate directly. All of them let a model make a check pass or fail by what it writes, and the risk tier can make a gate approve itself, which is why the first and third gates stay human.&lt;/p&gt;
+
+&lt;h2 id=&quot;where-this-does-not-fit&quot;&gt;Where this does not fit&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;This is a lot of machinery, and for many tasks it is the wrong tool.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;If you are learning, or the change is small&lt;/strong&gt;, a single interactive Claude Code session with an OpenSpec &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/opsx:propose&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/opsx:apply&lt;/code&gt; gives you most of the benefit with none of the setup. The runner pays off when a change is big enough that an unattended hour matters.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;If you are a developer on Windows&lt;/strong&gt;, the README says it was tested end to end on Linux, that macOS should behave the same, and that Windows has not been tested. One of the kit’s open proposals is an audit of paths, shell commands and process termination. It also runs one Implementer at a time. A proposal for parallel implementation lanes is written but not built.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;If you are an architect needing atomic release across repos&lt;/strong&gt;, the initiative model gives you linked gates but not a transaction. A failure between two repos’ merges leaves you with a partial release.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;If you cannot trust a regex-level trace&lt;/strong&gt;, you need real mutation testing or coverage gates in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;extraChecks&lt;/code&gt;. The trace is a floor.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;The permission model is a bet.&lt;/strong&gt; Agents run with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;acceptEdits&lt;/code&gt; and a per-role allow-list, with prompts denied. That is safe against surprises in the tool list, not against a prompt-injected agent that has &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Write&lt;/code&gt; access to the worktree.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;decision-rule&quot;&gt;Decision rule&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Put a deterministic runner around your agents when the cost of an unreviewed mistake is higher than the cost of the setup, and keep every decision about “done” and “approved” in code or in a human.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Beginner:&lt;/strong&gt; try it in three steps. Install Node 20.19+, Claude Code and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;@fission-ai/openspec&lt;/code&gt;. Register a small throwaway repo with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;repo add&lt;/code&gt;. Run one change with a one-line idea, and read the files at each gate. You will learn more from the first &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;proposal.md&lt;/code&gt; than from any summary.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Developer:&lt;/strong&gt; copy the shape, not the code. One function per agent run, explicit allow-lists, a cost cap and a log per session. Put every “is it done” test in a script.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Architect:&lt;/strong&gt; decide which gates must be human at every risk level, and write that policy as data. Then name the places where your checks are strings and not proofs, as I did for the trace and the review parser.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The same ideas appear one level up in my &lt;a href=&quot;/blog/2026/08/11/harness-engineering-and-loop-engineering/&quot;&gt;harness engineering post&lt;/a&gt;, which covers allow-lists and permissions in the single-agent case. My next changes to the kit, in order: make a missing &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;## Blocking&lt;/code&gt; section a blocker, add a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[manual]&lt;/code&gt; task class so a human-only check is not counted as an incomplete task, fix the retrospective instruction conflict, and run the lessons loop on real changes so I can report what it does.&lt;/p&gt;</content><author><name>Shanmuga Sundaram Natarajan (Shan)</name></author><category term="ai" /><category term="engineering" /><category term="agents" /><category term="openspec" /><category term="claude-code" /><category term="multi-agent" /><category term="agentic-sdlc" /><category term="spec-driven-development" /><category term="human-in-the-loop" /><category term="deterministic-checks" /><category term="nodejs" /><category term="agentic-ai" /><summary type="html">Ten AI agents write the research, specs, design, tests and code for one change in my delivery pipeline, and none of them decides what happens next. A plain Node program does. It reads a status command, starts the next agent, runs checks that involve no model, and stops at four points where a human has to say yes. The model still produces the inputs to those decisions, and I mark where that matters.</summary></entry><entry><title type="html">Stop Using a Language Model for Everything. Here’s What I Use Instead.</title><link href="https://shanmuga-sundaram-n.github.io/blog/2026/10/20/stop-using-llm-for-everything-jev-ai/" rel="alternate" type="text/html" title="Stop Using a Language Model for Everything. Here’s What I Use Instead." /><published>2026-10-20T14:30:00+05:30</published><updated>2026-10-20T14:30:00+05:30</updated><id>https://shanmuga-sundaram-n.github.io/blog/2026/10/20/stop-using-llm-for-everything-jev-ai</id><content type="html" xml:base="https://shanmuga-sundaram-n.github.io/blog/2026/10/20/stop-using-llm-for-everything-jev-ai/">&lt;p&gt;Most enterprise agent pipelines start from the same assumption: the AI layer is an LLM, every call goes through it, and the only open question is which one. I built a production pipeline on that assumption, and after running it for a while I started to doubt it.&lt;/p&gt;
 
 &lt;p&gt;I profiled the calls and about 80% of the AI work was structured decision-making: classify this intent, score this document for relevance, pull these fields out of some messy input. No human ever read those outputs. They went straight into the next system. So I was paying frontier prices and waiting on LLM latency for work that didn’t need generation at all. Every so often the model also invented a field that wasn’t in the input, which is what you get when nothing in the architecture stops it.&lt;/p&gt;
 
@@ -4094,38 +4515,4 @@ BUILD SUCCESSFUL &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;3s
 
 &lt;h2 id=&quot;wrapping-up&quot;&gt;Wrapping up&lt;/h2&gt;
 
-&lt;p&gt;Backpressure is a normal part of any reactive system under real load. The libraries give you the tools, but choosing between buffer, drop, throttle and request comes down to knowing how much your data matters and how your consumer behaves.&lt;/p&gt;</content><author><name>Shanmuga Sundaram Natarajan (Shan)</name></author><category term="engineering" /><category term="java" /><category term="reactive-programming" /><category term="backpressure" /><category term="project-reactor" /><category term="rxjava" /><category term="akka" /><category term="java" /><category term="streaming" /><summary type="html"></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://shanmuga-sundaram-n.github.io/assets/images/blog/backpressure-reactive.webp" /><media:content medium="image" url="https://shanmuga-sundaram-n.github.io/assets/images/blog/backpressure-reactive.webp" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Traditional Coding vs AI-Assisted Coding vs Vibe Coding: A New Spectrum</title><link href="https://shanmuga-sundaram-n.github.io/blog/2024/12/01/traditional-vs-ai-vs-vibe-coding/" rel="alternate" type="text/html" title="Traditional Coding vs AI-Assisted Coding vs Vibe Coding: A New Spectrum" /><published>2024-12-01T17:30:00+05:30</published><updated>2024-12-01T17:30:00+05:30</updated><id>https://shanmuga-sundaram-n.github.io/blog/2024/12/01/traditional-vs-ai-vs-vibe-coding</id><content type="html" xml:base="https://shanmuga-sundaram-n.github.io/blog/2024/12/01/traditional-vs-ai-vs-vibe-coding/">&lt;p&gt;&lt;img src=&quot;/assets/images/blog/traditional-vs-ai-vs-vibe-coding.webp&quot; alt=&quot;Traditional vs AI-Assisted vs Vibe Coding&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;I no longer write code in one way through the day. Depending on the task and what’s at stake, I move between three different modes, and picking the right one has become as important as any technical skill.&lt;/p&gt;
-
-&lt;h2 id=&quot;traditional-coding&quot;&gt;Traditional coding&lt;/h2&gt;
-
-&lt;p&gt;This is the old way. I write every line and reason through every decision. It’s slow, but I understand all of it. When something breaks I know where to look, and when a colleague asks why it works a certain way, I can explain.&lt;/p&gt;
-
-&lt;p&gt;This is where I put anything that has to be right: core domain logic, security-sensitive paths, and problems that are new to me. It’s also how I learn, because writing something by hand teaches you things that reading it doesn’t.&lt;/p&gt;
-
-&lt;h2 id=&quot;ai-assisted-coding&quot;&gt;AI-assisted coding&lt;/h2&gt;
-
-&lt;p&gt;This is my default now. I decide the logic and the architecture. The AI handles boilerplate, suggests implementations and takes some of the mental load.&lt;/p&gt;
-
-&lt;p&gt;It feels like pairing with someone very fast and well-read who occasionally makes things up. I’m still driving, and I still read every line it produces. I just spend less time on the mechanical parts. It suits most day-to-day work: scaffolding, translating a familiar pattern into code, refactoring, and getting a second opinion in code review.&lt;/p&gt;
-
-&lt;h2 id=&quot;vibe-coding&quot;&gt;Vibe coding&lt;/h2&gt;
-
-&lt;p&gt;This is the newest mode and the one people misunderstand most. You describe what you want in plain language and iterate on what comes back, rather than working at the level of syntax.&lt;/p&gt;
-
-&lt;p&gt;The speed is real. For prototypes, exploration and proofs of concept, you can try ten ideas in the time it used to take to build one. I use it for throwaway tools and for getting familiar with an unfamiliar API.&lt;/p&gt;
-
-&lt;p&gt;But it doesn’t replace engineering knowledge. You need that knowledge to judge what you get back, spot subtle bugs and notice shortcuts that will bite later. Without it you end up with code that arrives fast and is painful to maintain.&lt;/p&gt;
-
-&lt;h2 id=&quot;choosing-between-them&quot;&gt;Choosing between them&lt;/h2&gt;
-
-&lt;p&gt;A single day might go like this. I vibe code to see how a new API behaves, switch to AI-assisted coding to build the real integration, and then write the authentication and error handling by hand.&lt;/p&gt;
-
-&lt;p&gt;Mixing these up is where trouble starts. Vibe coding a security layer is a bad idea. Hand-writing boilerplate wastes time. And using AI without reviewing the output is just careless.&lt;/p&gt;
-
-&lt;h2 id=&quot;what-it-means-for-engineers&quot;&gt;What it means for engineers&lt;/h2&gt;
-
-&lt;p&gt;There are more ways to build than before, and that’s good. But the fundamentals matter more now, not less. As code gets easier to generate, the valuable part is understanding systems, trade-offs and failure modes well enough to know whether the generated code is any good.&lt;/p&gt;
-
-&lt;p&gt;The skill I’d work on is noticing which mode you’re in, and whether it’s the right one for the task in front of you.&lt;/p&gt;</content><author><name>Shanmuga Sundaram Natarajan (Shan)</name></author><category term="ai" /><category term="engineering" /><category term="ai" /><category term="coding" /><category term="vibe-coding" /><category term="productivity" /><category term="software-engineering" /><category term="claude-code" /><summary type="html"></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://shanmuga-sundaram-n.github.io/assets/images/blog/traditional-vs-ai-vs-vibe-coding.webp" /><media:content medium="image" url="https://shanmuga-sundaram-n.github.io/assets/images/blog/traditional-vs-ai-vs-vibe-coding.webp" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
+&lt;p&gt;Backpressure is a normal part of any reactive system under real load. The libraries give you the tools, but choosing between buffer, drop, throttle and request comes down to knowing how much your data matters and how your consumer behaves.&lt;/p&gt;</content><author><name>Shanmuga Sundaram Natarajan (Shan)</name></author><category term="engineering" /><category term="java" /><category term="reactive-programming" /><category term="backpressure" /><category term="project-reactor" /><category term="rxjava" /><category term="akka" /><category term="java" /><category term="streaming" /><summary type="html"></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://shanmuga-sundaram-n.github.io/assets/images/blog/backpressure-reactive.webp" /><media:content medium="image" url="https://shanmuga-sundaram-n.github.io/assets/images/blog/backpressure-reactive.webp" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
